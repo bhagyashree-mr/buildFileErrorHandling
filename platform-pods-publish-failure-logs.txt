@@ -1,0 +1,1411 @@
+sudo -E env PATH=/opt/Python-RDA/bin:/usr/local/python-37/bin:/usr/local/python-311/bin:/opt/java/openjdk/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin /usr/bin/bash build_311.sh -d /opt/codebase/ -t daily-jk -no-pull -r registry/external-registry.sh -pods-file platform-pods.txt -m templates/
+
+
+Registry file used: registry/external-registry.sh
+DOCKERFILES root directory: templates/
+Parent directory of the pods to build: /opt/codebase/
+Pods to be build: cfx-rda-access-manager,cfx-rda-user-preferences,cfx-rda-resource-manager,cfx-rda-app-sdk
+Tag to be associated with containers: daily-jk
+
+
+Building Pods
+Pods root directory user input :  /opt/codebase/
+Pods to build:  ['cfx-rda-access-manager', 'cfx-rda-user-preferences', 'cfx-rda-resource-manager', 'cfx-rda-app-sdk']
+===> Pods to be built and deployed(if specified): 4
+Package dist directory is  /opt/codebase//cfx-rda-access-manager/dist
+Package dist directory is  /opt/codebase//cfx-rda-user-preferences/dist
+Package dist directory is  /opt/codebase//cfx-rda-resource-manager/dist
+Package dist directory is  /opt/codebase//cfx-rda-app-sdk/dist
+
+Current Pod (for wheel) is cfx-rda-access-manager
+dist dir--  dist/
+module_parent: /opt/codebase/cfx-rda-access-manager/
+Wheel Build completed for Current pod  cfx-rda-access-manager
+=============================================
+
+Current Pod (for wheel) is cfx-rda-user-preferences
+dist dir--  dist/
+module_parent: /opt/codebase/cfx-rda-user-preferences/
+Wheel Build completed for Current pod  cfx-rda-user-preferences
+=============================================
+
+Current Pod (for wheel) is cfx-rda-resource-manager
+dist dir--  dist/
+module_parent: /opt/codebase/cfx-rda-resource-manager/
+Wheel Build completed for Current pod  cfx-rda-resource-manager
+=============================================
+
+Current Pod (for wheel) is cfx-rda-app-sdk
+dist dir--  dist/
+module_parent: /opt/codebase/cfx-rda-app-sdk/
+Wheel Build completed for Current pod  cfx-rda-app-sdk
+=============================================
+
+Current Pod (for building resources zip) is cfx-rda-access-manager
+resources/etc copied successfully to /opt/codebase/cfx-rda-access-manager/target
+minio_resources.zip created successfully at /opt/codebase/cfx-rda-access-manager/target
+LOGGING_FILE: log-templates/logging.yml , file exists: True
+log-templates/logging.yml copied successfully to /opt/codebase/cfx-rda-access-manager/target
+
+Current Pod (for building resources zip) is cfx-rda-user-preferences
+resources/etc copied successfully to /opt/codebase/cfx-rda-user-preferences/target
+minio_resources.zip is not created as resources/minio does not exists for POD: cfx-rda-user-preferences.
+LOGGING_FILE: log-templates/logging.yml , file exists: True
+log-templates/logging.yml copied successfully to /opt/codebase/cfx-rda-user-preferences/target
+
+Current Pod (for building resources zip) is cfx-rda-resource-manager
+resources/etc copied successfully to /opt/codebase/cfx-rda-resource-manager/target
+minio_resources.zip created successfully at /opt/codebase/cfx-rda-resource-manager/target
+LOGGING_FILE: log-templates/logging.yml , file exists: True
+log-templates/logging.yml copied successfully to /opt/codebase/cfx-rda-resource-manager/target
+
+Current Pod (for building resources zip) is cfx-rda-app-sdk
+Resources folder does not exist for POD: cfx-rda-app-sdk.
+LOGGING_FILE: log-templates/logging.yml , file exists: True
+log-templates/logging.yml copied successfully to /opt/codebase/cfx-rda-app-sdk/target
+==> Deploying to DevPi
+Uploading /opt/codebase//cfx-rda-access-manager/dist/cfxdimensions_app_access_manager-24.2.8.3-py3-none-any.whl /opt/codebase//cfx-rda-user-preferences/dist/user_preferences-24.1.22.1-py3-none-any.whl /opt/codebase//cfx-rda-resource-manager/dist/cfxdimensions_app_resource_manager-24.3.7.1-py3-none-any.whl /opt/codebase//cfx-rda-app-sdk/dist/dimensions_app_sdk-24.2.11.1-py3-none-any.whl
+Successfully uploaded 4 files to devpi index jenkins_2024-03-11
+===> Pods successfully built and deployed(if specified):  4
+===> Pods build failed:  0
+===> Pods deployment failed:  0
+Completed in 37.16 secs
+Mon Mar 11 06:53:26 UTC 2024 [INFO]  Initializing Docker Registry...
+WARNING! Using --password via the CLI is insecure. Use --password-stdin.
+WARNING! Your password will be stored unencrypted in /var/jenkins_home/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+Mon Mar 11 06:53:26 UTC 2024 [INFO]  Collecting Pod Versions...
+Pods root directory:  /opt/codebase/
+DOCKERFILES root directory:  templates/
+Pods to fetch versions:  cfx-rda-access-manager,cfx-rda-user-preferences,cfx-rda-resource-manager,cfx-rda-app-sdk
+
+=====================Pod Versions==========================
+cfxdimensions_app_access_manager_version - 24.2.8.3
+user_preferences_version - 24.1.22.1
+cfxdimensions_app_resource_manager_version - 24.3.7.1
+dimensions_app_sdk_version - 24.2.11.1
+===========================================================
+
+{'cfx-rda-access-manager': 'cfxdimensions-app-access-manager', 'cfx-rda-user-preferences': 'user-preferences', 'cfx-rda-resource-manager': 'cfxdimensions-app-resource-manager', 'cfx-rda-app-sdk': 'dimensions-app-sdk'}
+Processing templates/cfx-rda-access-manager/Dockerfile ...
+Copying templates/cfx-rda-access-manager/requirements_cfx.txt ...
+Copying templates/cfx-rda-access-manager/requirements_other.txt ...
+Processing templates/cfx-rda-resource-manager/Dockerfile ...
+Copying templates/cfx-rda-resource-manager/requirements_cfx.txt ...
+Copying templates/cfx-rda-resource-manager/requirements_other.txt ...
+Processing templates/cfx-rda-user-preferences/Dockerfile ...
+Copying templates/cfx-rda-user-preferences/requirements_cfx.txt ...
+Copying templates/cfx-rda-user-preferences/requirements_other.txt ...
+
+version.txt path: /opt/codebase//cfx-rda-access-manager/target/version.txt
+CURRENT DOCKER_FILE=/opt/codebase/cfx-rda-apps-tools/tools/target_templates//cfx-rda-access-manager/Dockerfile, IMAGE_BASE=docker1.cloudfabrix.io/cfx/ubuntu-cfx-app-svc-base-min-ng_311, IMAGE=cfx-rda-access-manager
+Mon Mar 11 06:53:26 UTC 2024 [INFO]  Pulling base image: docker1.cloudfabrix.io/cfx/ubuntu-cfx-app-svc-base-min-ng_311
+Using default tag: latest
+latest: Pulling from cfx/ubuntu-cfx-app-svc-base-min-ng_311
+Digest: sha256:3322a9da59a0eb47f4f9dc6ef3c22f9a5ba2ece1cafde0e94f7791b5ee85547b
+Status: Image is up to date for docker1.cloudfabrix.io/cfx/ubuntu-cfx-app-svc-base-min-ng_311:latest
+docker1.cloudfabrix.io/cfx/ubuntu-cfx-app-svc-base-min-ng_311:latest
+Mon Mar 11 06:53:26 UTC 2024 [INFO]  Building image cfx-rda-access-manager:daily-jk
+CURRENT DOCKER_FILE=/opt/codebase/cfx-rda-apps-tools/tools/target_templates//cfx-rda-access-manager/Dockerfile, IMAGE_BASE=docker1.cloudfabrix.io/cfx/ubuntu-cfx-app-svc-base-min-ng_311, IMAGE=cfx-rda-access-manager
+Sending build context to Docker daemon  1.489MB
+
+Step 1/16 : ARG DOCKER_REGISTRY
+Step 2/16 : ARG IMAGE_BASE
+Step 3/16 : FROM $IMAGE_BASE
+ ---> 8617c1d6d94b
+Step 4/16 : ARG DEVPI_USER
+ ---> Running in bc7128aaf28c
+Removing intermediate container bc7128aaf28c
+ ---> 33315d28e3d6
+Step 5/16 : ARG DEVPI_INDEX
+ ---> Running in 27ced35cedb6
+Removing intermediate container 27ced35cedb6
+ ---> 2d470788565c
+Step 6/16 : ARG CURRENT_VERSION
+ ---> Running in 2fd3b3ede45d
+Removing intermediate container 2fd3b3ede45d
+ ---> c78fb54bff0e
+Step 7/16 : MAINTAINER macaw.io
+ ---> Running in 36bcded343ee
+Removing intermediate container 36bcded343ee
+ ---> 352c248c3786
+Step 8/16 : RUN     echo $CURRENT_VERSION > /rda_build_tag.txt
+ ---> Running in ca1ac6e3b3b0
+Removing intermediate container ca1ac6e3b3b0
+ ---> 8ab8dc833b80
+Step 9/16 : ENV     PIP_CONFIG_FILE=
+ ---> Running in d7888acb684d
+Removing intermediate container d7888acb684d
+ ---> ae257a6ce012
+Step 10/16 : RUN     mkdir -p /etc/cfxdimensions-app-access-manager
+ ---> Running in 5855528fbf63
+Removing intermediate container 5855528fbf63
+ ---> cbc592e287b5
+Step 11/16 : COPY    target/ /etc/cfxdimensions-app-access-manager
+ ---> d26ddf141364
+Step 12/16 : COPY requirements_other.txt /tmp/requirements_other.txt
+ ---> 8030612a54c7
+Step 13/16 : COPY requirements_cfx.txt /tmp/requirements_cfx.txt
+ ---> 71e41ed5bf20
+Step 14/16 : RUN /cfx_venv/bin/pip install -r /tmp/requirements_other.txt --no-cache-dir
+ ---> Running in dbdc079bed84
+Collecting SQLAlchemy-Utils==0.41.1 (from -r /tmp/requirements_other.txt (line 1))
+  Downloading SQLAlchemy_Utils-0.41.1-py3-none-any.whl.metadata (4.3 kB)
+Collecting XlsxWriter==3.1.9 (from -r /tmp/requirements_other.txt (line 2))
+  Downloading XlsxWriter-3.1.9-py3-none-any.whl.metadata (2.6 kB)
+Collecting confluent-kafka==2.3.0 (from -r /tmp/requirements_other.txt (line 3))
+  Downloading confluent_kafka-2.3.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (2.3 kB)
+Collecting ed25519==1.5 (from -r /tmp/requirements_other.txt (line 4))
+  Downloading ed25519-1.5.tar.gz (868 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 869.0/869.0 kB 10.8 MB/s eta 0:00:00
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting elasticsearch-dsl==7.0.0 (from -r /tmp/requirements_other.txt (line 5))
+  Downloading elasticsearch_dsl-7.0.0-py2.py3-none-any.whl.metadata (10 kB)
+Collecting opensearch-py==2.4.2 (from -r /tmp/requirements_other.txt (line 7))
+  Downloading opensearch_py-2.4.2-py2.py3-none-any.whl.metadata (6.8 kB)
+Collecting funcy==2.0 (from -r /tmp/requirements_other.txt (line 8))
+  Downloading funcy-2.0-py2.py3-none-any.whl.metadata (5.9 kB)
+Collecting getversion==1.0.2 (from -r /tmp/requirements_other.txt (line 9))
+  Downloading getversion-1.0.2-py2.py3-none-any.whl.metadata (2.7 kB)
+Collecting importlib-resources==6.1.1 (from -r /tmp/requirements_other.txt (line 12))
+  Downloading importlib_resources-6.1.1-py3-none-any.whl.metadata (4.1 kB)
+Collecting jsonschema==4.20.0 (from -r /tmp/requirements_other.txt (line 13))
+  Downloading jsonschema-4.20.0-py3-none-any.whl.metadata (8.1 kB)
+Collecting nats-py==2.6.0 (from -r /tmp/requirements_other.txt (line 14))
+  Downloading nats-py-2.6.0.tar.gz (94 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 94.6/94.6 kB 128.3 MB/s eta 0:00:00
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Installing backend dependencies: started
+  Installing backend dependencies: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting nest-asyncio==1.5.8 (from -r /tmp/requirements_other.txt (line 15))
+  Downloading nest_asyncio-1.5.8-py3-none-any.whl.metadata (2.8 kB)
+Collecting nkeys==0.1.0 (from -r /tmp/requirements_other.txt (line 16))
+  Downloading nkeys-0.1.0.tar.gz (6.2 kB)
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting pandas-explode==0.0.7 (from -r /tmp/requirements_other.txt (line 17))
+  Downloading pandas_explode-0.0.7.tar.gz (4.0 kB)
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting pyarrow==14.0.2 (from -r /tmp/requirements_other.txt (line 19))
+  Downloading pyarrow-14.0.2-cp311-cp311-manylinux_2_28_x86_64.whl.metadata (3.0 kB)
+Collecting pydantic==2.5.3 (from -r /tmp/requirements_other.txt (line 20))
+  Downloading pydantic-2.5.3-py3-none-any.whl.metadata (65 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 65.6/65.6 kB 119.0 MB/s eta 0:00:00
+Collecting pyrsistent==0.20.0 (from -r /tmp/requirements_other.txt (line 21))
+  Downloading pyrsistent-0.20.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (27 kB)
+Collecting setuptools-scm==8.0.4 (from -r /tmp/requirements_other.txt (line 22))
+  Downloading setuptools_scm-8.0.4-py3-none-any.whl.metadata (6.4 kB)
+Collecting simpleeval==0.9.13 (from -r /tmp/requirements_other.txt (line 23))
+  Downloading simpleeval-0.9.13-py2.py3-none-any.whl.metadata (15 kB)
+Collecting stdlib-list==0.10.0 (from -r /tmp/requirements_other.txt (line 24))
+  Downloading stdlib_list-0.10.0-py3-none-any.whl.metadata (3.3 kB)
+Collecting tabulate==0.9.0 (from -r /tmp/requirements_other.txt (line 25))
+  Downloading tabulate-0.9.0-py3-none-any.whl.metadata (34 kB)
+Collecting tomli==2.0.1 (from -r /tmp/requirements_other.txt (line 26))
+  Downloading tomli-2.0.1-py3-none-any.whl.metadata (8.9 kB)
+Requirement already satisfied: typing_extensions==4.9.0 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 27)) (4.9.0)
+Requirement already satisfied: SQLAlchemy>=1.3 in /cfx_venv/lib/python3.11/site-packages (from SQLAlchemy-Utils==0.41.1->-r /tmp/requirements_other.txt (line 1)) (2.0.25)
+Requirement already satisfied: six in /cfx_venv/lib/python3.11/site-packages (from elasticsearch-dsl==7.0.0->-r /tmp/requirements_other.txt (line 5)) (1.16.0)
+Requirement already satisfied: python-dateutil in /cfx_venv/lib/python3.11/site-packages (from elasticsearch-dsl==7.0.0->-r /tmp/requirements_other.txt (line 5)) (2.8.2)
+Collecting elasticsearch<8.0.0,>=7.0.0 (from elasticsearch-dsl==7.0.0->-r /tmp/requirements_other.txt (line 5))
+  Downloading elasticsearch-7.17.9-py2.py3-none-any.whl.metadata (5.7 kB)
+Requirement already satisfied: urllib3>=1.26.18 in /cfx_venv/lib/python3.11/site-packages (from opensearch-py==2.4.2->-r /tmp/requirements_other.txt (line 7)) (2.1.0)
+Requirement already satisfied: requests<3.0.0,>=2.4.0 in /cfx_venv/lib/python3.11/site-packages (from opensearch-py==2.4.2->-r /tmp/requirements_other.txt (line 7)) (2.31.0)
+Requirement already satisfied: certifi>=2022.12.07 in /cfx_venv/lib/python3.11/site-packages (from opensearch-py==2.4.2->-r /tmp/requirements_other.txt (line 7)) (2023.11.17)
+Requirement already satisfied: attrs>=22.2.0 in /cfx_venv/lib/python3.11/site-packages (from jsonschema==4.20.0->-r /tmp/requirements_other.txt (line 13)) (23.2.0)
+Collecting jsonschema-specifications>=2023.03.6 (from jsonschema==4.20.0->-r /tmp/requirements_other.txt (line 13))
+  Downloading jsonschema_specifications-2023.12.1-py3-none-any.whl.metadata (3.0 kB)
+Collecting referencing>=0.28.4 (from jsonschema==4.20.0->-r /tmp/requirements_other.txt (line 13))
+  Downloading referencing-0.33.0-py3-none-any.whl.metadata (2.7 kB)
+Collecting rpds-py>=0.7.1 (from jsonschema==4.20.0->-r /tmp/requirements_other.txt (line 13))
+  Downloading rpds_py-0.18.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.1 kB)
+Requirement already satisfied: pandas in /cfx_venv/lib/python3.11/site-packages (from pandas-explode==0.0.7->-r /tmp/requirements_other.txt (line 17)) (2.1.4)
+Requirement already satisfied: numpy>=1.16.6 in /cfx_venv/lib/python3.11/site-packages (from pyarrow==14.0.2->-r /tmp/requirements_other.txt (line 19)) (1.26.3)
+Collecting annotated-types>=0.4.0 (from pydantic==2.5.3->-r /tmp/requirements_other.txt (line 20))
+  Downloading annotated_types-0.6.0-py3-none-any.whl.metadata (12 kB)
+Collecting pydantic-core==2.14.6 (from pydantic==2.5.3->-r /tmp/requirements_other.txt (line 20))
+  Downloading pydantic_core-2.14.6-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.5 kB)
+Requirement already satisfied: packaging>=20 in /cfx_venv/lib/python3.11/site-packages (from setuptools-scm==8.0.4->-r /tmp/requirements_other.txt (line 22)) (23.2)
+Requirement already satisfied: setuptools in /cfx_venv/lib/python3.11/site-packages (from setuptools-scm==8.0.4->-r /tmp/requirements_other.txt (line 22)) (68.1.2)
+Collecting urllib3>=1.26.18 (from opensearch-py==2.4.2->-r /tmp/requirements_other.txt (line 7))
+  Downloading urllib3-1.26.18-py2.py3-none-any.whl.metadata (48 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 48.9/48.9 kB 96.2 MB/s eta 0:00:00
+Requirement already satisfied: charset-normalizer<4,>=2 in /cfx_venv/lib/python3.11/site-packages (from requests<3.0.0,>=2.4.0->opensearch-py==2.4.2->-r /tmp/requirements_other.txt (line 7)) (3.3.2)
+Requirement already satisfied: idna<4,>=2.5 in /cfx_venv/lib/python3.11/site-packages (from requests<3.0.0,>=2.4.0->opensearch-py==2.4.2->-r /tmp/requirements_other.txt (line 7)) (3.6)
+Requirement already satisfied: greenlet!=0.4.17 in /cfx_venv/lib/python3.11/site-packages (from SQLAlchemy>=1.3->SQLAlchemy-Utils==0.41.1->-r /tmp/requirements_other.txt (line 1)) (3.0.3)
+Requirement already satisfied: pytz>=2020.1 in /cfx_venv/lib/python3.11/site-packages (from pandas->pandas-explode==0.0.7->-r /tmp/requirements_other.txt (line 17)) (2023.3.post1)
+Requirement already satisfied: tzdata>=2022.1 in /cfx_venv/lib/python3.11/site-packages (from pandas->pandas-explode==0.0.7->-r /tmp/requirements_other.txt (line 17)) (2023.4)
+Downloading SQLAlchemy_Utils-0.41.1-py3-none-any.whl (92 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 92.6/92.6 kB 103.5 MB/s eta 0:00:00
+Downloading XlsxWriter-3.1.9-py3-none-any.whl (154 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 154.8/154.8 kB 64.7 MB/s eta 0:00:00
+Downloading confluent_kafka-2.3.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (4.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.0/4.0 MB 49.1 MB/s eta 0:00:00
+Downloading elasticsearch_dsl-7.0.0-py2.py3-none-any.whl (48 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 48.9/48.9 kB 109.4 MB/s eta 0:00:00
+Downloading opensearch_py-2.4.2-py2.py3-none-any.whl (258 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 258.6/258.6 kB 96.5 MB/s eta 0:00:00
+Downloading funcy-2.0-py2.py3-none-any.whl (30 kB)
+Downloading getversion-1.0.2-py2.py3-none-any.whl (12 kB)
+Downloading importlib_resources-6.1.1-py3-none-any.whl (33 kB)
+Downloading jsonschema-4.20.0-py3-none-any.whl (84 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 84.7/84.7 kB 111.2 MB/s eta 0:00:00
+Downloading nest_asyncio-1.5.8-py3-none-any.whl (5.3 kB)
+Downloading pyarrow-14.0.2-cp311-cp311-manylinux_2_28_x86_64.whl (38.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 38.0/38.0 MB 77.4 MB/s eta 0:00:00
+Downloading pydantic-2.5.3-py3-none-any.whl (381 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 381.9/381.9 kB 78.6 MB/s eta 0:00:00
+Downloading pyrsistent-0.20.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (120 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 120.0/120.0 kB 89.6 MB/s eta 0:00:00
+Downloading setuptools_scm-8.0.4-py3-none-any.whl (42 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 42.1/42.1 kB 71.0 MB/s eta 0:00:00
+Downloading simpleeval-0.9.13-py2.py3-none-any.whl (15 kB)
+Downloading stdlib_list-0.10.0-py3-none-any.whl (79 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 79.8/79.8 kB 72.4 MB/s eta 0:00:00
+Downloading tabulate-0.9.0-py3-none-any.whl (35 kB)
+Downloading tomli-2.0.1-py3-none-any.whl (12 kB)
+Downloading pydantic_core-2.14.6-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.1 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 70.9 MB/s eta 0:00:00
+Downloading annotated_types-0.6.0-py3-none-any.whl (12 kB)
+Downloading elasticsearch-7.17.9-py2.py3-none-any.whl (385 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 386.0/386.0 kB 116.1 MB/s eta 0:00:00
+Downloading jsonschema_specifications-2023.12.1-py3-none-any.whl (18 kB)
+Downloading referencing-0.33.0-py3-none-any.whl (26 kB)
+Downloading rpds_py-0.18.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.1 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.1/1.1 MB 81.0 MB/s eta 0:00:00
+Downloading urllib3-1.26.18-py2.py3-none-any.whl (143 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 143.8/143.8 kB 68.2 MB/s eta 0:00:00
+Building wheels for collected packages: ed25519, nats-py, nkeys, pandas-explode
+  Building wheel for ed25519 (pyproject.toml): started
+  Building wheel for ed25519 (pyproject.toml): finished with status 'done'
+  Created wheel for ed25519: filename=ed25519-1.5-cp311-cp311-linux_x86_64.whl size=105005 sha256=246c76e7c769734f8ff55bd6141fe23ade108e65cdce571f1019567d6cee2e01
+  Stored in directory: /tmp/pip-ephem-wheel-cache-6rdiw5hg/wheels/29/ee/7f/dcbc82c274c565cb7f13479d7212a3c99a37f41234dae3cb71
+  Building wheel for nats-py (pyproject.toml): started
+  Building wheel for nats-py (pyproject.toml): finished with status 'done'
+  Created wheel for nats-py: filename=nats_py-2.6.0-py3-none-any.whl size=73017 sha256=0988b7e7082a663521e4204e00ac79a5946c1373734e864ae0a49089dbf8e116
+  Stored in directory: /tmp/pip-ephem-wheel-cache-6rdiw5hg/wheels/7d/72/65/9cde86dbf0351b8fb16aa5714ec4d73f4e7d960fed07adc9d5
+  Building wheel for nkeys (pyproject.toml): started
+  Building wheel for nkeys (pyproject.toml): finished with status 'done'
+  Created wheel for nkeys: filename=nkeys-0.1.0-py3-none-any.whl size=6106 sha256=339e3323e66019fb779992248910500bf2f4cce2a23b8294ba18a350ffa8c373
+  Stored in directory: /tmp/pip-ephem-wheel-cache-6rdiw5hg/wheels/a3/20/b2/2756a3cd076991ded08dd0a45974721cb7b864d9a55f904599
+  Building wheel for pandas-explode (pyproject.toml): started
+  Building wheel for pandas-explode (pyproject.toml): finished with status 'done'
+  Created wheel for pandas-explode: filename=pandas_explode-0.0.7-py2.py3-none-any.whl size=3907 sha256=c5d3c6e6a3f171c468d8ac265817d5b1ce5bfef0b7f44f8b544a207d3ce190ab
+  Stored in directory: /tmp/pip-ephem-wheel-cache-6rdiw5hg/wheels/28/d0/c3/6552069c76b2123930cd914ea04b3f1fe384945619a16cc981
+Successfully built ed25519 nats-py nkeys pandas-explode
+Installing collected packages: simpleeval, funcy, ed25519, confluent-kafka, XlsxWriter, urllib3, tomli, tabulate, stdlib-list, setuptools-scm, rpds-py, pyrsistent, pydantic-core, pyarrow, nkeys, nest-asyncio, nats-py, importlib-resources, annotated-types, SQLAlchemy-Utils, referencing, pydantic, getversion, elasticsearch, pandas-explode, opensearch-py, jsonschema-specifications, elasticsearch-dsl, jsonschema
+  Attempting uninstall: urllib3
+    Found existing installation: urllib3 2.1.0
+    Uninstalling urllib3-2.1.0:
+      Successfully uninstalled urllib3-2.1.0
+Successfully installed SQLAlchemy-Utils-0.41.1 XlsxWriter-3.1.9 annotated-types-0.6.0 confluent-kafka-2.3.0 ed25519-1.5 elasticsearch-7.17.9 elasticsearch-dsl-7.0.0 funcy-2.0 getversion-1.0.2 importlib-resources-6.1.1 jsonschema-4.20.0 jsonschema-specifications-2023.12.1 nats-py-2.6.0 nest-asyncio-1.5.8 nkeys-0.1.0 opensearch-py-2.4.2 pandas-explode-0.0.7 pyarrow-14.0.2 pydantic-2.5.3 pydantic-core-2.14.6 pyrsistent-0.20.0 referencing-0.33.0 rpds-py-0.18.0 setuptools-scm-8.0.4 simpleeval-0.9.13 stdlib-list-0.10.0 tabulate-0.9.0 tomli-2.0.1 urllib3-1.26.18
+Removing intermediate container dbdc079bed84
+ ---> bceb198f8c23
+Step 15/16 : RUN /cfx_venv/bin/pip install -r /tmp/requirements_cfx.txt  --no-cache-dir --prefer-binary --no-cache-dir --prefer-binary -i http://10.95.159.86:3141/$DEVPI_USER/$DEVPI_INDEX/ --trusted-host 10.95.159.86
+ ---> Running in 0360c67c03ad
+Looking in indexes: http://10.95.159.86:3141/macaw/jenkins_2024-03-11/
+Collecting cfxdimensions-app-access-manager (from -r /tmp/requirements_cfx.txt (line 1))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-11/%2Bf/fc4/4bedd99d46824/cfxdimensions_app_access_manager-24.2.8.3-py3-none-any.whl (15 kB)
+Collecting rda-es-lib (from -r /tmp/requirements_cfx.txt (line 2))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-11/%2Bf/24b/f81fc67a36c22/rda_es_lib-24.2.9.1-py3-none-any.whl (14 kB)
+Collecting rda-extension-list (from -r /tmp/requirements_cfx.txt (line 3))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-11/%2Bf/f2f/973b1fc9dc278/rda_extension_list-24.2.23.1-py3-none-any.whl (19 kB)
+Collecting rda-messaging (from -r /tmp/requirements_cfx.txt (line 4))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-11/%2Bf/fb7/ad9ab8c7788d9/rda_messaging-24.2.29.1-py3-none-any.whl (535 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 535.6/535.6 kB 75.5 MB/s eta 0:00:00
+Collecting dimensions-app-sdk (from -r /tmp/requirements_cfx.txt (line 5))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-11/%2Bf/6c7/c01e2704c3364/dimensions_app_sdk-24.2.11.1-py3-none-any.whl (378 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 378.2/378.2 kB 65.5 MB/s eta 0:00:00
+Collecting rda-logging (from -r /tmp/requirements_cfx.txt (line 6))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-11/%2Bf/3ad/891c6cae8a8b5/rda_logging-24.2.9.1-py3-none-any.whl (5.2 kB)
+Collecting cfxql (from -r /tmp/requirements_cfx.txt (line 7))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-11/%2Bf/cb0/7cc69fdedaab9/cfxql-24.2.14.1-py3-none-any.whl (47 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 47.0/47.0 kB 83.6 MB/s eta 0:00:00
+Collecting mysql-connector-python==8.0.5 (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5))
+  Downloading http://10.95.159.86:3141/root/pypi/%2Bf/917/c98b8a5ac7540/mysql_connector_python-8.0.5-py2.py3-none-any.whl (249 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 249.3/249.3 kB 57.2 MB/s eta 0:00:00
+Collecting supervisor==4.1.0 (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5))
+  Downloading http://10.95.159.86:3141/root/pypi/%2Bf/a76/b2f77a560f2dc/supervisor-4.1.0-py2.py3-none-any.whl (318 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 318.4/318.4 kB 70.8 MB/s eta 0:00:00
+Collecting mysqlclient==2.1.1 (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5))
+  Downloading http://10.95.159.86:3141/root/pypi/%2Bf/828/757e419fb11dd/mysqlclient-2.1.1.tar.gz (88 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 88.1/88.1 kB 81.1 MB/s eta 0:00:00
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Requirement already satisfied: sqlalchemy==2.0.25 in /cfx_venv/lib/python3.11/site-packages (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (2.0.25)
+Requirement already satisfied: sqlalchemy-utils==0.41.1 in /cfx_venv/lib/python3.11/site-packages (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (0.41.1)
+Collecting future==0.17.1 (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5))
+  Downloading http://10.95.159.86:3141/root/pypi/%2Bf/670/45236dcfd6816/future-0.17.1.tar.gz (829 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 829.1/829.1 kB 67.5 MB/s eta 0:00:00
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Requirement already satisfied: six==1.16.0 in /cfx_venv/lib/python3.11/site-packages (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (1.16.0)
+Collecting cachetools==4.2.4 (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5))
+  Downloading http://10.95.159.86:3141/root/pypi/%2Bf/929/71d3cb7d2a97e/cachetools-4.2.4-py3-none-any.whl (10 kB)
+Requirement already satisfied: requests>=2.31.0 in /cfx_venv/lib/python3.11/site-packages (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (2.31.0)
+Collecting minio==7.1.12 (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5))
+  Downloading http://10.95.159.86:3141/root/pypi/%2Bf/c8a/b8646f93d47b9/minio-7.1.12-py3-none-any.whl (76 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 76.2/76.2 kB 108.8 MB/s eta 0:00:00
+Requirement already satisfied: pandas==2.1.4 in /cfx_venv/lib/python3.11/site-packages (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (2.1.4)
+Collecting swifter==0.281 (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5))
+  Downloading http://10.95.159.86:3141/root/pypi/%2Bf/513/f160c793b956f/swifter-0.281.tar.gz (3.3 kB)
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Requirement already satisfied: simplejson==3.19.2 in /cfx_venv/lib/python3.11/site-packages (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (3.19.2)
+Collecting xlrd==1.2.0 (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5))
+  Downloading http://10.95.159.86:3141/root/pypi/%2Bf/e55/1fb498759fa3a/xlrd-1.2.0-py2.py3-none-any.whl (103 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 103.3/103.3 kB 53.9 MB/s eta 0:00:00
+Collecting babel==2.10.3 (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5))
+  Downloading http://10.95.159.86:3141/root/pypi/%2Bf/ff5/6f4892c1c4bf0/Babel-2.10.3-py3-none-any.whl (9.5 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 9.5/9.5 MB 71.4 MB/s eta 0:00:00
+Requirement already satisfied: opensearch-py==2.4.2 in /cfx_venv/lib/python3.11/site-packages (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (2.4.2)
+Requirement already satisfied: elasticsearch-dsl==7.0.0 in /cfx_venv/lib/python3.11/site-packages (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (7.0.0)
+Requirement already satisfied: statistics==1.0.3.5 in /cfx_venv/lib/python3.11/site-packages (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (1.0.3.5)
+Collecting schedule==1.0.0 (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5))
+  Downloading http://10.95.159.86:3141/root/pypi/%2Bf/823/69250700af61a/schedule-1.0.0-py2.py3-none-any.whl (9.0 kB)
+Requirement already satisfied: pytz>=2015.7 in /cfx_venv/lib/python3.11/site-packages (from babel==2.10.3->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (2023.3.post1)
+Requirement already satisfied: python-dateutil in /cfx_venv/lib/python3.11/site-packages (from elasticsearch-dsl==7.0.0->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (2.8.2)
+Requirement already satisfied: elasticsearch<8.0.0,>=7.0.0 in /cfx_venv/lib/python3.11/site-packages (from elasticsearch-dsl==7.0.0->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (7.17.9)
+Requirement already satisfied: certifi in /cfx_venv/lib/python3.11/site-packages (from minio==7.1.12->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (2023.11.17)
+Requirement already satisfied: urllib3 in /cfx_venv/lib/python3.11/site-packages (from minio==7.1.12->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (1.26.18)
+Requirement already satisfied: numpy<2,>=1.23.2 in /cfx_venv/lib/python3.11/site-packages (from pandas==2.1.4->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (1.26.3)
+Requirement already satisfied: tzdata>=2022.1 in /cfx_venv/lib/python3.11/site-packages (from pandas==2.1.4->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (2023.4)
+Requirement already satisfied: typing-extensions>=4.6.0 in /cfx_venv/lib/python3.11/site-packages (from sqlalchemy==2.0.25->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (4.9.0)
+Requirement already satisfied: greenlet!=0.4.17 in /cfx_venv/lib/python3.11/site-packages (from sqlalchemy==2.0.25->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (3.0.3)
+Requirement already satisfied: docutils>=0.3 in /cfx_venv/lib/python3.11/site-packages (from statistics==1.0.3.5->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (0.20.1)
+Requirement already satisfied: psutil in /cfx_venv/lib/python3.11/site-packages (from swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (5.9.7)
+Requirement already satisfied: dask>=0.19.0 in /cfx_venv/lib/python3.11/site-packages (from dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (2023.12.1)
+Requirement already satisfied: tqdm in /cfx_venv/lib/python3.11/site-packages (from swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (4.66.1)
+Requirement already satisfied: numba in /cfx_venv/lib/python3.11/site-packages (from swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (0.58.1)
+Requirement already satisfied: charset-normalizer<4,>=2 in /cfx_venv/lib/python3.11/site-packages (from requests>=2.31.0->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (3.3.2)
+Requirement already satisfied: idna<4,>=2.5 in /cfx_venv/lib/python3.11/site-packages (from requests>=2.31.0->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (3.6)
+Requirement already satisfied: click>=8.1 in /cfx_venv/lib/python3.11/site-packages (from dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (8.1.7)
+Requirement already satisfied: cloudpickle>=1.5.0 in /cfx_venv/lib/python3.11/site-packages (from dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (3.0.0)
+Requirement already satisfied: fsspec>=2021.09.0 in /cfx_venv/lib/python3.11/site-packages (from dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (2023.12.2)
+Requirement already satisfied: packaging>=20.0 in /cfx_venv/lib/python3.11/site-packages (from dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (23.2)
+Requirement already satisfied: partd>=1.2.0 in /cfx_venv/lib/python3.11/site-packages (from dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (1.4.1)
+Requirement already satisfied: pyyaml>=5.3.1 in /cfx_venv/lib/python3.11/site-packages (from dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (6.0.1)
+Requirement already satisfied: toolz>=0.10.0 in /cfx_venv/lib/python3.11/site-packages (from dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (0.12.0)
+Requirement already satisfied: importlib-metadata>=4.13.0 in /cfx_venv/lib/python3.11/site-packages (from dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (7.0.1)
+Requirement already satisfied: pyarrow>=7.0 in /cfx_venv/lib/python3.11/site-packages (from dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (14.0.2)
+Collecting pyarrow-hotfix (from dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5))
+  Downloading http://10.95.159.86:3141/root/pypi/%2Bf/dcc/9ae2d220dff00/pyarrow_hotfix-0.6-py3-none-any.whl (7.9 kB)
+Collecting lz4>=4.3.2 (from dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5))
+  Downloading http://10.95.159.86:3141/root/pypi/%2Bf/0e9/c410b11a31dbd/lz4-4.3.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.3 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 77.1 MB/s eta 0:00:00
+Requirement already satisfied: llvmlite<0.42,>=0.41.0dev0 in /cfx_venv/lib/python3.11/site-packages (from numba->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (0.41.1)
+Requirement already satisfied: zipp>=0.5 in /cfx_venv/lib/python3.11/site-packages (from importlib-metadata>=4.13.0->dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (3.17.0)
+Requirement already satisfied: locket in /cfx_venv/lib/python3.11/site-packages (from partd>=1.2.0->dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (1.0.0)
+Requirement already satisfied: bokeh>=2.4.2 in /cfx_venv/lib/python3.11/site-packages (from dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (3.3.3)
+Requirement already satisfied: jinja2>=2.10.3 in /cfx_venv/lib/python3.11/site-packages (from dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (3.1.2)
+Requirement already satisfied: distributed==2023.12.1 in /cfx_venv/lib/python3.11/site-packages (from dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (2023.12.1)
+Requirement already satisfied: msgpack>=1.0.0 in /cfx_venv/lib/python3.11/site-packages (from distributed==2023.12.1->dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (1.0.7)
+Requirement already satisfied: sortedcontainers>=2.0.5 in /cfx_venv/lib/python3.11/site-packages (from distributed==2023.12.1->dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (2.4.0)
+Requirement already satisfied: tblib>=1.6.0 in /cfx_venv/lib/python3.11/site-packages (from distributed==2023.12.1->dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (3.0.0)
+Requirement already satisfied: tornado>=6.0.4 in /cfx_venv/lib/python3.11/site-packages (from distributed==2023.12.1->dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (6.4)
+Requirement already satisfied: zict>=3.0.0 in /cfx_venv/lib/python3.11/site-packages (from distributed==2023.12.1->dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (3.0.0)
+Requirement already satisfied: contourpy>=1 in /cfx_venv/lib/python3.11/site-packages (from bokeh>=2.4.2->dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (1.2.0)
+Requirement already satisfied: pillow>=7.1.0 in /cfx_venv/lib/python3.11/site-packages (from bokeh>=2.4.2->dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (10.2.0)
+Requirement already satisfied: xyzservices>=2021.09.1 in /cfx_venv/lib/python3.11/site-packages (from bokeh>=2.4.2->dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (2023.10.1)
+Requirement already satisfied: MarkupSafe>=2.0 in /cfx_venv/lib/python3.11/site-packages (from jinja2>=2.10.3->dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (2.1.3)
+Building wheels for collected packages: future, mysqlclient, swifter
+  Building wheel for future (pyproject.toml): started
+  Building wheel for future (pyproject.toml): finished with status 'done'
+  Created wheel for future: filename=future-0.17.1-py3-none-any.whl size=488728 sha256=f412f677c838c519cbbc927a1f390208dd8a378bdb719437601813b9e9df66c4
+  Stored in directory: /tmp/pip-ephem-wheel-cache-uq9qg0p0/wheels/98/c8/35/6b3f546215c481c2c11e26e919abdf1c80c7fed0f3bc32ff09
+  Building wheel for mysqlclient (pyproject.toml): started
+  Building wheel for mysqlclient (pyproject.toml): finished with status 'done'
+  Created wheel for mysqlclient: filename=mysqlclient-2.1.1-cp311-cp311-linux_x86_64.whl size=106242 sha256=6c7e34ad692b6cb8f13c193c592508649bd2e5f0ecef4c6d4efd301c91c1d649
+  Stored in directory: /tmp/pip-ephem-wheel-cache-uq9qg0p0/wheels/ec/05/a1/5b063161f7eb5d36688bd11909f38a922ed41792e812683397
+  Building wheel for swifter (pyproject.toml): started
+  Building wheel for swifter (pyproject.toml): finished with status 'done'
+  Created wheel for swifter: filename=swifter-0.281-py3-none-any.whl size=4326 sha256=c2244d7e2f2e54f904db7f5bc0bacd38a389a03c0b27fd6fb6f4d9186b612e95
+  Stored in directory: /tmp/pip-ephem-wheel-cache-uq9qg0p0/wheels/81/4c/5c/42d3e40cd3fb4f7d9d9cd7c98694ab43f8c8b02f2628b70da0
+Successfully built future mysqlclient swifter
+Installing collected packages: supervisor, rda-messaging, rda-logging, rda-extension-list, rda-es-lib, mysql-connector-python, cfxql, cfxdimensions-app-access-manager, xlrd, schedule, pyarrow-hotfix, mysqlclient, minio, lz4, future, cachetools, babel, swifter, dimensions-app-sdk
+  Attempting uninstall: supervisor
+    Found existing installation: supervisor 4.2.5
+    Uninstalling supervisor-4.2.5:
+      Successfully uninstalled supervisor-4.2.5
+  Attempting uninstall: mysql-connector-python
+    Found existing installation: mysql-connector-python 8.2.0
+    Uninstalling mysql-connector-python-8.2.0:
+      Successfully uninstalled mysql-connector-python-8.2.0
+  Attempting uninstall: xlrd
+    Found existing installation: xlrd 2.0.1
+    Uninstalling xlrd-2.0.1:
+      Successfully uninstalled xlrd-2.0.1
+  Attempting uninstall: schedule
+    Found existing installation: schedule 1.2.1
+    Uninstalling schedule-1.2.1:
+      Successfully uninstalled schedule-1.2.1
+  Attempting uninstall: mysqlclient
+    Found existing installation: mysqlclient 2.2.1
+    Uninstalling mysqlclient-2.2.1:
+      Successfully uninstalled mysqlclient-2.2.1
+  Attempting uninstall: minio
+    Found existing installation: minio 7.2.3
+    Uninstalling minio-7.2.3:
+      Successfully uninstalled minio-7.2.3
+  Attempting uninstall: future
+    Found existing installation: future 0.18.3
+    Uninstalling future-0.18.3:
+      Successfully uninstalled future-0.18.3
+  Attempting uninstall: cachetools
+    Found existing installation: cachetools 5.3.2
+    Uninstalling cachetools-5.3.2:
+      Successfully uninstalled cachetools-5.3.2
+  Attempting uninstall: babel
+    Found existing installation: Babel 2.14.0
+    Uninstalling Babel-2.14.0:
+      Successfully uninstalled Babel-2.14.0
+  Attempting uninstall: swifter
+    Found existing installation: swifter 1.4.0
+    Uninstalling swifter-1.4.0:
+      Successfully uninstalled swifter-1.4.0
+Successfully installed babel-2.10.3 cachetools-4.2.4 cfxdimensions-app-access-manager-24.2.8.3 cfxql-24.2.14.1 dimensions-app-sdk-24.2.11.1 future-0.17.1 lz4-4.3.3 minio-7.1.12 mysql-connector-python-8.0.5 mysqlclient-2.1.1 pyarrow-hotfix-0.6 rda-es-lib-24.2.9.1 rda-extension-list-24.2.23.1 rda-logging-24.2.9.1 rda-messaging-24.2.29.1 schedule-1.0.0 supervisor-4.1.0 swifter-0.281 xlrd-1.2.0
+Removing intermediate container 0360c67c03ad
+ ---> b3dc31370a2e
+Step 16/16 : CMD ["python", "-m", "dimensions.PodRunnerMain", "--services", "cfxdimensions-app-access-manager"]
+ ---> Running in a3d3496b9f65
+Removing intermediate container a3d3496b9f65
+ ---> 79abf24ce05f
+Successfully built 79abf24ce05f
+Successfully tagged cfx-rda-access-manager:daily-jk
+Mon Mar 11 06:54:41 UTC 2024 [INFO]  Applying tags
+Mon Mar 11 06:54:41 UTC 2024 [INFO]  Pushing images to registry cfx-rda-access-manager:daily-jk
+The push refers to repository [docker.io/library/cfxregistry.cloudfabrix.iocfx-rda-access-manager]
+1d512b7532ad: Preparing
+7e3acf2aaabb: Preparing
+de090b5537ad: Preparing
+ea4e91919cad: Preparing
+94ac0d5b596a: Preparing
+ba0dd71e73a4: Preparing
+bbf1318bf461: Preparing
+b2a84af32bd7: Preparing
+5f70bf18a086: Preparing
+e38fd90fc8fc: Preparing
+0454c69ef7b5: Preparing
+94a1167ca6c0: Preparing
+7e657f44714d: Preparing
+5673bd25e90e: Preparing
+632ea0a4652a: Preparing
+323111df41f1: Preparing
+cd1c8c8633fa: Preparing
+723a03221bc7: Preparing
+ba0dd71e73a4: Waiting
+bbf1318bf461: Waiting
+b2a84af32bd7: Waiting
+5f70bf18a086: Waiting
+e38fd90fc8fc: Waiting
+0454c69ef7b5: Waiting
+94a1167ca6c0: Waiting
+7e657f44714d: Waiting
+5673bd25e90e: Waiting
+632ea0a4652a: Waiting
+323111df41f1: Waiting
+cd1c8c8633fa: Waiting
+723a03221bc7: Waiting
+denied: requested access to the resource is denied
+Mon Mar 11 06:54:42 UTC 2024 [ERROR] Failed to push image: cfxregistry.cloudfabrix.iocfx-rda-access-manager:daily-jk
+version.txt path: /opt/codebase//cfx-rda-resource-manager/target/version.txt
+CURRENT DOCKER_FILE=/opt/codebase/cfx-rda-apps-tools/tools/target_templates//cfx-rda-resource-manager/Dockerfile, IMAGE_BASE=docker1.cloudfabrix.io/cfx/ubuntu-cfx-app-svc-base-min-ng_311, IMAGE=cfx-rda-resource-manager
+Mon Mar 11 06:54:42 UTC 2024 [INFO]  Pulling base image: docker1.cloudfabrix.io/cfx/ubuntu-cfx-app-svc-base-min-ng_311
+Using default tag: latest
+latest: Pulling from cfx/ubuntu-cfx-app-svc-base-min-ng_311
+Digest: sha256:3322a9da59a0eb47f4f9dc6ef3c22f9a5ba2ece1cafde0e94f7791b5ee85547b
+Status: Image is up to date for docker1.cloudfabrix.io/cfx/ubuntu-cfx-app-svc-base-min-ng_311:latest
+docker1.cloudfabrix.io/cfx/ubuntu-cfx-app-svc-base-min-ng_311:latest
+Mon Mar 11 06:54:42 UTC 2024 [INFO]  Building image cfx-rda-resource-manager:daily-jk
+CURRENT DOCKER_FILE=/opt/codebase/cfx-rda-apps-tools/tools/target_templates//cfx-rda-resource-manager/Dockerfile, IMAGE_BASE=docker1.cloudfabrix.io/cfx/ubuntu-cfx-app-svc-base-min-ng_311, IMAGE=cfx-rda-resource-manager
+Sending build context to Docker daemon  2.671MB
+
+Step 1/16 : ARG DOCKER_REGISTRY
+Step 2/16 : ARG IMAGE_BASE
+Step 3/16 : FROM $IMAGE_BASE
+ ---> 8617c1d6d94b
+Step 4/16 : ARG DEVPI_USER
+ ---> Running in 143ce389d615
+Removing intermediate container 143ce389d615
+ ---> cf6c86940d9f
+Step 5/16 : ARG DEVPI_INDEX
+ ---> Running in dd7c9eb6914a
+Removing intermediate container dd7c9eb6914a
+ ---> fe5cd75beac3
+Step 6/16 : ARG CURRENT_VERSION
+ ---> Running in 6d01f7b55465
+Removing intermediate container 6d01f7b55465
+ ---> 7e5a71f11410
+Step 7/16 : MAINTAINER macaw.io
+ ---> Running in d1d343a216e2
+Removing intermediate container d1d343a216e2
+ ---> 232f3451624e
+Step 8/16 : RUN     echo $CURRENT_VERSION > /rda_build_tag.txt
+ ---> Running in d26291dc9870
+Removing intermediate container d26291dc9870
+ ---> d2af119ec9d6
+Step 9/16 : ENV     PIP_CONFIG_FILE=
+ ---> Running in 39a18c356fd2
+Removing intermediate container 39a18c356fd2
+ ---> ac917dc3f73c
+Step 10/16 : RUN     mkdir -p /etc/cfxdimensions-app-resource-manager
+ ---> Running in 366e3e183a36
+Removing intermediate container 366e3e183a36
+ ---> fde20e5b3d83
+Step 11/16 : COPY    target/ /etc/cfxdimensions-app-resource-manager
+ ---> 461599c9216a
+Step 12/16 : COPY requirements_other.txt /tmp/requirements_other.txt
+ ---> fed9123c6b11
+Step 13/16 : COPY requirements_cfx.txt /tmp/requirements_cfx.txt
+ ---> 15ce6e372412
+Step 14/16 : RUN /cfx_venv/bin/pip install -r /tmp/requirements_other.txt --no-cache-dir
+ ---> Running in dcdc15aba7a6
+Collecting confluent-kafka==2.3.0 (from -r /tmp/requirements_other.txt (line 1))
+  Downloading confluent_kafka-2.3.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (2.3 kB)
+Collecting ed25519==1.5 (from -r /tmp/requirements_other.txt (line 2))
+  Downloading ed25519-1.5.tar.gz (868 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 869.0/869.0 kB 10.7 MB/s eta 0:00:00
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting opensearch-py==2.4.2 (from -r /tmp/requirements_other.txt (line 4))
+  Downloading opensearch_py-2.4.2-py2.py3-none-any.whl.metadata (6.8 kB)
+Collecting elasticsearch-dsl==7.0.0 (from -r /tmp/requirements_other.txt (line 5))
+  Downloading elasticsearch_dsl-7.0.0-py2.py3-none-any.whl.metadata (10 kB)
+Collecting funcy==1.16 (from -r /tmp/requirements_other.txt (line 6))
+  Downloading funcy-1.16-py2.py3-none-any.whl.metadata (6.0 kB)
+Collecting getversion==1.0.2 (from -r /tmp/requirements_other.txt (line 7))
+  Downloading getversion-1.0.2-py2.py3-none-any.whl.metadata (2.7 kB)
+Collecting importlib-resources==5.10.0 (from -r /tmp/requirements_other.txt (line 10))
+  Downloading importlib_resources-5.10.0-py3-none-any.whl.metadata (4.1 kB)
+Collecting jsonschema==4.5.1 (from -r /tmp/requirements_other.txt (line 11))
+  Downloading jsonschema-4.5.1-py3-none-any.whl.metadata (7.8 kB)
+Collecting nats-py==2.6.0 (from -r /tmp/requirements_other.txt (line 12))
+  Downloading nats-py-2.6.0.tar.gz (94 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 94.6/94.6 kB 128.9 MB/s eta 0:00:00
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Installing backend dependencies: started
+  Installing backend dependencies: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting nest-asyncio==1.5.5 (from -r /tmp/requirements_other.txt (line 13))
+  Downloading nest_asyncio-1.5.5-py3-none-any.whl.metadata (2.7 kB)
+Collecting nkeys==0.1.0 (from -r /tmp/requirements_other.txt (line 14))
+  Downloading nkeys-0.1.0.tar.gz (6.2 kB)
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting pandas-explode==0.0.7 (from -r /tmp/requirements_other.txt (line 15))
+  Downloading pandas_explode-0.0.7.tar.gz (4.0 kB)
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting pyarrow==14.0.1 (from -r /tmp/requirements_other.txt (line 17))
+  Downloading pyarrow-14.0.1-cp311-cp311-manylinux_2_28_x86_64.whl.metadata (3.0 kB)
+Collecting pydantic==2.5.3 (from -r /tmp/requirements_other.txt (line 18))
+  Downloading pydantic-2.5.3-py3-none-any.whl.metadata (65 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 65.6/65.6 kB 112.9 MB/s eta 0:00:00
+Collecting pyrsistent==0.20.0 (from -r /tmp/requirements_other.txt (line 19))
+  Downloading pyrsistent-0.20.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (27 kB)
+Requirement already satisfied: regex==2023.12.25 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 20)) (2023.12.25)
+Collecting setuptools-scm==8.0.4 (from -r /tmp/requirements_other.txt (line 21))
+  Downloading setuptools_scm-8.0.4-py3-none-any.whl.metadata (6.4 kB)
+Collecting simpleeval==0.9.13 (from -r /tmp/requirements_other.txt (line 22))
+  Downloading simpleeval-0.9.13-py2.py3-none-any.whl.metadata (15 kB)
+Requirement already satisfied: simplejson==3.19.2 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 23)) (3.19.2)
+Collecting SQLAlchemy-Utils==0.41.1 (from -r /tmp/requirements_other.txt (line 24))
+  Downloading SQLAlchemy_Utils-0.41.1-py3-none-any.whl.metadata (4.3 kB)
+Collecting stdlib-list==0.10.0 (from -r /tmp/requirements_other.txt (line 25))
+  Downloading stdlib_list-0.10.0-py3-none-any.whl.metadata (3.3 kB)
+Collecting tabulate==0.9.0 (from -r /tmp/requirements_other.txt (line 26))
+  Downloading tabulate-0.9.0-py3-none-any.whl.metadata (34 kB)
+Collecting tomli==2.0.1 (from -r /tmp/requirements_other.txt (line 27))
+  Downloading tomli-2.0.1-py3-none-any.whl.metadata (8.9 kB)
+Collecting XlsxWriter==3.0.3 (from -r /tmp/requirements_other.txt (line 28))
+  Downloading XlsxWriter-3.0.3-py3-none-any.whl.metadata (2.6 kB)
+Requirement already satisfied: urllib3>=1.26.18 in /cfx_venv/lib/python3.11/site-packages (from opensearch-py==2.4.2->-r /tmp/requirements_other.txt (line 4)) (2.1.0)
+Requirement already satisfied: requests<3.0.0,>=2.4.0 in /cfx_venv/lib/python3.11/site-packages (from opensearch-py==2.4.2->-r /tmp/requirements_other.txt (line 4)) (2.31.0)
+Requirement already satisfied: six in /cfx_venv/lib/python3.11/site-packages (from opensearch-py==2.4.2->-r /tmp/requirements_other.txt (line 4)) (1.16.0)
+Requirement already satisfied: python-dateutil in /cfx_venv/lib/python3.11/site-packages (from opensearch-py==2.4.2->-r /tmp/requirements_other.txt (line 4)) (2.8.2)
+Requirement already satisfied: certifi>=2022.12.07 in /cfx_venv/lib/python3.11/site-packages (from opensearch-py==2.4.2->-r /tmp/requirements_other.txt (line 4)) (2023.11.17)
+Collecting elasticsearch<8.0.0,>=7.0.0 (from elasticsearch-dsl==7.0.0->-r /tmp/requirements_other.txt (line 5))
+  Downloading elasticsearch-7.17.9-py2.py3-none-any.whl.metadata (5.7 kB)
+Requirement already satisfied: attrs>=17.4.0 in /cfx_venv/lib/python3.11/site-packages (from jsonschema==4.5.1->-r /tmp/requirements_other.txt (line 11)) (23.2.0)
+Requirement already satisfied: pandas in /cfx_venv/lib/python3.11/site-packages (from pandas-explode==0.0.7->-r /tmp/requirements_other.txt (line 15)) (2.1.4)
+Requirement already satisfied: numpy>=1.16.6 in /cfx_venv/lib/python3.11/site-packages (from pyarrow==14.0.1->-r /tmp/requirements_other.txt (line 17)) (1.26.3)
+Collecting annotated-types>=0.4.0 (from pydantic==2.5.3->-r /tmp/requirements_other.txt (line 18))
+  Downloading annotated_types-0.6.0-py3-none-any.whl.metadata (12 kB)
+Collecting pydantic-core==2.14.6 (from pydantic==2.5.3->-r /tmp/requirements_other.txt (line 18))
+  Downloading pydantic_core-2.14.6-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.5 kB)
+Requirement already satisfied: typing-extensions>=4.6.1 in /cfx_venv/lib/python3.11/site-packages (from pydantic==2.5.3->-r /tmp/requirements_other.txt (line 18)) (4.9.0)
+Requirement already satisfied: packaging>=20 in /cfx_venv/lib/python3.11/site-packages (from setuptools-scm==8.0.4->-r /tmp/requirements_other.txt (line 21)) (23.2)
+Requirement already satisfied: setuptools in /cfx_venv/lib/python3.11/site-packages (from setuptools-scm==8.0.4->-r /tmp/requirements_other.txt (line 21)) (68.1.2)
+Requirement already satisfied: SQLAlchemy>=1.3 in /cfx_venv/lib/python3.11/site-packages (from SQLAlchemy-Utils==0.41.1->-r /tmp/requirements_other.txt (line 24)) (2.0.25)
+Collecting urllib3>=1.26.18 (from opensearch-py==2.4.2->-r /tmp/requirements_other.txt (line 4))
+  Downloading urllib3-1.26.18-py2.py3-none-any.whl.metadata (48 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 48.9/48.9 kB 112.2 MB/s eta 0:00:00
+Requirement already satisfied: charset-normalizer<4,>=2 in /cfx_venv/lib/python3.11/site-packages (from requests<3.0.0,>=2.4.0->opensearch-py==2.4.2->-r /tmp/requirements_other.txt (line 4)) (3.3.2)
+Requirement already satisfied: idna<4,>=2.5 in /cfx_venv/lib/python3.11/site-packages (from requests<3.0.0,>=2.4.0->opensearch-py==2.4.2->-r /tmp/requirements_other.txt (line 4)) (3.6)
+Requirement already satisfied: greenlet!=0.4.17 in /cfx_venv/lib/python3.11/site-packages (from SQLAlchemy>=1.3->SQLAlchemy-Utils==0.41.1->-r /tmp/requirements_other.txt (line 24)) (3.0.3)
+Requirement already satisfied: pytz>=2020.1 in /cfx_venv/lib/python3.11/site-packages (from pandas->pandas-explode==0.0.7->-r /tmp/requirements_other.txt (line 15)) (2023.3.post1)
+Requirement already satisfied: tzdata>=2022.1 in /cfx_venv/lib/python3.11/site-packages (from pandas->pandas-explode==0.0.7->-r /tmp/requirements_other.txt (line 15)) (2023.4)
+Downloading confluent_kafka-2.3.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (4.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.0/4.0 MB 60.7 MB/s eta 0:00:00
+Downloading opensearch_py-2.4.2-py2.py3-none-any.whl (258 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 258.6/258.6 kB 124.1 MB/s eta 0:00:00
+Downloading elasticsearch_dsl-7.0.0-py2.py3-none-any.whl (48 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 48.9/48.9 kB 85.2 MB/s eta 0:00:00
+Downloading funcy-1.16-py2.py3-none-any.whl (32 kB)
+Downloading getversion-1.0.2-py2.py3-none-any.whl (12 kB)
+Downloading importlib_resources-5.10.0-py3-none-any.whl (34 kB)
+Downloading jsonschema-4.5.1-py3-none-any.whl (72 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 72.9/72.9 kB 119.2 MB/s eta 0:00:00
+Downloading nest_asyncio-1.5.5-py3-none-any.whl (5.2 kB)
+Downloading pyarrow-14.0.1-cp311-cp311-manylinux_2_28_x86_64.whl (38.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 38.0/38.0 MB 42.7 MB/s eta 0:00:00
+Downloading pydantic-2.5.3-py3-none-any.whl (381 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 381.9/381.9 kB 98.7 MB/s eta 0:00:00
+Downloading pyrsistent-0.20.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (120 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 120.0/120.0 kB 88.3 MB/s eta 0:00:00
+Downloading setuptools_scm-8.0.4-py3-none-any.whl (42 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 42.1/42.1 kB 114.1 MB/s eta 0:00:00
+Downloading simpleeval-0.9.13-py2.py3-none-any.whl (15 kB)
+Downloading SQLAlchemy_Utils-0.41.1-py3-none-any.whl (92 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 92.6/92.6 kB 68.1 MB/s eta 0:00:00
+Downloading stdlib_list-0.10.0-py3-none-any.whl (79 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 79.8/79.8 kB 123.5 MB/s eta 0:00:00
+Downloading tabulate-0.9.0-py3-none-any.whl (35 kB)
+Downloading tomli-2.0.1-py3-none-any.whl (12 kB)
+Downloading XlsxWriter-3.0.3-py3-none-any.whl (149 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 150.0/150.0 kB 120.0 MB/s eta 0:00:00
+Downloading pydantic_core-2.14.6-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.1 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 49.2 MB/s eta 0:00:00
+Downloading annotated_types-0.6.0-py3-none-any.whl (12 kB)
+Downloading elasticsearch-7.17.9-py2.py3-none-any.whl (385 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 386.0/386.0 kB 86.6 MB/s eta 0:00:00
+Downloading urllib3-1.26.18-py2.py3-none-any.whl (143 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 143.8/143.8 kB 83.7 MB/s eta 0:00:00
+Building wheels for collected packages: ed25519, nats-py, nkeys, pandas-explode
+  Building wheel for ed25519 (pyproject.toml): started
+  Building wheel for ed25519 (pyproject.toml): finished with status 'done'
+  Created wheel for ed25519: filename=ed25519-1.5-cp311-cp311-linux_x86_64.whl size=105012 sha256=46abf1abc6d26c0b53479ad1d2f44b229abe0c87c8b3f2ca932dde890de0ac08
+  Stored in directory: /tmp/pip-ephem-wheel-cache-w2e_ds25/wheels/29/ee/7f/dcbc82c274c565cb7f13479d7212a3c99a37f41234dae3cb71
+  Building wheel for nats-py (pyproject.toml): started
+  Building wheel for nats-py (pyproject.toml): finished with status 'done'
+  Created wheel for nats-py: filename=nats_py-2.6.0-py3-none-any.whl size=73017 sha256=45b989d5d7d3d6da68b157e6a23038888b3b3f948097083387c6454a6920b463
+  Stored in directory: /tmp/pip-ephem-wheel-cache-w2e_ds25/wheels/7d/72/65/9cde86dbf0351b8fb16aa5714ec4d73f4e7d960fed07adc9d5
+  Building wheel for nkeys (pyproject.toml): started
+  Building wheel for nkeys (pyproject.toml): finished with status 'done'
+  Created wheel for nkeys: filename=nkeys-0.1.0-py3-none-any.whl size=6106 sha256=07c3b067d10e4395b970e300015e34c854a96ddb43a9b1b6c16cd55fc3720284
+  Stored in directory: /tmp/pip-ephem-wheel-cache-w2e_ds25/wheels/a3/20/b2/2756a3cd076991ded08dd0a45974721cb7b864d9a55f904599
+  Building wheel for pandas-explode (pyproject.toml): started
+  Building wheel for pandas-explode (pyproject.toml): finished with status 'done'
+  Created wheel for pandas-explode: filename=pandas_explode-0.0.7-py2.py3-none-any.whl size=3907 sha256=0f7a2e36311306e2c4f7990f4a37d905f89da98a301cd7653c9b91671493a891
+  Stored in directory: /tmp/pip-ephem-wheel-cache-w2e_ds25/wheels/28/d0/c3/6552069c76b2123930cd914ea04b3f1fe384945619a16cc981
+Successfully built ed25519 nats-py nkeys pandas-explode
+Installing collected packages: simpleeval, funcy, ed25519, confluent-kafka, XlsxWriter, urllib3, tomli, tabulate, stdlib-list, setuptools-scm, pyrsistent, pydantic-core, pyarrow, nkeys, nest-asyncio, nats-py, importlib-resources, annotated-types, SQLAlchemy-Utils, pydantic, jsonschema, getversion, elasticsearch, pandas-explode, opensearch-py, elasticsearch-dsl
+  Attempting uninstall: urllib3
+    Found existing installation: urllib3 2.1.0
+    Uninstalling urllib3-2.1.0:
+      Successfully uninstalled urllib3-2.1.0
+Successfully installed SQLAlchemy-Utils-0.41.1 XlsxWriter-3.0.3 annotated-types-0.6.0 confluent-kafka-2.3.0 ed25519-1.5 elasticsearch-7.17.9 elasticsearch-dsl-7.0.0 funcy-1.16 getversion-1.0.2 importlib-resources-5.10.0 jsonschema-4.5.1 nats-py-2.6.0 nest-asyncio-1.5.5 nkeys-0.1.0 opensearch-py-2.4.2 pandas-explode-0.0.7 pyarrow-14.0.1 pydantic-2.5.3 pydantic-core-2.14.6 pyrsistent-0.20.0 setuptools-scm-8.0.4 simpleeval-0.9.13 stdlib-list-0.10.0 tabulate-0.9.0 tomli-2.0.1 urllib3-1.26.18
+Removing intermediate container dcdc15aba7a6
+ ---> b9933f611ce8
+Step 15/16 : RUN /cfx_venv/bin/pip install -r /tmp/requirements_cfx.txt  --no-cache-dir --prefer-binary --no-cache-dir --prefer-binary -i http://10.95.159.86:3141/$DEVPI_USER/$DEVPI_INDEX/ --trusted-host 10.95.159.86
+ ---> Running in a597e93f9ca4
+Looking in indexes: http://10.95.159.86:3141/macaw/jenkins_2024-03-11/
+Collecting cfxdimensions-app-resource-manager (from -r /tmp/requirements_cfx.txt (line 1))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-11/%2Bf/37f/7d93ad185b166/cfxdimensions_app_resource_manager-24.3.7.1-py3-none-any.whl (90 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 90.2/90.2 kB 42.7 MB/s eta 0:00:00
+Collecting rda-es-lib (from -r /tmp/requirements_cfx.txt (line 2))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-11/%2Bf/24b/f81fc67a36c22/rda_es_lib-24.2.9.1-py3-none-any.whl (14 kB)
+Collecting rda-extension-list (from -r /tmp/requirements_cfx.txt (line 3))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-11/%2Bf/f2f/973b1fc9dc278/rda_extension_list-24.2.23.1-py3-none-any.whl (19 kB)
+Collecting rda-messaging (from -r /tmp/requirements_cfx.txt (line 4))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-11/%2Bf/fb7/ad9ab8c7788d9/rda_messaging-24.2.29.1-py3-none-any.whl (535 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 535.6/535.6 kB 54.5 MB/s eta 0:00:00
+Collecting dimensions-app-sdk (from -r /tmp/requirements_cfx.txt (line 5))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-11/%2Bf/6c7/c01e2704c3364/dimensions_app_sdk-24.2.11.1-py3-none-any.whl (378 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 378.2/378.2 kB 54.9 MB/s eta 0:00:00
+Collecting rda-logging (from -r /tmp/requirements_cfx.txt (line 6))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-11/%2Bf/3ad/891c6cae8a8b5/rda_logging-24.2.9.1-py3-none-any.whl (5.2 kB)
+Collecting cfxql (from -r /tmp/requirements_cfx.txt (line 7))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-11/%2Bf/cb0/7cc69fdedaab9/cfxql-24.2.14.1-py3-none-any.whl (47 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 47.0/47.0 kB 74.4 MB/s eta 0:00:00
+Collecting mysql-connector-python==8.0.5 (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5))
+  Downloading http://10.95.159.86:3141/root/pypi/%2Bf/917/c98b8a5ac7540/mysql_connector_python-8.0.5-py2.py3-none-any.whl (249 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 249.3/249.3 kB 67.8 MB/s eta 0:00:00
+Collecting supervisor==4.1.0 (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5))
+  Downloading http://10.95.159.86:3141/root/pypi/%2Bf/a76/b2f77a560f2dc/supervisor-4.1.0-py2.py3-none-any.whl (318 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 318.4/318.4 kB 64.5 MB/s eta 0:00:00
+Collecting mysqlclient==2.1.1 (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5))
+  Downloading http://10.95.159.86:3141/root/pypi/%2Bf/828/757e419fb11dd/mysqlclient-2.1.1.tar.gz (88 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 88.1/88.1 kB 74.6 MB/s eta 0:00:00
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Requirement already satisfied: sqlalchemy==2.0.25 in /cfx_venv/lib/python3.11/site-packages (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (2.0.25)
+Requirement already satisfied: sqlalchemy-utils==0.41.1 in /cfx_venv/lib/python3.11/site-packages (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (0.41.1)
+Collecting future==0.17.1 (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5))
+  Downloading http://10.95.159.86:3141/root/pypi/%2Bf/670/45236dcfd6816/future-0.17.1.tar.gz (829 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 829.1/829.1 kB 69.1 MB/s eta 0:00:00
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Requirement already satisfied: six==1.16.0 in /cfx_venv/lib/python3.11/site-packages (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (1.16.0)
+Collecting cachetools==4.2.4 (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5))
+  Downloading http://10.95.159.86:3141/root/pypi/%2Bf/929/71d3cb7d2a97e/cachetools-4.2.4-py3-none-any.whl (10 kB)
+Requirement already satisfied: requests>=2.31.0 in /cfx_venv/lib/python3.11/site-packages (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (2.31.0)
+Collecting minio==7.1.12 (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5))
+  Downloading http://10.95.159.86:3141/root/pypi/%2Bf/c8a/b8646f93d47b9/minio-7.1.12-py3-none-any.whl (76 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 76.2/76.2 kB 96.7 MB/s eta 0:00:00
+Requirement already satisfied: pandas==2.1.4 in /cfx_venv/lib/python3.11/site-packages (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (2.1.4)
+Collecting swifter==0.281 (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5))
+  Downloading http://10.95.159.86:3141/root/pypi/%2Bf/513/f160c793b956f/swifter-0.281.tar.gz (3.3 kB)
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Requirement already satisfied: simplejson==3.19.2 in /cfx_venv/lib/python3.11/site-packages (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (3.19.2)
+Collecting xlrd==1.2.0 (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5))
+  Downloading http://10.95.159.86:3141/root/pypi/%2Bf/e55/1fb498759fa3a/xlrd-1.2.0-py2.py3-none-any.whl (103 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 103.3/103.3 kB 55.2 MB/s eta 0:00:00
+Collecting babel==2.10.3 (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5))
+  Downloading http://10.95.159.86:3141/root/pypi/%2Bf/ff5/6f4892c1c4bf0/Babel-2.10.3-py3-none-any.whl (9.5 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 9.5/9.5 MB 60.7 MB/s eta 0:00:00
+Requirement already satisfied: opensearch-py==2.4.2 in /cfx_venv/lib/python3.11/site-packages (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (2.4.2)
+Requirement already satisfied: elasticsearch-dsl==7.0.0 in /cfx_venv/lib/python3.11/site-packages (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (7.0.0)
+Requirement already satisfied: statistics==1.0.3.5 in /cfx_venv/lib/python3.11/site-packages (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (1.0.3.5)
+Collecting schedule==1.0.0 (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5))
+  Downloading http://10.95.159.86:3141/root/pypi/%2Bf/823/69250700af61a/schedule-1.0.0-py2.py3-none-any.whl (9.0 kB)
+Requirement already satisfied: pytz>=2015.7 in /cfx_venv/lib/python3.11/site-packages (from babel==2.10.3->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (2023.3.post1)
+Requirement already satisfied: python-dateutil in /cfx_venv/lib/python3.11/site-packages (from elasticsearch-dsl==7.0.0->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (2.8.2)
+Requirement already satisfied: elasticsearch<8.0.0,>=7.0.0 in /cfx_venv/lib/python3.11/site-packages (from elasticsearch-dsl==7.0.0->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (7.17.9)
+Requirement already satisfied: certifi in /cfx_venv/lib/python3.11/site-packages (from minio==7.1.12->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (2023.11.17)
+Requirement already satisfied: urllib3 in /cfx_venv/lib/python3.11/site-packages (from minio==7.1.12->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (1.26.18)
+Requirement already satisfied: numpy<2,>=1.23.2 in /cfx_venv/lib/python3.11/site-packages (from pandas==2.1.4->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (1.26.3)
+Requirement already satisfied: tzdata>=2022.1 in /cfx_venv/lib/python3.11/site-packages (from pandas==2.1.4->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (2023.4)
+Requirement already satisfied: typing-extensions>=4.6.0 in /cfx_venv/lib/python3.11/site-packages (from sqlalchemy==2.0.25->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (4.9.0)
+Requirement already satisfied: greenlet!=0.4.17 in /cfx_venv/lib/python3.11/site-packages (from sqlalchemy==2.0.25->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (3.0.3)
+Requirement already satisfied: docutils>=0.3 in /cfx_venv/lib/python3.11/site-packages (from statistics==1.0.3.5->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (0.20.1)
+Requirement already satisfied: psutil in /cfx_venv/lib/python3.11/site-packages (from swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (5.9.7)
+Requirement already satisfied: dask>=0.19.0 in /cfx_venv/lib/python3.11/site-packages (from dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (2023.12.1)
+Requirement already satisfied: tqdm in /cfx_venv/lib/python3.11/site-packages (from swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (4.66.1)
+Requirement already satisfied: numba in /cfx_venv/lib/python3.11/site-packages (from swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (0.58.1)
+Requirement already satisfied: charset-normalizer<4,>=2 in /cfx_venv/lib/python3.11/site-packages (from requests>=2.31.0->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (3.3.2)
+Requirement already satisfied: idna<4,>=2.5 in /cfx_venv/lib/python3.11/site-packages (from requests>=2.31.0->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (3.6)
+Requirement already satisfied: click>=8.1 in /cfx_venv/lib/python3.11/site-packages (from dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (8.1.7)
+Requirement already satisfied: cloudpickle>=1.5.0 in /cfx_venv/lib/python3.11/site-packages (from dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (3.0.0)
+Requirement already satisfied: fsspec>=2021.09.0 in /cfx_venv/lib/python3.11/site-packages (from dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (2023.12.2)
+Requirement already satisfied: packaging>=20.0 in /cfx_venv/lib/python3.11/site-packages (from dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (23.2)
+Requirement already satisfied: partd>=1.2.0 in /cfx_venv/lib/python3.11/site-packages (from dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (1.4.1)
+Requirement already satisfied: pyyaml>=5.3.1 in /cfx_venv/lib/python3.11/site-packages (from dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (6.0.1)
+Requirement already satisfied: toolz>=0.10.0 in /cfx_venv/lib/python3.11/site-packages (from dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (0.12.0)
+Requirement already satisfied: importlib-metadata>=4.13.0 in /cfx_venv/lib/python3.11/site-packages (from dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (7.0.1)
+Requirement already satisfied: pyarrow>=7.0 in /cfx_venv/lib/python3.11/site-packages (from dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (14.0.1)
+Collecting pyarrow-hotfix (from dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5))
+  Downloading http://10.95.159.86:3141/root/pypi/%2Bf/dcc/9ae2d220dff00/pyarrow_hotfix-0.6-py3-none-any.whl (7.9 kB)
+Collecting lz4>=4.3.2 (from dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5))
+  Downloading http://10.95.159.86:3141/root/pypi/%2Bf/0e9/c410b11a31dbd/lz4-4.3.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.3 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 43.1 MB/s eta 0:00:00
+Requirement already satisfied: llvmlite<0.42,>=0.41.0dev0 in /cfx_venv/lib/python3.11/site-packages (from numba->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (0.41.1)
+Requirement already satisfied: zipp>=0.5 in /cfx_venv/lib/python3.11/site-packages (from importlib-metadata>=4.13.0->dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (3.17.0)
+Requirement already satisfied: locket in /cfx_venv/lib/python3.11/site-packages (from partd>=1.2.0->dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (1.0.0)
+Requirement already satisfied: bokeh>=2.4.2 in /cfx_venv/lib/python3.11/site-packages (from dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (3.3.3)
+Requirement already satisfied: jinja2>=2.10.3 in /cfx_venv/lib/python3.11/site-packages (from dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (3.1.2)
+Requirement already satisfied: distributed==2023.12.1 in /cfx_venv/lib/python3.11/site-packages (from dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (2023.12.1)
+Requirement already satisfied: msgpack>=1.0.0 in /cfx_venv/lib/python3.11/site-packages (from distributed==2023.12.1->dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (1.0.7)
+Requirement already satisfied: sortedcontainers>=2.0.5 in /cfx_venv/lib/python3.11/site-packages (from distributed==2023.12.1->dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (2.4.0)
+Requirement already satisfied: tblib>=1.6.0 in /cfx_venv/lib/python3.11/site-packages (from distributed==2023.12.1->dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (3.0.0)
+Requirement already satisfied: tornado>=6.0.4 in /cfx_venv/lib/python3.11/site-packages (from distributed==2023.12.1->dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (6.4)
+Requirement already satisfied: zict>=3.0.0 in /cfx_venv/lib/python3.11/site-packages (from distributed==2023.12.1->dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (3.0.0)
+Requirement already satisfied: contourpy>=1 in /cfx_venv/lib/python3.11/site-packages (from bokeh>=2.4.2->dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (1.2.0)
+Requirement already satisfied: pillow>=7.1.0 in /cfx_venv/lib/python3.11/site-packages (from bokeh>=2.4.2->dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (10.2.0)
+Requirement already satisfied: xyzservices>=2021.09.1 in /cfx_venv/lib/python3.11/site-packages (from bokeh>=2.4.2->dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (2023.10.1)
+Requirement already satisfied: MarkupSafe>=2.0 in /cfx_venv/lib/python3.11/site-packages (from jinja2>=2.10.3->dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 5)) (2.1.3)
+Building wheels for collected packages: future, mysqlclient, swifter
+  Building wheel for future (pyproject.toml): started
+  Building wheel for future (pyproject.toml): finished with status 'done'
+  Created wheel for future: filename=future-0.17.1-py3-none-any.whl size=488728 sha256=b409899db3fd7b2419853438a920be2cce2e1750f4c134057424dd2412e2d244
+  Stored in directory: /tmp/pip-ephem-wheel-cache-tx2f06g9/wheels/98/c8/35/6b3f546215c481c2c11e26e919abdf1c80c7fed0f3bc32ff09
+  Building wheel for mysqlclient (pyproject.toml): started
+  Building wheel for mysqlclient (pyproject.toml): finished with status 'done'
+  Created wheel for mysqlclient: filename=mysqlclient-2.1.1-cp311-cp311-linux_x86_64.whl size=106240 sha256=060fd7b7d0fca6e2df38120ef4c799ab27b6405b3cca06f796e25b065c052059
+  Stored in directory: /tmp/pip-ephem-wheel-cache-tx2f06g9/wheels/ec/05/a1/5b063161f7eb5d36688bd11909f38a922ed41792e812683397
+  Building wheel for swifter (pyproject.toml): started
+  Building wheel for swifter (pyproject.toml): finished with status 'done'
+  Created wheel for swifter: filename=swifter-0.281-py3-none-any.whl size=4326 sha256=99d22e273d400a0f02de9bf01d89eab938e010a69317f6f29588018daf9b5429
+  Stored in directory: /tmp/pip-ephem-wheel-cache-tx2f06g9/wheels/81/4c/5c/42d3e40cd3fb4f7d9d9cd7c98694ab43f8c8b02f2628b70da0
+Successfully built future mysqlclient swifter
+Installing collected packages: supervisor, rda-messaging, rda-logging, rda-extension-list, rda-es-lib, mysql-connector-python, cfxql, cfxdimensions-app-resource-manager, xlrd, schedule, pyarrow-hotfix, mysqlclient, minio, lz4, future, cachetools, babel, swifter, dimensions-app-sdk
+  Attempting uninstall: supervisor
+    Found existing installation: supervisor 4.2.5
+    Uninstalling supervisor-4.2.5:
+      Successfully uninstalled supervisor-4.2.5
+  Attempting uninstall: mysql-connector-python
+    Found existing installation: mysql-connector-python 8.2.0
+    Uninstalling mysql-connector-python-8.2.0:
+      Successfully uninstalled mysql-connector-python-8.2.0
+  Attempting uninstall: xlrd
+    Found existing installation: xlrd 2.0.1
+    Uninstalling xlrd-2.0.1:
+      Successfully uninstalled xlrd-2.0.1
+  Attempting uninstall: schedule
+    Found existing installation: schedule 1.2.1
+    Uninstalling schedule-1.2.1:
+      Successfully uninstalled schedule-1.2.1
+  Attempting uninstall: mysqlclient
+    Found existing installation: mysqlclient 2.2.1
+    Uninstalling mysqlclient-2.2.1:
+      Successfully uninstalled mysqlclient-2.2.1
+  Attempting uninstall: minio
+    Found existing installation: minio 7.2.3
+    Uninstalling minio-7.2.3:
+      Successfully uninstalled minio-7.2.3
+  Attempting uninstall: future
+    Found existing installation: future 0.18.3
+    Uninstalling future-0.18.3:
+      Successfully uninstalled future-0.18.3
+  Attempting uninstall: cachetools
+    Found existing installation: cachetools 5.3.2
+    Uninstalling cachetools-5.3.2:
+      Successfully uninstalled cachetools-5.3.2
+  Attempting uninstall: babel
+    Found existing installation: Babel 2.14.0
+    Uninstalling Babel-2.14.0:
+      Successfully uninstalled Babel-2.14.0
+  Attempting uninstall: swifter
+    Found existing installation: swifter 1.4.0
+    Uninstalling swifter-1.4.0:
+      Successfully uninstalled swifter-1.4.0
+Successfully installed babel-2.10.3 cachetools-4.2.4 cfxdimensions-app-resource-manager-24.3.7.1 cfxql-24.2.14.1 dimensions-app-sdk-24.2.11.1 future-0.17.1 lz4-4.3.3 minio-7.1.12 mysql-connector-python-8.0.5 mysqlclient-2.1.1 pyarrow-hotfix-0.6 rda-es-lib-24.2.9.1 rda-extension-list-24.2.23.1 rda-logging-24.2.9.1 rda-messaging-24.2.29.1 schedule-1.0.0 supervisor-4.1.0 swifter-0.281 xlrd-1.2.0
+Removing intermediate container a597e93f9ca4
+ ---> 77cf89895333
+Step 16/16 : CMD ["python", "-m", "dimensions.PodRunnerMain", "--services", "cfxdimensions-app-resource-manager"]
+ ---> Running in 88584ebef766
+Removing intermediate container 88584ebef766
+ ---> f43484925eb8
+Successfully built f43484925eb8
+Successfully tagged cfx-rda-resource-manager:daily-jk
+Mon Mar 11 06:55:52 UTC 2024 [INFO]  Applying tags
+Mon Mar 11 06:55:52 UTC 2024 [INFO]  Pushing images to registry cfx-rda-resource-manager:daily-jk
+The push refers to repository [docker.io/library/cfxregistry.cloudfabrix.iocfx-rda-resource-manager]
+e393a8bd484c: Preparing
+f3aed5d83d77: Preparing
+c4918ab7c69a: Preparing
+b6d758f6e4d8: Preparing
+cf4c7387bdcd: Preparing
+11afc83e8510: Preparing
+92864a2f2d62: Preparing
+b2a84af32bd7: Preparing
+5f70bf18a086: Preparing
+e38fd90fc8fc: Preparing
+0454c69ef7b5: Preparing
+94a1167ca6c0: Preparing
+7e657f44714d: Preparing
+5673bd25e90e: Preparing
+632ea0a4652a: Preparing
+323111df41f1: Preparing
+cd1c8c8633fa: Preparing
+723a03221bc7: Preparing
+94a1167ca6c0: Waiting
+7e657f44714d: Waiting
+11afc83e8510: Waiting
+5673bd25e90e: Waiting
+632ea0a4652a: Waiting
+323111df41f1: Waiting
+92864a2f2d62: Waiting
+b2a84af32bd7: Waiting
+5f70bf18a086: Waiting
+e38fd90fc8fc: Waiting
+0454c69ef7b5: Waiting
+cd1c8c8633fa: Waiting
+723a03221bc7: Waiting
+denied: requested access to the resource is denied
+Mon Mar 11 06:55:58 UTC 2024 [ERROR] Failed to push image: cfxregistry.cloudfabrix.iocfx-rda-resource-manager:daily-jk
+version.txt path: /opt/codebase//cfx-rda-user-preferences/target/version.txt
+CURRENT DOCKER_FILE=/opt/codebase/cfx-rda-apps-tools/tools/target_templates//cfx-rda-user-preferences/Dockerfile, IMAGE_BASE=docker1.cloudfabrix.io/cfx/ubuntu-cfx-app-svc-base-min-ng_311, IMAGE=cfx-rda-user-preferences
+Mon Mar 11 06:55:58 UTC 2024 [INFO]  Pulling base image: docker1.cloudfabrix.io/cfx/ubuntu-cfx-app-svc-base-min-ng_311
+Using default tag: latest
+latest: Pulling from cfx/ubuntu-cfx-app-svc-base-min-ng_311
+Digest: sha256:3322a9da59a0eb47f4f9dc6ef3c22f9a5ba2ece1cafde0e94f7791b5ee85547b
+Status: Image is up to date for docker1.cloudfabrix.io/cfx/ubuntu-cfx-app-svc-base-min-ng_311:latest
+docker1.cloudfabrix.io/cfx/ubuntu-cfx-app-svc-base-min-ng_311:latest
+Mon Mar 11 06:55:58 UTC 2024 [INFO]  Building image cfx-rda-user-preferences:daily-jk
+CURRENT DOCKER_FILE=/opt/codebase/cfx-rda-apps-tools/tools/target_templates//cfx-rda-user-preferences/Dockerfile, IMAGE_BASE=docker1.cloudfabrix.io/cfx/ubuntu-cfx-app-svc-base-min-ng_311, IMAGE=cfx-rda-user-preferences
+Sending build context to Docker daemon  1.393MB
+
+Step 1/16 : ARG DOCKER_REGISTRY
+Step 2/16 : ARG IMAGE_BASE
+Step 3/16 : FROM $IMAGE_BASE
+ ---> 8617c1d6d94b
+Step 4/16 : ARG DEVPI_USER
+ ---> Running in e003fedaea42
+Removing intermediate container e003fedaea42
+ ---> 021a7222be18
+Step 5/16 : ARG DEVPI_INDEX
+ ---> Running in 6a7a2a07fcca
+Removing intermediate container 6a7a2a07fcca
+ ---> 4ebeb3032210
+Step 6/16 : ARG CURRENT_VERSION
+ ---> Running in 95b0e0cc4474
+Removing intermediate container 95b0e0cc4474
+ ---> d7e29efbe1bb
+Step 7/16 : MAINTAINER macaw.io
+ ---> Running in 4bfeb3f73ca3
+Removing intermediate container 4bfeb3f73ca3
+ ---> 70480c0af0d0
+Step 8/16 : RUN     echo $CURRENT_VERSION > /rda_build_tag.txt
+ ---> Running in 6c132f12032a
+Removing intermediate container 6c132f12032a
+ ---> 6f759e7ace39
+Step 9/16 : ENV     PIP_CONFIG_FILE=
+ ---> Running in a7d8d0478da4
+Removing intermediate container a7d8d0478da4
+ ---> def684680fd4
+Step 10/16 : RUN     mkdir -p /etc/user-preferences
+ ---> Running in 5dddaf5eec26
+Removing intermediate container 5dddaf5eec26
+ ---> 4e51a61655c6
+Step 11/16 : COPY    target/ /etc/user-preferences
+ ---> 80031c81dbae
+Step 12/16 : COPY requirements_other.txt /tmp/requirements_other.txt
+ ---> 15a41f9c877f
+Step 13/16 : COPY requirements_cfx.txt /tmp/requirements_cfx.txt
+ ---> 71f75cd0b387
+Step 14/16 : RUN /cfx_venv/bin/pip install -r /tmp/requirements_other.txt --no-cache-dir
+ ---> Running in ce2fdc70ba4d
+Collecting SQLAlchemy-Utils==0.41.1 (from -r /tmp/requirements_other.txt (line 1))
+  Downloading SQLAlchemy_Utils-0.41.1-py3-none-any.whl.metadata (4.3 kB)
+Collecting XlsxWriter==3.0.3 (from -r /tmp/requirements_other.txt (line 2))
+  Downloading XlsxWriter-3.0.3-py3-none-any.whl.metadata (2.6 kB)
+Collecting confluent-kafka==2.3.0 (from -r /tmp/requirements_other.txt (line 3))
+  Downloading confluent_kafka-2.3.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (2.3 kB)
+Collecting ed25519==1.5 (from -r /tmp/requirements_other.txt (line 4))
+  Downloading ed25519-1.5.tar.gz (868 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 869.0/869.0 kB 10.1 MB/s eta 0:00:00
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting elasticsearch-dsl==7.0.0 (from -r /tmp/requirements_other.txt (line 5))
+  Downloading elasticsearch_dsl-7.0.0-py2.py3-none-any.whl.metadata (10 kB)
+Collecting opensearch-py==2.4.2 (from -r /tmp/requirements_other.txt (line 7))
+  Downloading opensearch_py-2.4.2-py2.py3-none-any.whl.metadata (6.8 kB)
+Collecting funcy==1.16 (from -r /tmp/requirements_other.txt (line 8))
+  Downloading funcy-1.16-py2.py3-none-any.whl.metadata (6.0 kB)
+Collecting getversion==1.0.2 (from -r /tmp/requirements_other.txt (line 9))
+  Downloading getversion-1.0.2-py2.py3-none-any.whl.metadata (2.7 kB)
+Collecting importlib-resources==5.10.0 (from -r /tmp/requirements_other.txt (line 12))
+  Downloading importlib_resources-5.10.0-py3-none-any.whl.metadata (4.1 kB)
+Collecting jsonschema==4.5.1 (from -r /tmp/requirements_other.txt (line 13))
+  Downloading jsonschema-4.5.1-py3-none-any.whl.metadata (7.8 kB)
+Collecting nats-py==2.6.0 (from -r /tmp/requirements_other.txt (line 14))
+  Downloading nats-py-2.6.0.tar.gz (94 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 94.6/94.6 kB 68.3 MB/s eta 0:00:00
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Installing backend dependencies: started
+  Installing backend dependencies: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting nest-asyncio==1.5.5 (from -r /tmp/requirements_other.txt (line 15))
+  Downloading nest_asyncio-1.5.5-py3-none-any.whl.metadata (2.7 kB)
+Collecting nkeys==0.1.0 (from -r /tmp/requirements_other.txt (line 16))
+  Downloading nkeys-0.1.0.tar.gz (6.2 kB)
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting pandas-explode==0.0.7 (from -r /tmp/requirements_other.txt (line 17))
+  Downloading pandas_explode-0.0.7.tar.gz (4.0 kB)
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting pyarrow==14.0.1 (from -r /tmp/requirements_other.txt (line 19))
+  Downloading pyarrow-14.0.1-cp311-cp311-manylinux_2_28_x86_64.whl.metadata (3.0 kB)
+Collecting pydantic==2.5.3 (from -r /tmp/requirements_other.txt (line 20))
+  Downloading pydantic-2.5.3-py3-none-any.whl.metadata (65 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 65.6/65.6 kB 104.0 MB/s eta 0:00:00
+Collecting pyrsistent==0.20.0 (from -r /tmp/requirements_other.txt (line 21))
+  Downloading pyrsistent-0.20.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (27 kB)
+Collecting setuptools-scm==8.0.4 (from -r /tmp/requirements_other.txt (line 22))
+  Downloading setuptools_scm-8.0.4-py3-none-any.whl.metadata (6.4 kB)
+Collecting simpleeval==0.9.13 (from -r /tmp/requirements_other.txt (line 23))
+  Downloading simpleeval-0.9.13-py2.py3-none-any.whl.metadata (15 kB)
+Collecting stdlib-list==0.10.0 (from -r /tmp/requirements_other.txt (line 24))
+  Downloading stdlib_list-0.10.0-py3-none-any.whl.metadata (3.3 kB)
+Collecting tabulate==0.9.0 (from -r /tmp/requirements_other.txt (line 25))
+  Downloading tabulate-0.9.0-py3-none-any.whl.metadata (34 kB)
+Collecting tomli==2.0.1 (from -r /tmp/requirements_other.txt (line 26))
+  Downloading tomli-2.0.1-py3-none-any.whl.metadata (8.9 kB)
+Requirement already satisfied: typing_extensions==4.9.0 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 27)) (4.9.0)
+Requirement already satisfied: SQLAlchemy>=1.3 in /cfx_venv/lib/python3.11/site-packages (from SQLAlchemy-Utils==0.41.1->-r /tmp/requirements_other.txt (line 1)) (2.0.25)
+Requirement already satisfied: six in /cfx_venv/lib/python3.11/site-packages (from elasticsearch-dsl==7.0.0->-r /tmp/requirements_other.txt (line 5)) (1.16.0)
+Requirement already satisfied: python-dateutil in /cfx_venv/lib/python3.11/site-packages (from elasticsearch-dsl==7.0.0->-r /tmp/requirements_other.txt (line 5)) (2.8.2)
+Collecting elasticsearch<8.0.0,>=7.0.0 (from elasticsearch-dsl==7.0.0->-r /tmp/requirements_other.txt (line 5))
+  Downloading elasticsearch-7.17.9-py2.py3-none-any.whl.metadata (5.7 kB)
+Requirement already satisfied: urllib3>=1.26.18 in /cfx_venv/lib/python3.11/site-packages (from opensearch-py==2.4.2->-r /tmp/requirements_other.txt (line 7)) (2.1.0)
+Requirement already satisfied: requests<3.0.0,>=2.4.0 in /cfx_venv/lib/python3.11/site-packages (from opensearch-py==2.4.2->-r /tmp/requirements_other.txt (line 7)) (2.31.0)
+Requirement already satisfied: certifi>=2022.12.07 in /cfx_venv/lib/python3.11/site-packages (from opensearch-py==2.4.2->-r /tmp/requirements_other.txt (line 7)) (2023.11.17)
+Requirement already satisfied: attrs>=17.4.0 in /cfx_venv/lib/python3.11/site-packages (from jsonschema==4.5.1->-r /tmp/requirements_other.txt (line 13)) (23.2.0)
+Requirement already satisfied: pandas in /cfx_venv/lib/python3.11/site-packages (from pandas-explode==0.0.7->-r /tmp/requirements_other.txt (line 17)) (2.1.4)
+Requirement already satisfied: numpy>=1.16.6 in /cfx_venv/lib/python3.11/site-packages (from pyarrow==14.0.1->-r /tmp/requirements_other.txt (line 19)) (1.26.3)
+Collecting annotated-types>=0.4.0 (from pydantic==2.5.3->-r /tmp/requirements_other.txt (line 20))
+  Downloading annotated_types-0.6.0-py3-none-any.whl.metadata (12 kB)
+Collecting pydantic-core==2.14.6 (from pydantic==2.5.3->-r /tmp/requirements_other.txt (line 20))
+  Downloading pydantic_core-2.14.6-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.5 kB)
+Requirement already satisfied: packaging>=20 in /cfx_venv/lib/python3.11/site-packages (from setuptools-scm==8.0.4->-r /tmp/requirements_other.txt (line 22)) (23.2)
+Requirement already satisfied: setuptools in /cfx_venv/lib/python3.11/site-packages (from setuptools-scm==8.0.4->-r /tmp/requirements_other.txt (line 22)) (68.1.2)
+Collecting urllib3>=1.26.18 (from opensearch-py==2.4.2->-r /tmp/requirements_other.txt (line 7))
+  Downloading urllib3-1.26.18-py2.py3-none-any.whl.metadata (48 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 48.9/48.9 kB 59.5 MB/s eta 0:00:00
+Requirement already satisfied: charset-normalizer<4,>=2 in /cfx_venv/lib/python3.11/site-packages (from requests<3.0.0,>=2.4.0->opensearch-py==2.4.2->-r /tmp/requirements_other.txt (line 7)) (3.3.2)
+Requirement already satisfied: idna<4,>=2.5 in /cfx_venv/lib/python3.11/site-packages (from requests<3.0.0,>=2.4.0->opensearch-py==2.4.2->-r /tmp/requirements_other.txt (line 7)) (3.6)
+Requirement already satisfied: greenlet!=0.4.17 in /cfx_venv/lib/python3.11/site-packages (from SQLAlchemy>=1.3->SQLAlchemy-Utils==0.41.1->-r /tmp/requirements_other.txt (line 1)) (3.0.3)
+Requirement already satisfied: pytz>=2020.1 in /cfx_venv/lib/python3.11/site-packages (from pandas->pandas-explode==0.0.7->-r /tmp/requirements_other.txt (line 17)) (2023.3.post1)
+Requirement already satisfied: tzdata>=2022.1 in /cfx_venv/lib/python3.11/site-packages (from pandas->pandas-explode==0.0.7->-r /tmp/requirements_other.txt (line 17)) (2023.4)
+Downloading SQLAlchemy_Utils-0.41.1-py3-none-any.whl (92 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 92.6/92.6 kB 121.7 MB/s eta 0:00:00
+Downloading XlsxWriter-3.0.3-py3-none-any.whl (149 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 150.0/150.0 kB 123.9 MB/s eta 0:00:00
+Downloading confluent_kafka-2.3.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (4.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.0/4.0 MB 54.3 MB/s eta 0:00:00
+Downloading elasticsearch_dsl-7.0.0-py2.py3-none-any.whl (48 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 48.9/48.9 kB 112.7 MB/s eta 0:00:00
+Downloading opensearch_py-2.4.2-py2.py3-none-any.whl (258 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 258.6/258.6 kB 119.9 MB/s eta 0:00:00
+Downloading funcy-1.16-py2.py3-none-any.whl (32 kB)
+Downloading getversion-1.0.2-py2.py3-none-any.whl (12 kB)
+Downloading importlib_resources-5.10.0-py3-none-any.whl (34 kB)
+Downloading jsonschema-4.5.1-py3-none-any.whl (72 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 72.9/72.9 kB 119.8 MB/s eta 0:00:00
+Downloading nest_asyncio-1.5.5-py3-none-any.whl (5.2 kB)
+Downloading pyarrow-14.0.1-cp311-cp311-manylinux_2_28_x86_64.whl (38.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 38.0/38.0 MB 60.2 MB/s eta 0:00:00
+Downloading pydantic-2.5.3-py3-none-any.whl (381 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 381.9/381.9 kB 83.0 MB/s eta 0:00:00
+Downloading pyrsistent-0.20.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (120 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 120.0/120.0 kB 84.8 MB/s eta 0:00:00
+Downloading setuptools_scm-8.0.4-py3-none-any.whl (42 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 42.1/42.1 kB 67.0 MB/s eta 0:00:00
+Downloading simpleeval-0.9.13-py2.py3-none-any.whl (15 kB)
+Downloading stdlib_list-0.10.0-py3-none-any.whl (79 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 79.8/79.8 kB 71.2 MB/s eta 0:00:00
+Downloading tabulate-0.9.0-py3-none-any.whl (35 kB)
+Downloading tomli-2.0.1-py3-none-any.whl (12 kB)
+Downloading pydantic_core-2.14.6-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.1 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 52.1 MB/s eta 0:00:00
+Downloading annotated_types-0.6.0-py3-none-any.whl (12 kB)
+Downloading elasticsearch-7.17.9-py2.py3-none-any.whl (385 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 386.0/386.0 kB 69.1 MB/s eta 0:00:00
+Downloading urllib3-1.26.18-py2.py3-none-any.whl (143 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 143.8/143.8 kB 44.3 MB/s eta 0:00:00
+Building wheels for collected packages: ed25519, nats-py, nkeys, pandas-explode
+  Building wheel for ed25519 (pyproject.toml): started
+  Building wheel for ed25519 (pyproject.toml): finished with status 'done'
+  Created wheel for ed25519: filename=ed25519-1.5-cp311-cp311-linux_x86_64.whl size=105010 sha256=c14f76aa8cb265e2eb90538ab759822522ce275db1df5ff589f3ee1067d75b72
+  Stored in directory: /tmp/pip-ephem-wheel-cache-1_92dkqm/wheels/29/ee/7f/dcbc82c274c565cb7f13479d7212a3c99a37f41234dae3cb71
+  Building wheel for nats-py (pyproject.toml): started
+  Building wheel for nats-py (pyproject.toml): finished with status 'done'
+  Created wheel for nats-py: filename=nats_py-2.6.0-py3-none-any.whl size=73017 sha256=e23ff310162a76fe929138f037e9fdb4f561bce88fdc4507cb72f37f9dcaff8f
+  Stored in directory: /tmp/pip-ephem-wheel-cache-1_92dkqm/wheels/7d/72/65/9cde86dbf0351b8fb16aa5714ec4d73f4e7d960fed07adc9d5
+  Building wheel for nkeys (pyproject.toml): started
+  Building wheel for nkeys (pyproject.toml): finished with status 'done'
+  Created wheel for nkeys: filename=nkeys-0.1.0-py3-none-any.whl size=6106 sha256=335130b2b8060d7589ed3ecf2fdc126d7ccc8b62a0d056a16770971f5e915714
+  Stored in directory: /tmp/pip-ephem-wheel-cache-1_92dkqm/wheels/a3/20/b2/2756a3cd076991ded08dd0a45974721cb7b864d9a55f904599
+  Building wheel for pandas-explode (pyproject.toml): started
+  Building wheel for pandas-explode (pyproject.toml): finished with status 'done'
+  Created wheel for pandas-explode: filename=pandas_explode-0.0.7-py2.py3-none-any.whl size=3907 sha256=d36fef022dac1f4a17995b925866c98ac49c24fbbf908f2afb2d146bd541d726
+  Stored in directory: /tmp/pip-ephem-wheel-cache-1_92dkqm/wheels/28/d0/c3/6552069c76b2123930cd914ea04b3f1fe384945619a16cc981
+Successfully built ed25519 nats-py nkeys pandas-explode
+Installing collected packages: simpleeval, funcy, ed25519, confluent-kafka, XlsxWriter, urllib3, tomli, tabulate, stdlib-list, setuptools-scm, pyrsistent, pydantic-core, pyarrow, nkeys, nest-asyncio, nats-py, importlib-resources, annotated-types, SQLAlchemy-Utils, pydantic, jsonschema, getversion, elasticsearch, pandas-explode, opensearch-py, elasticsearch-dsl
+  Attempting uninstall: urllib3
+    Found existing installation: urllib3 2.1.0
+    Uninstalling urllib3-2.1.0:
+      Successfully uninstalled urllib3-2.1.0
+Successfully installed SQLAlchemy-Utils-0.41.1 XlsxWriter-3.0.3 annotated-types-0.6.0 confluent-kafka-2.3.0 ed25519-1.5 elasticsearch-7.17.9 elasticsearch-dsl-7.0.0 funcy-1.16 getversion-1.0.2 importlib-resources-5.10.0 jsonschema-4.5.1 nats-py-2.6.0 nest-asyncio-1.5.5 nkeys-0.1.0 opensearch-py-2.4.2 pandas-explode-0.0.7 pyarrow-14.0.1 pydantic-2.5.3 pydantic-core-2.14.6 pyrsistent-0.20.0 setuptools-scm-8.0.4 simpleeval-0.9.13 stdlib-list-0.10.0 tabulate-0.9.0 tomli-2.0.1 urllib3-1.26.18
+Removing intermediate container ce2fdc70ba4d
+ ---> 7613e600f564
+Step 15/16 : RUN /cfx_venv/bin/pip install -r /tmp/requirements_cfx.txt  --no-cache-dir --prefer-binary --no-cache-dir --prefer-binary -i http://10.95.159.86:3141/$DEVPI_USER/$DEVPI_INDEX/ --trusted-host 10.95.159.86
+ ---> Running in 99b179eb102a
+Looking in indexes: http://10.95.159.86:3141/macaw/jenkins_2024-03-11/
+Collecting rda-es-lib (from -r /tmp/requirements_cfx.txt (line 1))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-11/%2Bf/24b/f81fc67a36c22/rda_es_lib-24.2.9.1-py3-none-any.whl (14 kB)
+Collecting rda-extension-list (from -r /tmp/requirements_cfx.txt (line 2))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-11/%2Bf/f2f/973b1fc9dc278/rda_extension_list-24.2.23.1-py3-none-any.whl (19 kB)
+Collecting rda-messaging (from -r /tmp/requirements_cfx.txt (line 3))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-11/%2Bf/fb7/ad9ab8c7788d9/rda_messaging-24.2.29.1-py3-none-any.whl (535 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 535.6/535.6 kB 72.7 MB/s eta 0:00:00
+Collecting dimensions-app-sdk (from -r /tmp/requirements_cfx.txt (line 4))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-11/%2Bf/6c7/c01e2704c3364/dimensions_app_sdk-24.2.11.1-py3-none-any.whl (378 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 378.2/378.2 kB 74.0 MB/s eta 0:00:00
+Collecting user-preferences (from -r /tmp/requirements_cfx.txt (line 5))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-11/%2Bf/e85/a994eba9e8a74/user_preferences-24.1.22.1-py3-none-any.whl (25 kB)
+Collecting rda-logging (from -r /tmp/requirements_cfx.txt (line 6))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-11/%2Bf/3ad/891c6cae8a8b5/rda_logging-24.2.9.1-py3-none-any.whl (5.2 kB)
+Collecting cfxql (from -r /tmp/requirements_cfx.txt (line 7))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-11/%2Bf/cb0/7cc69fdedaab9/cfxql-24.2.14.1-py3-none-any.whl (47 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 47.0/47.0 kB 127.2 MB/s eta 0:00:00
+Collecting mysql-connector-python==8.0.5 (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4))
+  Downloading http://10.95.159.86:3141/root/pypi/%2Bf/917/c98b8a5ac7540/mysql_connector_python-8.0.5-py2.py3-none-any.whl (249 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 249.3/249.3 kB 54.5 MB/s eta 0:00:00
+Collecting supervisor==4.1.0 (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4))
+  Downloading http://10.95.159.86:3141/root/pypi/%2Bf/a76/b2f77a560f2dc/supervisor-4.1.0-py2.py3-none-any.whl (318 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 318.4/318.4 kB 38.0 MB/s eta 0:00:00
+Collecting mysqlclient==2.1.1 (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4))
+  Downloading http://10.95.159.86:3141/root/pypi/%2Bf/828/757e419fb11dd/mysqlclient-2.1.1.tar.gz (88 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 88.1/88.1 kB 83.8 MB/s eta 0:00:00
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Requirement already satisfied: sqlalchemy==2.0.25 in /cfx_venv/lib/python3.11/site-packages (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4)) (2.0.25)
+Requirement already satisfied: sqlalchemy-utils==0.41.1 in /cfx_venv/lib/python3.11/site-packages (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4)) (0.41.1)
+Collecting future==0.17.1 (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4))
+  Downloading http://10.95.159.86:3141/root/pypi/%2Bf/670/45236dcfd6816/future-0.17.1.tar.gz (829 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 829.1/829.1 kB 64.3 MB/s eta 0:00:00
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Requirement already satisfied: six==1.16.0 in /cfx_venv/lib/python3.11/site-packages (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4)) (1.16.0)
+Collecting cachetools==4.2.4 (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4))
+  Downloading http://10.95.159.86:3141/root/pypi/%2Bf/929/71d3cb7d2a97e/cachetools-4.2.4-py3-none-any.whl (10 kB)
+Requirement already satisfied: requests>=2.31.0 in /cfx_venv/lib/python3.11/site-packages (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4)) (2.31.0)
+Collecting minio==7.1.12 (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4))
+  Downloading http://10.95.159.86:3141/root/pypi/%2Bf/c8a/b8646f93d47b9/minio-7.1.12-py3-none-any.whl (76 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 76.2/76.2 kB 80.4 MB/s eta 0:00:00
+Requirement already satisfied: pandas==2.1.4 in /cfx_venv/lib/python3.11/site-packages (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4)) (2.1.4)
+Collecting swifter==0.281 (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4))
+  Downloading http://10.95.159.86:3141/root/pypi/%2Bf/513/f160c793b956f/swifter-0.281.tar.gz (3.3 kB)
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Requirement already satisfied: simplejson==3.19.2 in /cfx_venv/lib/python3.11/site-packages (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4)) (3.19.2)
+Collecting xlrd==1.2.0 (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4))
+  Downloading http://10.95.159.86:3141/root/pypi/%2Bf/e55/1fb498759fa3a/xlrd-1.2.0-py2.py3-none-any.whl (103 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 103.3/103.3 kB 67.1 MB/s eta 0:00:00
+Collecting babel==2.10.3 (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4))
+  Downloading http://10.95.159.86:3141/root/pypi/%2Bf/ff5/6f4892c1c4bf0/Babel-2.10.3-py3-none-any.whl (9.5 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 9.5/9.5 MB 59.9 MB/s eta 0:00:00
+Requirement already satisfied: opensearch-py==2.4.2 in /cfx_venv/lib/python3.11/site-packages (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4)) (2.4.2)
+Requirement already satisfied: elasticsearch-dsl==7.0.0 in /cfx_venv/lib/python3.11/site-packages (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4)) (7.0.0)
+Requirement already satisfied: statistics==1.0.3.5 in /cfx_venv/lib/python3.11/site-packages (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4)) (1.0.3.5)
+Collecting schedule==1.0.0 (from dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4))
+  Downloading http://10.95.159.86:3141/root/pypi/%2Bf/823/69250700af61a/schedule-1.0.0-py2.py3-none-any.whl (9.0 kB)
+Requirement already satisfied: pytz>=2015.7 in /cfx_venv/lib/python3.11/site-packages (from babel==2.10.3->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4)) (2023.3.post1)
+Requirement already satisfied: python-dateutil in /cfx_venv/lib/python3.11/site-packages (from elasticsearch-dsl==7.0.0->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4)) (2.8.2)
+Requirement already satisfied: elasticsearch<8.0.0,>=7.0.0 in /cfx_venv/lib/python3.11/site-packages (from elasticsearch-dsl==7.0.0->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4)) (7.17.9)
+Requirement already satisfied: certifi in /cfx_venv/lib/python3.11/site-packages (from minio==7.1.12->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4)) (2023.11.17)
+Requirement already satisfied: urllib3 in /cfx_venv/lib/python3.11/site-packages (from minio==7.1.12->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4)) (1.26.18)
+Requirement already satisfied: numpy<2,>=1.23.2 in /cfx_venv/lib/python3.11/site-packages (from pandas==2.1.4->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4)) (1.26.3)
+Requirement already satisfied: tzdata>=2022.1 in /cfx_venv/lib/python3.11/site-packages (from pandas==2.1.4->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4)) (2023.4)
+Requirement already satisfied: typing-extensions>=4.6.0 in /cfx_venv/lib/python3.11/site-packages (from sqlalchemy==2.0.25->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4)) (4.9.0)
+Requirement already satisfied: greenlet!=0.4.17 in /cfx_venv/lib/python3.11/site-packages (from sqlalchemy==2.0.25->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4)) (3.0.3)
+Requirement already satisfied: docutils>=0.3 in /cfx_venv/lib/python3.11/site-packages (from statistics==1.0.3.5->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4)) (0.20.1)
+Requirement already satisfied: psutil in /cfx_venv/lib/python3.11/site-packages (from swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4)) (5.9.7)
+Requirement already satisfied: dask>=0.19.0 in /cfx_venv/lib/python3.11/site-packages (from dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4)) (2023.12.1)
+Requirement already satisfied: tqdm in /cfx_venv/lib/python3.11/site-packages (from swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4)) (4.66.1)
+Requirement already satisfied: numba in /cfx_venv/lib/python3.11/site-packages (from swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4)) (0.58.1)
+Requirement already satisfied: charset-normalizer<4,>=2 in /cfx_venv/lib/python3.11/site-packages (from requests>=2.31.0->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4)) (3.3.2)
+Requirement already satisfied: idna<4,>=2.5 in /cfx_venv/lib/python3.11/site-packages (from requests>=2.31.0->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4)) (3.6)
+Requirement already satisfied: click>=8.1 in /cfx_venv/lib/python3.11/site-packages (from dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4)) (8.1.7)
+Requirement already satisfied: cloudpickle>=1.5.0 in /cfx_venv/lib/python3.11/site-packages (from dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4)) (3.0.0)
+Requirement already satisfied: fsspec>=2021.09.0 in /cfx_venv/lib/python3.11/site-packages (from dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4)) (2023.12.2)
+Requirement already satisfied: packaging>=20.0 in /cfx_venv/lib/python3.11/site-packages (from dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4)) (23.2)
+Requirement already satisfied: partd>=1.2.0 in /cfx_venv/lib/python3.11/site-packages (from dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4)) (1.4.1)
+Requirement already satisfied: pyyaml>=5.3.1 in /cfx_venv/lib/python3.11/site-packages (from dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4)) (6.0.1)
+Requirement already satisfied: toolz>=0.10.0 in /cfx_venv/lib/python3.11/site-packages (from dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4)) (0.12.0)
+Requirement already satisfied: importlib-metadata>=4.13.0 in /cfx_venv/lib/python3.11/site-packages (from dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4)) (7.0.1)
+Requirement already satisfied: pyarrow>=7.0 in /cfx_venv/lib/python3.11/site-packages (from dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4)) (14.0.1)
+Collecting pyarrow-hotfix (from dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4))
+  Downloading http://10.95.159.86:3141/root/pypi/%2Bf/dcc/9ae2d220dff00/pyarrow_hotfix-0.6-py3-none-any.whl (7.9 kB)
+Collecting lz4>=4.3.2 (from dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4))
+  Downloading http://10.95.159.86:3141/root/pypi/%2Bf/0e9/c410b11a31dbd/lz4-4.3.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.3 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 81.2 MB/s eta 0:00:00
+Requirement already satisfied: llvmlite<0.42,>=0.41.0dev0 in /cfx_venv/lib/python3.11/site-packages (from numba->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4)) (0.41.1)
+Requirement already satisfied: zipp>=0.5 in /cfx_venv/lib/python3.11/site-packages (from importlib-metadata>=4.13.0->dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4)) (3.17.0)
+Requirement already satisfied: locket in /cfx_venv/lib/python3.11/site-packages (from partd>=1.2.0->dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4)) (1.0.0)
+Requirement already satisfied: bokeh>=2.4.2 in /cfx_venv/lib/python3.11/site-packages (from dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4)) (3.3.3)
+Requirement already satisfied: jinja2>=2.10.3 in /cfx_venv/lib/python3.11/site-packages (from dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4)) (3.1.2)
+Requirement already satisfied: distributed==2023.12.1 in /cfx_venv/lib/python3.11/site-packages (from dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4)) (2023.12.1)
+Requirement already satisfied: msgpack>=1.0.0 in /cfx_venv/lib/python3.11/site-packages (from distributed==2023.12.1->dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4)) (1.0.7)
+Requirement already satisfied: sortedcontainers>=2.0.5 in /cfx_venv/lib/python3.11/site-packages (from distributed==2023.12.1->dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4)) (2.4.0)
+Requirement already satisfied: tblib>=1.6.0 in /cfx_venv/lib/python3.11/site-packages (from distributed==2023.12.1->dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4)) (3.0.0)
+Requirement already satisfied: tornado>=6.0.4 in /cfx_venv/lib/python3.11/site-packages (from distributed==2023.12.1->dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4)) (6.4)
+Requirement already satisfied: zict>=3.0.0 in /cfx_venv/lib/python3.11/site-packages (from distributed==2023.12.1->dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4)) (3.0.0)
+Requirement already satisfied: contourpy>=1 in /cfx_venv/lib/python3.11/site-packages (from bokeh>=2.4.2->dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4)) (1.2.0)
+Requirement already satisfied: pillow>=7.1.0 in /cfx_venv/lib/python3.11/site-packages (from bokeh>=2.4.2->dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4)) (10.2.0)
+Requirement already satisfied: xyzservices>=2021.09.1 in /cfx_venv/lib/python3.11/site-packages (from bokeh>=2.4.2->dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4)) (2023.10.1)
+Requirement already satisfied: MarkupSafe>=2.0 in /cfx_venv/lib/python3.11/site-packages (from jinja2>=2.10.3->dask>=0.19.0->dask[complete]>=0.19.0->swifter==0.281->dimensions-app-sdk->-r /tmp/requirements_cfx.txt (line 4)) (2.1.3)
+Building wheels for collected packages: future, mysqlclient, swifter
+  Building wheel for future (pyproject.toml): started
+  Building wheel for future (pyproject.toml): finished with status 'done'
+  Created wheel for future: filename=future-0.17.1-py3-none-any.whl size=488728 sha256=ad888d7aecac5b57732e0c7e722c69087ed5df1a0baaad994215f34fe573dd47
+  Stored in directory: /tmp/pip-ephem-wheel-cache-0bsxv3bp/wheels/98/c8/35/6b3f546215c481c2c11e26e919abdf1c80c7fed0f3bc32ff09
+  Building wheel for mysqlclient (pyproject.toml): started
+  Building wheel for mysqlclient (pyproject.toml): finished with status 'done'
+  Created wheel for mysqlclient: filename=mysqlclient-2.1.1-cp311-cp311-linux_x86_64.whl size=106244 sha256=5546d9c6c98538d1aefed67f6c5c2d114e3fda861c38d8d11ead8c67a482407c
+  Stored in directory: /tmp/pip-ephem-wheel-cache-0bsxv3bp/wheels/ec/05/a1/5b063161f7eb5d36688bd11909f38a922ed41792e812683397
+  Building wheel for swifter (pyproject.toml): started
+  Building wheel for swifter (pyproject.toml): finished with status 'done'
+  Created wheel for swifter: filename=swifter-0.281-py3-none-any.whl size=4326 sha256=70d11e724013b6e4292e7b65ce92abc7e9e029a7745471ead0f028101f9538ae
+  Stored in directory: /tmp/pip-ephem-wheel-cache-0bsxv3bp/wheels/81/4c/5c/42d3e40cd3fb4f7d9d9cd7c98694ab43f8c8b02f2628b70da0
+Successfully built future mysqlclient swifter
+Installing collected packages: user-preferences, supervisor, rda-messaging, rda-logging, rda-extension-list, rda-es-lib, mysql-connector-python, cfxql, xlrd, schedule, pyarrow-hotfix, mysqlclient, minio, lz4, future, cachetools, babel, swifter, dimensions-app-sdk
+  Attempting uninstall: supervisor
+    Found existing installation: supervisor 4.2.5
+    Uninstalling supervisor-4.2.5:
+      Successfully uninstalled supervisor-4.2.5
+  Attempting uninstall: mysql-connector-python
+    Found existing installation: mysql-connector-python 8.2.0
+    Uninstalling mysql-connector-python-8.2.0:
+      Successfully uninstalled mysql-connector-python-8.2.0
+  Attempting uninstall: xlrd
+    Found existing installation: xlrd 2.0.1
+    Uninstalling xlrd-2.0.1:
+      Successfully uninstalled xlrd-2.0.1
+  Attempting uninstall: schedule
+    Found existing installation: schedule 1.2.1
+    Uninstalling schedule-1.2.1:
+      Successfully uninstalled schedule-1.2.1
+  Attempting uninstall: mysqlclient
+    Found existing installation: mysqlclient 2.2.1
+    Uninstalling mysqlclient-2.2.1:
+      Successfully uninstalled mysqlclient-2.2.1
+  Attempting uninstall: minio
+    Found existing installation: minio 7.2.3
+    Uninstalling minio-7.2.3:
+      Successfully uninstalled minio-7.2.3
+  Attempting uninstall: future
+    Found existing installation: future 0.18.3
+    Uninstalling future-0.18.3:
+      Successfully uninstalled future-0.18.3
+  Attempting uninstall: cachetools
+    Found existing installation: cachetools 5.3.2
+    Uninstalling cachetools-5.3.2:
+      Successfully uninstalled cachetools-5.3.2
+  Attempting uninstall: babel
+    Found existing installation: Babel 2.14.0
+    Uninstalling Babel-2.14.0:
+      Successfully uninstalled Babel-2.14.0
+  Attempting uninstall: swifter
+    Found existing installation: swifter 1.4.0
+    Uninstalling swifter-1.4.0:
+      Successfully uninstalled swifter-1.4.0
+Successfully installed babel-2.10.3 cachetools-4.2.4 cfxql-24.2.14.1 dimensions-app-sdk-24.2.11.1 future-0.17.1 lz4-4.3.3 minio-7.1.12 mysql-connector-python-8.0.5 mysqlclient-2.1.1 pyarrow-hotfix-0.6 rda-es-lib-24.2.9.1 rda-extension-list-24.2.23.1 rda-logging-24.2.9.1 rda-messaging-24.2.29.1 schedule-1.0.0 supervisor-4.1.0 swifter-0.281 user-preferences-24.1.22.1 xlrd-1.2.0
+Removing intermediate container 99b179eb102a
+ ---> 4ee4a765f246
+Step 16/16 : CMD ["python", "-m", "dimensions.PodRunnerMain", "--services", "user-preferences"]
+ ---> Running in 8c14126da563
+Removing intermediate container 8c14126da563
+ ---> 47ae9f71f42a
+Successfully built 47ae9f71f42a
+Successfully tagged cfx-rda-user-preferences:daily-jk
+Mon Mar 11 06:57:14 UTC 2024 [INFO]  Applying tags
+Mon Mar 11 06:57:14 UTC 2024 [INFO]  Pushing images to registry cfx-rda-user-preferences:daily-jk
+The push refers to repository [docker.io/library/cfxregistry.cloudfabrix.iocfx-rda-user-preferences]
+9be40b9d560c: Preparing
+b9cc93342472: Preparing
+ce75206ddccc: Preparing
+5fee835d24b3: Preparing
+e8b11e97b8a0: Preparing
+c28c83d70d87: Preparing
+75b841e39f71: Preparing
+b2a84af32bd7: Preparing
+5f70bf18a086: Preparing
+e38fd90fc8fc: Preparing
+0454c69ef7b5: Preparing
+94a1167ca6c0: Preparing
+7e657f44714d: Preparing
+5673bd25e90e: Preparing
+632ea0a4652a: Preparing
+323111df41f1: Preparing
+cd1c8c8633fa: Preparing
+723a03221bc7: Preparing
+c28c83d70d87: Waiting
+75b841e39f71: Waiting
+b2a84af32bd7: Waiting
+5f70bf18a086: Waiting
+e38fd90fc8fc: Waiting
+0454c69ef7b5: Waiting
+94a1167ca6c0: Waiting
+7e657f44714d: Waiting
+5673bd25e90e: Waiting
+632ea0a4652a: Waiting
+323111df41f1: Waiting
+cd1c8c8633fa: Waiting
+723a03221bc7: Waiting
+denied: requested access to the resource is denied
+Mon Mar 11 06:57:15 UTC 2024 [ERROR] Failed to push image: cfxregistry.cloudfabrix.iocfx-rda-user-preferences:daily-jk

@@ -1,0 +1,2147 @@
+Fri Mar  8 14:57:41 UTC 2024 [INFO]  Building image ubuntu-cfxdx-nb-nginx-all:daily-jk
+Sending build context to Docker daemon  205.8kB
+
+Step 1/57 : ARG IMAGE_BASE
+Step 2/57 : FROM $IMAGE_BASE
+ ---> e3112fc90370
+Step 3/57 : ARG DEVPI_INDEX
+ ---> Using cache
+ ---> 4ce71a85c8f7
+Step 4/57 : MAINTAINER cloudfabrix.io
+ ---> Using cache
+ ---> 1ee2a1726813
+Step 5/57 : ENV PIP_CONFIG_FILE=
+ ---> Using cache
+ ---> c3b5d93e201a
+Step 6/57 : COPY        cfxdx_init.py            /opt/cfxdx_nb/
+ ---> Using cache
+ ---> e5a1b77d7fa8
+Step 7/57 : COPY        nb_start_bg_procs.py     /opt/cfxdx_nb/
+ ---> Using cache
+ ---> 63a26703e08a
+Step 8/57 : COPY        cfxdx_nb_nginx_main.sh   /opt/cfxdx_nb/
+ ---> Using cache
+ ---> 8019f9a6125d
+Step 9/57 : COPY        cfxdx_shell              /opt/cfxdx_nb/
+ ---> Using cache
+ ---> 37f7083137aa
+Step 10/57 : ENV     JUPYTER_CONFIG_DIR=/opt/cfxdx_nb/jupyter_config/
+ ---> Using cache
+ ---> b071897bb4c2
+Step 11/57 : RUN        chmod +x /opt/cfxdx_nb/cfxdx_nb_nginx_main.sh
+ ---> Using cache
+ ---> 964401679bcf
+Step 12/57 : COPY    kernel.json /usr/share/jupyter/kernels/python3/kernel.json
+ ---> Using cache
+ ---> 6982843ba3a5
+Step 13/57 : COPY       jupyter_notebook_config.py   /opt/cfxdx_nb/jupyter_config/
+ ---> Using cache
+ ---> 3c4b69b70714
+Step 14/57 : COPY    logo.png /opt/cfxdx_nb/jupyter_config/custom/
+ ---> Using cache
+ ---> ef2fe0366ecc
+Step 15/57 : COPY    custom.css /opt/cfxdx_nb/jupyter_config/custom/
+ ---> Using cache
+ ---> b66dbd86a981
+Step 16/57 : RUN     (apt-get install -y libpcre3 libpcre3-dev && cd /tmp; wget https://nginx.org/download/nginx-1.24.0.tar.gz && tar xvf nginx-1.24.0.tar.gz && cd nginx-1.24.0 && ./configure --with-http_ssl_module && make && make install && ls -lrt /usr/local/nginx  && /usr/local/nginx/sbin/nginx -v && apt-get install -y nmap)
+ ---> Using cache
+ ---> 5a5652129bb8
+Step 17/57 : RUN     apt-get update &&         apt-get install -y apache2-utils &&         /bin/mkdir -p /usr/local/nginx/tlscerts/server  &&         /bin/mkdir -p /root/.cfx/auth/
+ ---> Using cache
+ ---> f2088bbc470d
+Step 18/57 : RUN     mkdir -p /opt/cfxdx_base/  && echo ${IMAGE_VERSION} > /opt/cfxdx_base/version.info
+ ---> Using cache
+ ---> 154017eb8090
+Step 19/57 : RUN     (apt-get update &&  DEBIAN_FRONTEND=noninteractive apt-get install -y libkrb5-dev krb5-user telnet curl iputils-ping traceroute)
+ ---> Using cache
+ ---> c7ea484a3b98
+Step 20/57 : RUN     mkdir -p /opt/cfxdx-bundle-all
+ ---> Using cache
+ ---> c641bb29a835
+Step 21/57 : COPY    docker-entrypoint.sh  /macawentrypoint.sh
+ ---> Using cache
+ ---> e6af3cf281d5
+Step 22/57 : COPY    cfxdx-bundle-all.sh   /opt/cfxdx-bundle-all
+ ---> Using cache
+ ---> 71b811f59f7d
+Step 23/57 : RUN     chmod +x /macawentrypoint.sh   &&         chmod +x /opt/cfxdx-bundle-all/cfxdx-bundle-all.sh
+ ---> Using cache
+ ---> e3fdf4bfd977
+Step 24/57 : WORKDIR /opt/cfxdx-bundle-all
+ ---> Using cache
+ ---> 48d118ed10a8
+Step 25/57 : ENV     PATH /:/opt/cfxdx-bundle-all:/usr/local/bin:$PATH
+ ---> Using cache
+ ---> 1e6299998a01
+Step 26/57 : RUN     apt-get install -y wget telnet curl unzip cron
+ ---> Using cache
+ ---> 34cfaa6b3802
+Step 27/57 : RUN     mkdir -p /opt/cfxdx_nb && mkdir -p /opt/cfxdx_nb/jupyter_config/
+ ---> Using cache
+ ---> 9f9f17468298
+Step 28/57 : RUN   openssl req -x509 -days 3650 -batch -nodes -newkey rsa:2048 -keyout /usr/local/nginx/tlscerts/server/server.key -out /usr/local/nginx/tlscerts/server/server.crt
+ ---> Using cache
+ ---> 535645ae2d2b
+Step 29/57 : RUN   /bin/mkdir -p /root/.cfx/auth/ && touch /root/.cfx/auth/htpasswd && htpasswd -b -c /root/.cfx/auth/htpasswd admin abcd123$
+ ---> Using cache
+ ---> 66b85874042a
+Step 30/57 : RUN mkdir -p /tmp/bot_package_logs
+ ---> Using cache
+ ---> ffd9054fd37d
+Step 31/57 : RUN mkdir -p /opt/rda_user_ext_wrapper/
+ ---> Using cache
+ ---> d32bcc30572a
+Step 32/57 : COPY ./rda_user_ext_wrapper/ /opt/rda_user_ext_wrapper/
+ ---> Using cache
+ ---> de55c83aea30
+Step 33/57 : RUN apt update && curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - && apt-get install -y nodejs
+ ---> Using cache
+ ---> 30cd907fee53
+Step 34/57 : COPY requirements_other.txt /tmp/requirements_other.txt
+ ---> Using cache
+ ---> 9aaff8fc7a7a
+Step 35/57 : COPY requirements_cfx.txt /tmp/requirements_cfx.txt
+ ---> Using cache
+ ---> ab7c37a911da
+Step 36/57 : RUN /cfx_venv/bin/pip install -r /tmp/requirements_other.txt
+ ---> Running in ec9ec3a3f5d9
+Collecting en-core-web-sm@ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1-py3-none-any.whl (from -r /tmp/requirements_other.txt (line 83))
+  Downloading https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1-py3-none-any.whl (12.8 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 12.8/12.8 MB 18.6 MB/s eta 0:00:00
+Collecting Babel==2.10.3 (from -r /tmp/requirements_other.txt (line 1))
+  Downloading Babel-2.10.3-py3-none-any.whl.metadata (1.3 kB)
+Collecting Cython==0.29.37 (from -r /tmp/requirements_other.txt (line 2))
+  Downloading Cython-0.29.37-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl.metadata (3.1 kB)
+Collecting Faker==8.2.1 (from -r /tmp/requirements_other.txt (line 3))
+  Downloading Faker-8.2.1-py3-none-any.whl.metadata (14 kB)
+Collecting Jinja2==3.1.2 (from -r /tmp/requirements_other.txt (line 4))
+  Downloading Jinja2-3.1.2-py3-none-any.whl.metadata (3.5 kB)
+Collecting LunarCalendar==0.0.9 (from -r /tmp/requirements_other.txt (line 5))
+  Downloading LunarCalendar-0.0.9-py2.py3-none-any.whl.metadata (6.3 kB)
+Collecting MarkupSafe==2.1.1 (from -r /tmp/requirements_other.txt (line 6))
+  Downloading MarkupSafe-2.1.1.tar.gz (18 kB)
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting Office365-REST-Python-Client==2.3.3 (from -r /tmp/requirements_other.txt (line 7))
+  Downloading Office365_REST_Python_Client-2.3.3-py3-none-any.whl.metadata (13 kB)
+Collecting Pillow==9.2.0 (from -r /tmp/requirements_other.txt (line 8))
+  Downloading Pillow-9.2.0-cp311-cp311-manylinux_2_28_x86_64.whl.metadata (8.9 kB)
+Collecting PyJWT==1.7.1 (from -r /tmp/requirements_other.txt (line 9))
+  Downloading PyJWT-1.7.1-py2.py3-none-any.whl.metadata (3.9 kB)
+Collecting PyMeeus==0.5.11 (from -r /tmp/requirements_other.txt (line 10))
+  Downloading PyMeeus-0.5.11.tar.gz (5.4 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.4/5.4 MB 17.4 MB/s eta 0:00:00
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting PyNaCl==1.5.0 (from -r /tmp/requirements_other.txt (line 11))
+  Downloading PyNaCl-1.5.0-cp36-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl.metadata (8.6 kB)
+Requirement already satisfied: PyYAML==6.0 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 12)) (6.0)
+Collecting Pygments==2.13.0 (from -r /tmp/requirements_other.txt (line 13))
+  Downloading Pygments-2.13.0-py3-none-any.whl.metadata (1.6 kB)
+Collecting QtPy==2.2.1 (from -r /tmp/requirements_other.txt (line 14))
+  Downloading QtPy-2.2.1-py3-none-any.whl.metadata (8.4 kB)
+Requirement already satisfied: SQLAlchemy==2.0.25 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 15)) (2.0.25)
+Collecting Send2Trash==1.8.2 (from -r /tmp/requirements_other.txt (line 16))
+  Downloading Send2Trash-1.8.2-py3-none-any.whl.metadata (4.0 kB)
+Requirement already satisfied: XlsxWriter==3.0.3 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 17)) (3.0.3)
+Collecting adal==1.2.6 (from -r /tmp/requirements_other.txt (line 18))
+  Downloading adal-1.2.6-py2.py3-none-any.whl.metadata (6.7 kB)
+Collecting aiohttp==3.9.1 (from -r /tmp/requirements_other.txt (line 19))
+  Downloading aiohttp-3.9.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (7.4 kB)
+Collecting aiosignal==1.2.0 (from -r /tmp/requirements_other.txt (line 20))
+  Downloading aiosignal-1.2.0-py3-none-any.whl.metadata (5.5 kB)
+Collecting anyio==3.6.1 (from -r /tmp/requirements_other.txt (line 21))
+  Downloading anyio-3.6.1-py3-none-any.whl.metadata (4.7 kB)
+Collecting appdirs==1.4.4 (from -r /tmp/requirements_other.txt (line 22))
+  Downloading appdirs-1.4.4-py2.py3-none-any.whl.metadata (9.0 kB)
+Collecting argon2-cffi-bindings==21.2.0 (from -r /tmp/requirements_other.txt (line 23))
+  Downloading argon2_cffi_bindings-21.2.0-cp36-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.7 kB)
+Collecting argon2-cffi==21.3.0 (from -r /tmp/requirements_other.txt (line 24))
+  Downloading argon2_cffi-21.3.0-py3-none-any.whl.metadata (5.4 kB)
+Collecting async-timeout==4.0.2 (from -r /tmp/requirements_other.txt (line 25))
+  Downloading async_timeout-4.0.2-py3-none-any.whl.metadata (4.2 kB)
+Collecting asynctest==0.13.0 (from -r /tmp/requirements_other.txt (line 26))
+  Downloading asynctest-0.13.0-py3-none-any.whl.metadata (5.4 kB)
+Collecting autopage==0.5.1 (from -r /tmp/requirements_other.txt (line 27))
+  Downloading autopage-0.5.1-py3-none-any.whl.metadata (7.8 kB)
+Collecting azure-common==1.1.26 (from -r /tmp/requirements_other.txt (line 28))
+  Downloading azure_common-1.1.26-py2.py3-none-any.whl.metadata (4.6 kB)
+Collecting azure-core==1.11.0 (from -r /tmp/requirements_other.txt (line 29))
+  Downloading azure_core-1.11.0-py2.py3-none-any.whl.metadata (22 kB)
+Collecting azure-identity==1.5.0 (from -r /tmp/requirements_other.txt (line 30))
+  Downloading azure_identity-1.5.0-py2.py3-none-any.whl.metadata (39 kB)
+Collecting azure-loganalytics==0.1.0 (from -r /tmp/requirements_other.txt (line 31))
+  Downloading azure_loganalytics-0.1.0-py2.py3-none-any.whl.metadata (2.0 kB)
+Collecting azure-mgmt-compute==18.0.0 (from -r /tmp/requirements_other.txt (line 32))
+  Downloading azure_mgmt_compute-18.0.0-py2.py3-none-any.whl.metadata (33 kB)
+Collecting azure-mgmt-consumption==3.0.0 (from -r /tmp/requirements_other.txt (line 33))
+  Downloading azure_mgmt_consumption-3.0.0-py2.py3-none-any.whl.metadata (5.9 kB)
+Collecting azure-mgmt-core==1.2.2 (from -r /tmp/requirements_other.txt (line 34))
+  Downloading azure_mgmt_core-1.2.2-py2.py3-none-any.whl.metadata (3.4 kB)
+Collecting azure-mgmt-loganalytics==2.0.0 (from -r /tmp/requirements_other.txt (line 35))
+  Downloading azure_mgmt_loganalytics-2.0.0-py2.py3-none-any.whl.metadata (10.0 kB)
+Collecting azure-mgmt-monitor==1.0.1 (from -r /tmp/requirements_other.txt (line 36))
+  Downloading azure_mgmt_monitor-1.0.1-py2.py3-none-any.whl.metadata (13 kB)
+Collecting azure-mgmt-network==17.0.0 (from -r /tmp/requirements_other.txt (line 37))
+  Downloading azure_mgmt_network-17.0.0-py2.py3-none-any.whl.metadata (51 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 51.8/51.8 kB 8.0 MB/s eta 0:00:00
+Collecting azure-mgmt-resource==15.0.0 (from -r /tmp/requirements_other.txt (line 38))
+  Downloading azure_mgmt_resource-15.0.0-py2.py3-none-any.whl.metadata (23 kB)
+Collecting azure-mgmt-storage==16.0.0 (from -r /tmp/requirements_other.txt (line 39))
+  Downloading azure_mgmt_storage-16.0.0-py2.py3-none-any.whl.metadata (18 kB)
+Collecting azure-nspkg==3.0.2 (from -r /tmp/requirements_other.txt (line 40))
+  Downloading azure_nspkg-3.0.2-py3-none-any.whl.metadata (1.5 kB)
+Collecting azure-storage-blob==12.8.1 (from -r /tmp/requirements_other.txt (line 41))
+  Downloading azure_storage_blob-12.8.1-py2.py3-none-any.whl.metadata (24 kB)
+Collecting backcall==0.2.0 (from -r /tmp/requirements_other.txt (line 42))
+  Downloading backcall-0.2.0-py2.py3-none-any.whl.metadata (2.0 kB)
+Collecting bcrypt==3.2.0 (from -r /tmp/requirements_other.txt (line 44))
+  Downloading bcrypt-3.2.0-cp36-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl.metadata (7.5 kB)
+Collecting beautifulsoup4==4.11.1 (from -r /tmp/requirements_other.txt (line 45))
+  Downloading beautifulsoup4-4.11.1-py3-none-any.whl.metadata (3.5 kB)
+Collecting bleach==4.1.0 (from -r /tmp/requirements_other.txt (line 46))
+  Downloading bleach-4.1.0-py2.py3-none-any.whl.metadata (24 kB)
+Collecting blis==0.7.11 (from -r /tmp/requirements_other.txt (line 47))
+  Downloading blis-0.7.11-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (7.4 kB)
+Collecting boto3==1.34.8 (from -r /tmp/requirements_other.txt (line 48))
+  Downloading boto3-1.34.8-py3-none-any.whl.metadata (6.6 kB)
+Collecting boto==2.49.0 (from -r /tmp/requirements_other.txt (line 49))
+  Downloading boto-2.49.0-py2.py3-none-any.whl.metadata (7.3 kB)
+Collecting botocore==1.34.47 (from -r /tmp/requirements_other.txt (line 50))
+  Downloading botocore-1.34.47-py3-none-any.whl.metadata (5.7 kB)
+Collecting bs4==0.0.1 (from -r /tmp/requirements_other.txt (line 51))
+  Downloading bs4-0.0.1.tar.gz (1.1 kB)
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting cached-property==1.5.2 (from -r /tmp/requirements_other.txt (line 52))
+  Downloading cached_property-1.5.2-py2.py3-none-any.whl.metadata (11 kB)
+Collecting cachetools==4.2.4 (from -r /tmp/requirements_other.txt (line 53))
+  Downloading cachetools-4.2.4-py3-none-any.whl.metadata (4.8 kB)
+Collecting catalogue==2.0.8 (from -r /tmp/requirements_other.txt (line 54))
+  Downloading catalogue-2.0.8-py3-none-any.whl.metadata (14 kB)
+Requirement already satisfied: certifi==2023.11.17 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 55)) (2023.11.17)
+Requirement already satisfied: cffi==1.15.0 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 56)) (1.15.0)
+Collecting chardet==5.0.0 (from -r /tmp/requirements_other.txt (line 57))
+  Downloading chardet-5.0.0-py3-none-any.whl.metadata (3.4 kB)
+Requirement already satisfied: charset-normalizer==2.0.12 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 58)) (2.0.12)
+Collecting click==8.1.3 (from -r /tmp/requirements_other.txt (line 59))
+  Downloading click-8.1.3-py3-none-any.whl.metadata (3.2 kB)
+Collecting cliff==3.10.1 (from -r /tmp/requirements_other.txt (line 60))
+  Downloading cliff-3.10.1-py3-none-any.whl.metadata (2.0 kB)
+Collecting cmd2==2.4.2 (from -r /tmp/requirements_other.txt (line 61))
+  Downloading cmd2-2.4.2-py3-none-any.whl.metadata (12 kB)
+Collecting cmdstanpy==1.2.0 (from -r /tmp/requirements_other.txt (line 62))
+  Downloading cmdstanpy-1.2.0-py3-none-any.whl.metadata (3.9 kB)
+Collecting colored==1.4.3 (from -r /tmp/requirements_other.txt (line 63))
+  Downloading colored-1.4.3.tar.gz (29 kB)
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting confection==0.1.4 (from -r /tmp/requirements_other.txt (line 64))
+  Downloading confection-0.1.4-py3-none-any.whl.metadata (19 kB)
+Collecting confluent-kafka==2.3.0 (from -r /tmp/requirements_other.txt (line 65))
+  Downloading confluent_kafka-2.3.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (2.3 kB)
+Collecting convertdate==2.4.0 (from -r /tmp/requirements_other.txt (line 66))
+  Downloading convertdate-2.4.0-py3-none-any.whl.metadata (8.3 kB)
+Collecting croniter==1.3.5 (from -r /tmp/requirements_other.txt (line 67))
+  Downloading croniter-1.3.5-py2.py3-none-any.whl.metadata (22 kB)
+Requirement already satisfied: cryptography==3.4.8 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 68)) (3.4.8)
+Collecting cx-Oracle==8.1.0 (from -r /tmp/requirements_other.txt (line 69))
+  Downloading cx_Oracle-8.1.0.tar.gz (343 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 343.9/343.9 kB 17.6 MB/s eta 0:00:00
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting cycler==0.11.0 (from -r /tmp/requirements_other.txt (line 70))
+  Downloading cycler-0.11.0-py3-none-any.whl.metadata (785 bytes)
+Collecting cymem==2.0.6 (from -r /tmp/requirements_other.txt (line 71))
+  Downloading cymem-2.0.6.tar.gz (8.2 kB)
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Installing backend dependencies: started
+  Installing backend dependencies: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting debtcollector==2.5.0 (from -r /tmp/requirements_other.txt (line 72))
+  Downloading debtcollector-2.5.0-py3-none-any.whl.metadata (2.3 kB)
+Requirement already satisfied: decorator==5.1.1 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 73)) (5.1.1)
+Collecting defusedxml==0.7.1 (from -r /tmp/requirements_other.txt (line 74))
+  Downloading defusedxml-0.7.1-py2.py3-none-any.whl.metadata (32 kB)
+Collecting dnspython==2.2.1 (from -r /tmp/requirements_other.txt (line 75))
+  Downloading dnspython-2.2.1-py3-none-any.whl.metadata (4.9 kB)
+Collecting docopt==0.6.2 (from -r /tmp/requirements_other.txt (line 76))
+  Downloading docopt-0.6.2.tar.gz (25 kB)
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting dogpile.cache==1.1.8 (from -r /tmp/requirements_other.txt (line 77))
+  Downloading dogpile.cache-1.1.8-py3-none-any.whl.metadata (5.0 kB)
+Collecting dohq-teamcity==1.0.8 (from -r /tmp/requirements_other.txt (line 78))
+  Downloading dohq_teamcity-1.0.8-py3-none-any.whl.metadata (920 bytes)
+Requirement already satisfied: ed25519==1.5 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 79)) (1.5)
+Requirement already satisfied: elasticsearch-dsl==7.0.0 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 80)) (7.0.0)
+Requirement already satisfied: opensearch-py==2.4.2 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 82)) (2.4.2)
+Collecting entrypoints==0.4 (from -r /tmp/requirements_other.txt (line 84))
+  Downloading entrypoints-0.4-py3-none-any.whl.metadata (2.6 kB)
+Collecting ephem==4.1.3 (from -r /tmp/requirements_other.txt (line 85))
+  Downloading ephem-4.1.3.tar.gz (1.3 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 23.2 MB/s eta 0:00:00
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting et-xmlfile==1.1.0 (from -r /tmp/requirements_other.txt (line 86))
+  Downloading et_xmlfile-1.1.0-py3-none-any.whl.metadata (1.8 kB)
+Collecting eventlet==0.33.1 (from -r /tmp/requirements_other.txt (line 87))
+  Downloading eventlet-0.33.1-py2.py3-none-any.whl.metadata (4.3 kB)
+Collecting exchangelib==4.6.1 (from -r /tmp/requirements_other.txt (line 88))
+  Downloading exchangelib-4.6.1-py2.py3-none-any.whl.metadata (3.7 kB)
+Collecting fastjsonschema==2.16.2 (from -r /tmp/requirements_other.txt (line 89))
+  Downloading fastjsonschema-2.16.2-py3-none-any.whl.metadata (1.9 kB)
+Collecting fonttools==4.37.4 (from -r /tmp/requirements_other.txt (line 90))
+  Downloading fonttools-4.37.4-py3-none-any.whl.metadata (137 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 137.2/137.2 kB 9.5 MB/s eta 0:00:00
+Collecting frozenlist==1.4.1 (from -r /tmp/requirements_other.txt (line 91))
+  Downloading frozenlist-1.4.1-cp311-cp311-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (12 kB)
+Requirement already satisfied: funcy==1.16 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 92)) (1.16)
+Requirement already satisfied: future==0.17.1 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 93)) (0.17.1)
+Collecting gensim==3.8.1 (from -r /tmp/requirements_other.txt (line 94))
+  Downloading gensim-3.8.1.tar.gz (23.4 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 23.4/23.4 MB 34.5 MB/s eta 0:00:00
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Installing backend dependencies: started
+  Installing backend dependencies: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Requirement already satisfied: getversion==1.0.2 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 95)) (1.0.2)
+Collecting google-api-core==2.15.0 (from -r /tmp/requirements_other.txt (line 96))
+  Downloading google_api_core-2.15.0-py3-none-any.whl.metadata (2.7 kB)
+Collecting google-api-python-client==2.111.0 (from -r /tmp/requirements_other.txt (line 97))
+  Downloading google_api_python_client-2.111.0-py2.py3-none-any.whl.metadata (6.6 kB)
+Collecting google-auth-httplib2==0.1.0 (from -r /tmp/requirements_other.txt (line 98))
+  Downloading google_auth_httplib2-0.1.0-py2.py3-none-any.whl.metadata (2.1 kB)
+Collecting google-auth==2.25.2 (from -r /tmp/requirements_other.txt (line 99))
+  Downloading google_auth-2.25.2-py2.py3-none-any.whl.metadata (4.7 kB)
+Collecting google-cloud-core==2.4.1 (from -r /tmp/requirements_other.txt (line 100))
+  Downloading google_cloud_core-2.4.1-py2.py3-none-any.whl.metadata (2.7 kB)
+Collecting google-cloud-storage==2.14.0 (from -r /tmp/requirements_other.txt (line 101))
+  Downloading google_cloud_storage-2.14.0-py2.py3-none-any.whl.metadata (6.1 kB)
+Collecting google-crc32c==1.5.0 (from -r /tmp/requirements_other.txt (line 102))
+  Downloading google_crc32c-1.5.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (2.3 kB)
+Collecting google-resumable-media==2.7.0 (from -r /tmp/requirements_other.txt (line 103))
+  Downloading google_resumable_media-2.7.0-py2.py3-none-any.whl.metadata (2.2 kB)
+Collecting googleapis-common-protos==1.56.4 (from -r /tmp/requirements_other.txt (line 104))
+  Downloading googleapis_common_protos-1.56.4-py2.py3-none-any.whl.metadata (1.3 kB)
+Collecting greenlet==1.1.3.post0 (from -r /tmp/requirements_other.txt (line 105))
+  Downloading greenlet-1.1.3.post0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (3.9 kB)
+Requirement already satisfied: grpcio-tools==1.60.0 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 106)) (1.60.0)
+Requirement already satisfied: grpcio==1.60.0 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 107)) (1.60.0)
+Collecting haikunator==2.1.0 (from -r /tmp/requirements_other.txt (line 108))
+  Downloading haikunator-2.1.0-py2.py3-none-any.whl.metadata (848 bytes)
+Collecting hdfs==2.7.0 (from -r /tmp/requirements_other.txt (line 109))
+  Downloading hdfs-2.7.0-py3-none-any.whl.metadata (3.9 kB)
+Collecting hijri-converter==2.2.4 (from -r /tmp/requirements_other.txt (line 110))
+  Downloading hijri_converter-2.2.4-py3-none-any.whl.metadata (4.9 kB)
+Collecting holidays==0.40 (from -r /tmp/requirements_other.txt (line 111))
+  Downloading holidays-0.40-py3-none-any.whl.metadata (21 kB)
+Collecting httplib2==0.20.4 (from -r /tmp/requirements_other.txt (line 112))
+  Downloading httplib2-0.20.4-py3-none-any.whl.metadata (2.5 kB)
+Collecting hubspot-api-client==3.7.2 (from -r /tmp/requirements_other.txt (line 113))
+  Downloading hubspot_api_client-3.7.2-py3-none-any.whl.metadata (5.1 kB)
+Collecting humanreadable==0.1.0 (from -r /tmp/requirements_other.txt (line 114))
+  Downloading humanreadable-0.1.0-py3-none-any.whl.metadata (7.0 kB)
+Requirement already satisfied: idna==3.4 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 115)) (3.4)
+Collecting ifconfig-parser==0.0.5 (from -r /tmp/requirements_other.txt (line 116))
+  Downloading ifconfig-parser-0.0.5.tar.gz (4.6 kB)
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting ijson==2.6.1 (from -r /tmp/requirements_other.txt (line 117))
+  Downloading ijson-2.6.1.tar.gz (29 kB)
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting imbalanced-learn==0.7.0 (from -r /tmp/requirements_other.txt (line 118))
+  Downloading imbalanced_learn-0.7.0-py3-none-any.whl.metadata (11 kB)
+Collecting imcsdk==0.9.10 (from -r /tmp/requirements_other.txt (line 119))
+  Downloading imcsdk-0.9.10.tar.gz (439 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 439.1/439.1 kB 17.9 MB/s eta 0:00:00
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Requirement already satisfied: importlib-metadata==5.0.0 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 120)) (5.0.0)
+Requirement already satisfied: importlib-resources==5.10.0 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 121)) (5.10.0)
+Collecting influxdb==5.3.1 (from -r /tmp/requirements_other.txt (line 122))
+  Downloading influxdb-5.3.1-py2.py3-none-any.whl.metadata (6.0 kB)
+Collecting infoblox-netmri==3.8.0.0 (from -r /tmp/requirements_other.txt (line 123))
+  Downloading infoblox_netmri-3.8.0.0-py2.py3-none-any.whl.metadata (3.2 kB)
+Collecting iniconfig==1.1.1 (from -r /tmp/requirements_other.txt (line 124))
+  Downloading iniconfig-1.1.1-py2.py3-none-any.whl.metadata (2.4 kB)
+Collecting ipaddress==1.0.23 (from -r /tmp/requirements_other.txt (line 125))
+  Downloading ipaddress-1.0.23-py2.py3-none-any.whl.metadata (923 bytes)
+Collecting ipycytoscape==1.3.3 (from -r /tmp/requirements_other.txt (line 126))
+  Downloading ipycytoscape-1.3.3-py2.py3-none-any.whl.metadata (7.5 kB)
+Collecting ipykernel==6.29.2 (from -r /tmp/requirements_other.txt (line 127))
+  Downloading ipykernel-6.29.2-py3-none-any.whl.metadata (6.0 kB)
+Collecting ipympl==0.9.3 (from -r /tmp/requirements_other.txt (line 128))
+  Downloading ipympl-0.9.3-py2.py3-none-any.whl.metadata (1.3 kB)
+Collecting ipynbname==2023.2.0.0 (from -r /tmp/requirements_other.txt (line 129))
+  Downloading ipynbname-2023.2.0.0-py3-none-any.whl.metadata (1.9 kB)
+Collecting ipython-genutils==0.2.0 (from -r /tmp/requirements_other.txt (line 130))
+  Downloading ipython_genutils-0.2.0-py2.py3-none-any.whl.metadata (755 bytes)
+Collecting ipython==8.21.0 (from -r /tmp/requirements_other.txt (line 131))
+  Downloading ipython-8.21.0-py3-none-any.whl.metadata (5.9 kB)
+Collecting ipywidgets==8.1.2 (from -r /tmp/requirements_other.txt (line 132))
+  Downloading ipywidgets-8.1.2-py3-none-any.whl.metadata (2.4 kB)
+Collecting iso8601==1.1.0 (from -r /tmp/requirements_other.txt (line 133))
+  Downloading iso8601-1.1.0-py3-none-any.whl.metadata (9.8 kB)
+Collecting isodate==0.6.1 (from -r /tmp/requirements_other.txt (line 134))
+  Downloading isodate-0.6.1-py2.py3-none-any.whl.metadata (9.6 kB)
+Collecting jdcal==1.4.1 (from -r /tmp/requirements_other.txt (line 135))
+  Downloading jdcal-1.4.1-py2.py3-none-any.whl.metadata (5.0 kB)
+Collecting jedi==0.18.1 (from -r /tmp/requirements_other.txt (line 136))
+  Downloading jedi-0.18.1-py2.py3-none-any.whl.metadata (20 kB)
+Collecting jira==3.2.0 (from -r /tmp/requirements_other.txt (line 137))
+  Downloading jira-3.2.0-py3-none-any.whl.metadata (10.0 kB)
+Collecting jmespath==0.10.0 (from -r /tmp/requirements_other.txt (line 138))
+  Downloading jmespath-0.10.0-py2.py3-none-any.whl.metadata (8.0 kB)
+Collecting joblib==1.3.2 (from -r /tmp/requirements_other.txt (line 139))
+  Downloading joblib-1.3.2-py3-none-any.whl.metadata (5.4 kB)
+Collecting js-regex==1.0.1 (from -r /tmp/requirements_other.txt (line 140))
+  Downloading js_regex-1.0.1-py3-none-any.whl.metadata (6.2 kB)
+Collecting json5==0.9.5 (from -r /tmp/requirements_other.txt (line 141))
+  Downloading json5-0.9.5-py2.py3-none-any.whl.metadata (7.3 kB)
+Collecting jsonpatch==1.32 (from -r /tmp/requirements_other.txt (line 142))
+  Downloading jsonpatch-1.32-py2.py3-none-any.whl.metadata (3.2 kB)
+Collecting jsonpointer==2.3 (from -r /tmp/requirements_other.txt (line 143))
+  Downloading jsonpointer-2.3-py2.py3-none-any.whl.metadata (2.5 kB)
+Requirement already satisfied: jsonschema==4.21.1 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 144)) (4.21.1)
+Collecting json-normalize==1.0.1 (from -r /tmp/requirements_other.txt (line 145))
+  Downloading json_normalize-1.0.1-py3-none-any.whl.metadata (8.6 kB)
+Collecting junos-eznc==2.5.1 (from -r /tmp/requirements_other.txt (line 146))
+  Downloading junos-eznc-2.5.1.tar.gz (154 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 154.2/154.2 kB 7.5 MB/s eta 0:00:00
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting jupyter-client==8.6.0 (from -r /tmp/requirements_other.txt (line 147))
+  Downloading jupyter_client-8.6.0-py3-none-any.whl.metadata (8.3 kB)
+Collecting jupyter-console==6.6.3 (from -r /tmp/requirements_other.txt (line 148))
+  Downloading jupyter_console-6.6.3-py3-none-any.whl.metadata (5.8 kB)
+Collecting jupyter-core==5.7.1 (from -r /tmp/requirements_other.txt (line 149))
+  Downloading jupyter_core-5.7.1-py3-none-any.whl.metadata (3.4 kB)
+Collecting jupyter-server==2.12.5 (from -r /tmp/requirements_other.txt (line 150))
+  Downloading jupyter_server-2.12.5-py3-none-any.whl.metadata (8.4 kB)
+Collecting jupyter==1.0.0 (from -r /tmp/requirements_other.txt (line 151))
+  Downloading jupyter-1.0.0-py2.py3-none-any.whl.metadata (995 bytes)
+Collecting jupyterlab-pygments==0.3.0 (from -r /tmp/requirements_other.txt (line 152))
+  Downloading jupyterlab_pygments-0.3.0-py3-none-any.whl.metadata (4.4 kB)
+Collecting jupyterlab-server==2.25.3 (from -r /tmp/requirements_other.txt (line 153))
+  Downloading jupyterlab_server-2.25.3-py3-none-any.whl.metadata (5.9 kB)
+Collecting jupyterlab-templates==0.5.1 (from -r /tmp/requirements_other.txt (line 155))
+  Downloading jupyterlab_templates-0.5.1-py3-none-any.whl.metadata (18 kB)
+Collecting jupyterlab-widgets==3.0.10 (from -r /tmp/requirements_other.txt (line 156))
+  Downloading jupyterlab_widgets-3.0.10-py3-none-any.whl.metadata (4.1 kB)
+Collecting jupyterlab==4.1.2 (from -r /tmp/requirements_other.txt (line 157))
+  Downloading jupyterlab-4.1.2-py3-none-any.whl.metadata (15 kB)
+Collecting kafka-python==2.0.2 (from -r /tmp/requirements_other.txt (line 158))
+  Downloading kafka_python-2.0.2-py2.py3-none-any.whl.metadata (7.8 kB)
+Collecting keystoneauth1==5.0.0 (from -r /tmp/requirements_other.txt (line 159))
+  Downloading keystoneauth1-5.0.0-py3-none-any.whl.metadata (3.8 kB)
+Collecting kiwisolver==1.4.4 (from -r /tmp/requirements_other.txt (line 160))
+  Downloading kiwisolver-1.4.4-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.3 kB)
+Collecting korean-lunar-calendar==0.3.1 (from -r /tmp/requirements_other.txt (line 161))
+  Downloading korean_lunar_calendar-0.3.1-py3-none-any.whl.metadata (2.8 kB)
+Collecting kubernetes==23.3.0 (from -r /tmp/requirements_other.txt (line 162))
+  Downloading kubernetes-23.3.0-py2.py3-none-any.whl.metadata (1.5 kB)
+Collecting langcodes==3.3.0 (from -r /tmp/requirements_other.txt (line 163))
+  Downloading langcodes-3.3.0-py3-none-any.whl.metadata (29 kB)
+Collecting lxml==4.9.1 (from -r /tmp/requirements_other.txt (line 164))
+  Downloading lxml-4.9.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl.metadata (3.3 kB)
+Collecting matplotlib==3.5.3 (from -r /tmp/requirements_other.txt (line 165))
+  Downloading matplotlib-3.5.3.tar.gz (35.2 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 35.2/35.2 MB 27.0 MB/s eta 0:00:00
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Installing backend dependencies: started
+  Installing backend dependencies: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting mbstrdecoder==1.1.1 (from -r /tmp/requirements_other.txt (line 166))
+  Downloading mbstrdecoder-1.1.1-py3-none-any.whl.metadata (4.0 kB)
+Requirement already satisfied: minio==7.1.12 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 167)) (7.1.12)
+Collecting mistune==3.0.2 (from -r /tmp/requirements_other.txt (line 168))
+  Downloading mistune-3.0.2-py3-none-any.whl.metadata (1.7 kB)
+Collecting msal-extensions==0.3.0 (from -r /tmp/requirements_other.txt (line 169))
+  Downloading msal_extensions-0.3.0-py2.py3-none-any.whl.metadata (5.9 kB)
+Collecting msal==1.8.0 (from -r /tmp/requirements_other.txt (line 170))
+  Downloading msal-1.8.0-py2.py3-none-any.whl.metadata (9.8 kB)
+Collecting msgpack==1.0.4 (from -r /tmp/requirements_other.txt (line 171))
+  Downloading msgpack-1.0.4.tar.gz (128 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 128.1/128.1 kB 8.3 MB/s eta 0:00:00
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Installing backend dependencies: started
+  Installing backend dependencies: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting msrest==0.6.21 (from -r /tmp/requirements_other.txt (line 172))
+  Downloading msrest-0.6.21-py2.py3-none-any.whl.metadata (21 kB)
+Collecting msrestazure==0.6.4 (from -r /tmp/requirements_other.txt (line 173))
+  Downloading msrestazure-0.6.4-py2.py3-none-any.whl.metadata (15 kB)
+Collecting multidict==6.0.2 (from -r /tmp/requirements_other.txt (line 174))
+  Downloading multidict-6.0.2.tar.gz (50 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 50.3/50.3 kB 3.0 MB/s eta 0:00:00
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting munch==2.5.0 (from -r /tmp/requirements_other.txt (line 175))
+  Downloading munch-2.5.0-py2.py3-none-any.whl.metadata (5.8 kB)
+Collecting murmurhash==1.0.8 (from -r /tmp/requirements_other.txt (line 176))
+  Downloading murmurhash-1.0.8.tar.gz (12 kB)
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Installing backend dependencies: started
+  Installing backend dependencies: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Requirement already satisfied: mysqlclient==2.1.1 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 177)) (2.1.1)
+Requirement already satisfied: nats-py==2.6.0 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 178)) (2.6.0)
+Collecting nbclassic==0.3.7 (from -r /tmp/requirements_other.txt (line 179))
+  Downloading nbclassic-0.3.7-py3-none-any.whl.metadata (2.0 kB)
+Collecting nbclient==0.5.12 (from -r /tmp/requirements_other.txt (line 180))
+  Downloading nbclient-0.5.12-py3-none-any.whl.metadata (5.0 kB)
+Collecting nbconvert==7.16.1 (from -r /tmp/requirements_other.txt (line 181))
+  Downloading nbconvert-7.16.1-py3-none-any.whl.metadata (8.0 kB)
+Collecting nbformat==5.9.2 (from -r /tmp/requirements_other.txt (line 182))
+  Downloading nbformat-5.9.2-py3-none-any.whl.metadata (3.4 kB)
+Collecting ncclient==0.6.13 (from -r /tmp/requirements_other.txt (line 183))
+  Downloading ncclient-0.6.13.tar.gz (105 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 105.7/105.7 kB 15.0 MB/s eta 0:00:00
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Requirement already satisfied: nest-asyncio==1.5.5 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 184)) (1.5.5)
+Collecting netaddr==0.8.0 (from -r /tmp/requirements_other.txt (line 185))
+  Downloading netaddr-0.8.0-py2.py3-none-any.whl.metadata (4.9 kB)
+Collecting netifaces==0.11.0 (from -r /tmp/requirements_other.txt (line 186))
+  Downloading netifaces-0.11.0.tar.gz (30 kB)
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting netmiko==4.2.0 (from -r /tmp/requirements_other.txt (line 187))
+  Downloading netmiko-4.2.0-py3-none-any.whl.metadata (7.5 kB)
+Collecting networkx==2.6.3 (from -r /tmp/requirements_other.txt (line 188))
+  Downloading networkx-2.6.3-py3-none-any.whl.metadata (5.0 kB)
+Requirement already satisfied: nkeys==0.1.0 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 189)) (0.1.0)
+Collecting nltk==3.8.1 (from -r /tmp/requirements_other.txt (line 190))
+  Downloading nltk-3.8.1-py3-none-any.whl.metadata (2.8 kB)
+Collecting notebook-shim==0.2.4 (from -r /tmp/requirements_other.txt (line 191))
+  Downloading notebook_shim-0.2.4-py3-none-any.whl.metadata (4.0 kB)
+Collecting notebook==6.4.8 (from -r /tmp/requirements_other.txt (line 192))
+  Downloading notebook-6.4.8-py3-none-any.whl.metadata (2.4 kB)
+Collecting ntc-templates==3.1.0 (from -r /tmp/requirements_other.txt (line 193))
+  Downloading ntc_templates-3.1.0-py3-none-any.whl.metadata (23 kB)
+Collecting ntlm-auth==1.5.0 (from -r /tmp/requirements_other.txt (line 194))
+  Downloading ntlm_auth-1.5.0-py2.py3-none-any.whl.metadata (10 kB)
+Requirement already satisfied: numpy==1.26.2 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 195)) (1.26.2)
+Collecting prophet==1.1.5 (from -r /tmp/requirements_other.txt (line 196))
+  Downloading prophet-1.1.5-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (3.5 kB)
+Collecting oauth2client==4.1.3 (from -r /tmp/requirements_other.txt (line 197))
+  Downloading oauth2client-4.1.3-py2.py3-none-any.whl.metadata (1.2 kB)
+Collecting oauthlib==3.1.0 (from -r /tmp/requirements_other.txt (line 198))
+  Downloading oauthlib-3.1.0-py2.py3-none-any.whl.metadata (7.1 kB)
+Collecting openpyxl==3.1.2 (from -r /tmp/requirements_other.txt (line 199))
+  Downloading openpyxl-3.1.2-py2.py3-none-any.whl.metadata (2.5 kB)
+Collecting openstacksdk==0.101.0 (from -r /tmp/requirements_other.txt (line 200))
+  Downloading openstacksdk-0.101.0-py3-none-any.whl.metadata (6.7 kB)
+Collecting os-client-config==2.1.0 (from -r /tmp/requirements_other.txt (line 201))
+  Downloading os_client_config-2.1.0-py3-none-any.whl.metadata (2.2 kB)
+Collecting os-service-types==1.7.0 (from -r /tmp/requirements_other.txt (line 202))
+  Downloading os_service_types-1.7.0-py2.py3-none-any.whl.metadata (1.7 kB)
+Collecting osc-lib==2.6.2 (from -r /tmp/requirements_other.txt (line 203))
+  Downloading osc_lib-2.6.2-py3-none-any.whl.metadata (3.5 kB)
+Collecting oslo.config==8.8.0 (from -r /tmp/requirements_other.txt (line 204))
+  Downloading oslo.config-8.8.0-py3-none-any.whl.metadata (3.1 kB)
+Collecting oslo.context==4.1.0 (from -r /tmp/requirements_other.txt (line 205))
+  Downloading oslo.context-4.1.0-py3-none-any.whl.metadata (2.0 kB)
+Collecting oslo.i18n==5.1.0 (from -r /tmp/requirements_other.txt (line 206))
+  Downloading oslo.i18n-5.1.0-py3-none-any.whl.metadata (2.0 kB)
+Collecting oslo.log==4.8.0 (from -r /tmp/requirements_other.txt (line 207))
+  Downloading oslo.log-4.8.0-py3-none-any.whl.metadata (3.1 kB)
+Collecting oslo.serialization==4.3.0 (from -r /tmp/requirements_other.txt (line 208))
+  Downloading oslo.serialization-4.3.0-py3-none-any.whl.metadata (2.1 kB)
+Collecting oslo.utils==4.13.0 (from -r /tmp/requirements_other.txt (line 209))
+  Downloading oslo.utils-4.13.0-py3-none-any.whl.metadata (2.2 kB)
+Requirement already satisfied: packaging==21.3 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 210)) (21.3)
+Collecting paho-mqtt==1.5.1 (from -r /tmp/requirements_other.txt (line 211))
+  Downloading paho-mqtt-1.5.1.tar.gz (101 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 101.8/101.8 kB 6.0 MB/s eta 0:00:00
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Requirement already satisfied: pandas==2.1.4 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 212)) (2.1.4)
+Collecting pandocfilters==1.5.0 (from -r /tmp/requirements_other.txt (line 213))
+  Downloading pandocfilters-1.5.0-py2.py3-none-any.whl.metadata (9.0 kB)
+Collecting paramiko==2.11.0 (from -r /tmp/requirements_other.txt (line 214))
+  Downloading paramiko-2.11.0-py2.py3-none-any.whl.metadata (4.6 kB)
+Collecting parso==0.8.3 (from -r /tmp/requirements_other.txt (line 215))
+  Downloading parso-0.8.3-py2.py3-none-any.whl.metadata (7.5 kB)
+Collecting pathy==0.6.2 (from -r /tmp/requirements_other.txt (line 216))
+  Downloading pathy-0.6.2-py3-none-any.whl.metadata (14 kB)
+Collecting patsy==0.5.6 (from -r /tmp/requirements_other.txt (line 217))
+  Downloading patsy-0.5.6-py2.py3-none-any.whl.metadata (3.5 kB)
+Collecting pbr==5.10.0 (from -r /tmp/requirements_other.txt (line 218))
+  Downloading pbr-5.10.0-py2.py3-none-any.whl.metadata (1.3 kB)
+Collecting pexpect==4.8.0 (from -r /tmp/requirements_other.txt (line 219))
+  Downloading pexpect-4.8.0-py2.py3-none-any.whl.metadata (2.2 kB)
+Collecting pickleshare==0.7.5 (from -r /tmp/requirements_other.txt (line 220))
+  Downloading pickleshare-0.7.5-py2.py3-none-any.whl.metadata (1.5 kB)
+Collecting pingparsing==1.4.0 (from -r /tmp/requirements_other.txt (line 221))
+  Downloading pingparsing-1.4.0-py3-none-any.whl.metadata (22 kB)
+Collecting pluggy==1.0.0 (from -r /tmp/requirements_other.txt (line 222))
+  Downloading pluggy-1.0.0-py2.py3-none-any.whl.metadata (4.3 kB)
+Collecting portalocker==1.7.1 (from -r /tmp/requirements_other.txt (line 223))
+  Downloading portalocker-1.7.1-py2.py3-none-any.whl.metadata (4.4 kB)
+Collecting preshed==3.0.7 (from -r /tmp/requirements_other.txt (line 224))
+  Downloading preshed-3.0.7.tar.gz (14 kB)
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Installing backend dependencies: started
+  Installing backend dependencies: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting prettytable==3.4.1 (from -r /tmp/requirements_other.txt (line 225))
+  Downloading prettytable-3.4.1-py3-none-any.whl.metadata (24 kB)
+Collecting prometheus-client==0.14.1 (from -r /tmp/requirements_other.txt (line 226))
+  Downloading prometheus_client-0.14.1-py3-none-any.whl.metadata (21 kB)
+Collecting prompt-toolkit==3.0.43 (from -r /tmp/requirements_other.txt (line 227))
+  Downloading prompt_toolkit-3.0.43-py3-none-any.whl.metadata (6.5 kB)
+Requirement already satisfied: protobuf==4.25.1 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 228)) (4.25.1)
+Requirement already satisfied: psutil==5.9.1 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 229)) (5.9.1)
+Collecting ptyprocess==0.7.0 (from -r /tmp/requirements_other.txt (line 230))
+  Downloading ptyprocess-0.7.0-py2.py3-none-any.whl.metadata (1.3 kB)
+Collecting purestorage==1.19.0 (from -r /tmp/requirements_other.txt (line 231))
+  Downloading purestorage-1.19.0.tar.gz (28 kB)
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting py==1.11.0 (from -r /tmp/requirements_other.txt (line 232))
+  Downloading py-1.11.0-py2.py3-none-any.whl.metadata (2.8 kB)
+Collecting pySqsListener==0.8.10 (from -r /tmp/requirements_other.txt (line 233))
+  Downloading pySqsListener-0.8.10-py2.py3-none-any.whl.metadata (7.6 kB)
+Requirement already satisfied: pyarrow==14.0.1 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 234)) (14.0.1)
+Collecting pyasn1-modules==0.2.8 (from -r /tmp/requirements_other.txt (line 235))
+  Downloading pyasn1_modules-0.2.8-py2.py3-none-any.whl.metadata (1.9 kB)
+Requirement already satisfied: pyasn1==0.4.8 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 236)) (0.4.8)
+Collecting pycef==1.11 (from -r /tmp/requirements_other.txt (line 237))
+  Downloading pycef-1.11-py3-none-any.whl.metadata (4.1 kB)
+Requirement already satisfied: pycparser==2.21 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 238)) (2.21)
+Requirement already satisfied: pydantic==2.5.3 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 239)) (2.5.3)
+Collecting pygrok==1.0.0 (from -r /tmp/requirements_other.txt (line 240))
+  Downloading pygrok-1.0.0.tar.gz (18 kB)
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting pyinotify==0.9.6 (from -r /tmp/requirements_other.txt (line 241))
+  Downloading pyinotify-0.9.6.tar.gz (60 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 61.0/61.0 kB 2.0 MB/s eta 0:00:00
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting pykerberos==1.2.4 (from -r /tmp/requirements_other.txt (line 242))
+  Downloading pykerberos-1.2.4.tar.gz (25 kB)
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting pymssql==2.2.11 (from -r /tmp/requirements_other.txt (line 243))
+  Downloading pymssql-2.2.11-cp311-cp311-manylinux_2_28_x86_64.whl.metadata (4.8 kB)
+Collecting pymsteams==0.2.2 (from -r /tmp/requirements_other.txt (line 244))
+  Downloading pymsteams-0.2.2.tar.gz (9.6 kB)
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Requirement already satisfied: pyparsing==2.4.7 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 245)) (2.4.7)
+Collecting pyperclip==1.8.2 (from -r /tmp/requirements_other.txt (line 246))
+  Downloading pyperclip-1.8.2.tar.gz (20 kB)
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Requirement already satisfied: pyrsistent==0.20.0 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 247)) (0.20.0)
+Collecting pyserial==3.5 (from -r /tmp/requirements_other.txt (line 248))
+  Downloading pyserial-3.5-py2.py3-none-any.whl.metadata (1.6 kB)
+Collecting pystan==3.8.0 (from -r /tmp/requirements_other.txt (line 249))
+  Downloading pystan-3.8.0-py3-none-any.whl.metadata (3.8 kB)
+Collecting pytest==7.1.2 (from -r /tmp/requirements_other.txt (line 250))
+  Downloading pytest-7.1.2-py3-none-any.whl.metadata (7.8 kB)
+Collecting python-3parclient==4.2.12 (from -r /tmp/requirements_other.txt (line 251))
+  Downloading python_3parclient-4.2.12-py2.py3-none-any.whl.metadata (7.8 kB)
+Requirement already satisfied: python-dateutil==2.8.2 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 252)) (2.8.2)
+Collecting python-keystoneclient==4.5.0 (from -r /tmp/requirements_other.txt (line 253))
+  Downloading python_keystoneclient-4.5.0-py3-none-any.whl.metadata (3.7 kB)
+Requirement already satisfied: python-magic-debian-bin==0.4.25 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 254)) (0.4.25)
+Collecting python-magic==0.4.27 (from -r /tmp/requirements_other.txt (line 255))
+  Downloading python_magic-0.4.27-py2.py3-none-any.whl.metadata (5.8 kB)
+Collecting python-neutronclient==7.3.0 (from -r /tmp/requirements_other.txt (line 256))
+  Downloading python_neutronclient-7.3.0-py3-none-any.whl.metadata (3.0 kB)
+Collecting python-novaclient==17.4.0 (from -r /tmp/requirements_other.txt (line 257))
+  Downloading python_novaclient-17.4.0-py3-none-any.whl.metadata (2.9 kB)
+Collecting pytz-deprecation-shim==0.1.0.post0 (from -r /tmp/requirements_other.txt (line 258))
+  Downloading pytz_deprecation_shim-0.1.0.post0-py2.py3-none-any.whl.metadata (5.2 kB)
+Requirement already satisfied: pytz==2023.3.post1 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 259)) (2023.3.post1)
+Collecting pyvmomi==7.0.3 (from -r /tmp/requirements_other.txt (line 260))
+  Downloading pyvmomi-7.0.3.tar.gz (592 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 592.3/592.3 kB 17.9 MB/s eta 0:00:00
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting pywinrm==0.4.3 (from -r /tmp/requirements_other.txt (line 261))
+  Downloading pywinrm-0.4.3-py2.py3-none-any.whl.metadata (11 kB)
+Collecting pyzmq==25.1.2 (from -r /tmp/requirements_other.txt (line 262))
+  Downloading pyzmq-25.1.2-cp311-cp311-manylinux_2_28_x86_64.whl.metadata (4.9 kB)
+Collecting qgridnext==2.0.0 (from -r /tmp/requirements_other.txt (line 263))
+  Downloading qgridnext-2.0.0-py3-none-any.whl.metadata (8.8 kB)
+Collecting qtconsole==5.3.2 (from -r /tmp/requirements_other.txt (line 264))
+  Downloading qtconsole-5.3.2-py3-none-any.whl.metadata (5.0 kB)
+Collecting rake-nltk==1.0.6 (from -r /tmp/requirements_other.txt (line 265))
+  Downloading rake_nltk-1.0.6-py3-none-any.whl.metadata (6.4 kB)
+Collecting regex==2023.12.25 (from -r /tmp/requirements_other.txt (line 266))
+  Downloading regex-2023.12.25-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (40 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 40.9/40.9 kB 4.7 MB/s eta 0:00:00
+Collecting requests-ntlm==1.1.0 (from -r /tmp/requirements_other.txt (line 267))
+  Downloading requests_ntlm-1.1.0-py2.py3-none-any.whl.metadata (938 bytes)
+Collecting requests-oauthlib==1.3.1 (from -r /tmp/requirements_other.txt (line 268))
+  Downloading requests_oauthlib-1.3.1-py2.py3-none-any.whl.metadata (10 kB)
+Collecting requests-toolbelt==1.0.0 (from -r /tmp/requirements_other.txt (line 269))
+  Downloading requests_toolbelt-1.0.0-py2.py3-none-any.whl.metadata (14 kB)
+Requirement already satisfied: requests==2.31.0 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 270)) (2.31.0)
+Collecting requestsexceptions==1.4.0 (from -r /tmp/requirements_other.txt (line 271))
+  Downloading requestsexceptions-1.4.0-py2.py3-none-any.whl.metadata (1.2 kB)
+Collecting rfc3986==2.0.0 (from -r /tmp/requirements_other.txt (line 272))
+  Downloading rfc3986-2.0.0-py2.py3-none-any.whl.metadata (6.6 kB)
+Requirement already satisfied: rsa==4.9 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 273)) (4.9)
+Collecting s3transfer==0.10.0 (from -r /tmp/requirements_other.txt (line 274))
+  Downloading s3transfer-0.10.0-py3-none-any.whl.metadata (1.7 kB)
+Collecting scikit-learn==1.3.2 (from -r /tmp/requirements_other.txt (line 275))
+  Downloading scikit_learn-1.3.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (11 kB)
+Collecting scipy==1.11.4 (from -r /tmp/requirements_other.txt (line 276))
+  Downloading scipy-1.11.4-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (60 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 60.4/60.4 kB 8.9 MB/s eta 0:00:00
+Collecting scp==0.14.4 (from -r /tmp/requirements_other.txt (line 277))
+  Downloading scp-0.14.4-py2.py3-none-any.whl.metadata (4.5 kB)
+Collecting seaborn==0.11.2 (from -r /tmp/requirements_other.txt (line 278))
+  Downloading seaborn-0.11.2-py3-none-any.whl.metadata (2.3 kB)
+Collecting semantic-version==2.9.0 (from -r /tmp/requirements_other.txt (line 279))
+  Downloading semantic_version-2.9.0-py2.py3-none-any.whl.metadata (9.7 kB)
+Collecting setuptools-git==1.2 (from -r /tmp/requirements_other.txt (line 280))
+  Downloading setuptools_git-1.2-py2.py3-none-any.whl.metadata (5.8 kB)
+Collecting setuptools-rust==0.11.4 (from -r /tmp/requirements_other.txt (line 281))
+  Downloading setuptools_rust-0.11.4-py3-none-any.whl.metadata (8.2 kB)
+Requirement already satisfied: setuptools-scm==8.0.4 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 282)) (8.0.4)
+Collecting sidecar==0.7.0 (from -r /tmp/requirements_other.txt (line 283))
+  Downloading sidecar-0.7.0-py3-none-any.whl.metadata (5.4 kB)
+Requirement already satisfied: simpleeval==0.9.13 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 284)) (0.9.13)
+Requirement already satisfied: simplejson==3.19.2 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 285)) (3.19.2)
+Requirement already satisfied: six==1.16.0 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 286)) (1.16.0)
+Collecting slack-sdk==3.18.1 (from -r /tmp/requirements_other.txt (line 287))
+  Downloading slack_sdk-3.18.1-py2.py3-none-any.whl.metadata (15 kB)
+Collecting smart-open==5.2.1 (from -r /tmp/requirements_other.txt (line 288))
+  Downloading smart_open-5.2.1-py3-none-any.whl.metadata (22 kB)
+Collecting sniffio==1.3.0 (from -r /tmp/requirements_other.txt (line 289))
+  Downloading sniffio-1.3.0-py3-none-any.whl.metadata (3.6 kB)
+Collecting soupsieve==2.3.2.post1 (from -r /tmp/requirements_other.txt (line 290))
+  Downloading soupsieve-2.3.2.post1-py3-none-any.whl.metadata (5.7 kB)
+Collecting spacy-legacy==3.0.12 (from -r /tmp/requirements_other.txt (line 291))
+  Downloading spacy_legacy-3.0.12-py2.py3-none-any.whl.metadata (2.8 kB)
+Collecting spacy-loggers==1.0.5 (from -r /tmp/requirements_other.txt (line 292))
+  Downloading spacy_loggers-1.0.5-py3-none-any.whl.metadata (23 kB)
+Collecting spacy==3.7.2 (from -r /tmp/requirements_other.txt (line 293))
+  Downloading spacy-3.7.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (25 kB)
+Collecting spectate==1.0.1 (from -r /tmp/requirements_other.txt (line 294))
+  Downloading spectate-1.0.1-py2.py3-none-any.whl.metadata (2.2 kB)
+Collecting splunk-sdk==1.7.2 (from -r /tmp/requirements_other.txt (line 295))
+  Downloading splunk-sdk-1.7.2.tar.gz (107 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 107.9/107.9 kB 10.1 MB/s eta 0:00:00
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting srsly==2.4.8 (from -r /tmp/requirements_other.txt (line 296))
+  Downloading srsly-2.4.8-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (20 kB)
+Collecting statsmodels==0.14.1 (from -r /tmp/requirements_other.txt (line 297))
+  Downloading statsmodels-0.14.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (9.5 kB)
+Requirement already satisfied: stdlib-list==0.10.0 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 298)) (0.10.0)
+Collecting stevedore==3.5.0 (from -r /tmp/requirements_other.txt (line 299))
+  Downloading stevedore-3.5.0-py3-none-any.whl.metadata (2.2 kB)
+Collecting subprocrunner==1.6.0 (from -r /tmp/requirements_other.txt (line 300))
+  Downloading subprocrunner-1.6.0-py3-none-any.whl.metadata (6.1 kB)
+Requirement already satisfied: supervisor==4.1.0 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 301)) (4.1.0)
+Requirement already satisfied: tabulate==0.9.0 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 302)) (0.9.0)
+Collecting tenacity==8.1.0 (from -r /tmp/requirements_other.txt (line 303))
+  Downloading tenacity-8.1.0-py3-none-any.whl.metadata (1.1 kB)
+Collecting terminado==0.13.3 (from -r /tmp/requirements_other.txt (line 304))
+  Downloading terminado-0.13.3-py3-none-any.whl.metadata (784 bytes)
+Collecting testpath==0.6.0 (from -r /tmp/requirements_other.txt (line 305))
+  Downloading testpath-0.6.0-py3-none-any.whl.metadata (1.1 kB)
+Collecting text-unidecode==1.3 (from -r /tmp/requirements_other.txt (line 306))
+  Downloading text_unidecode-1.3-py2.py3-none-any.whl.metadata (2.4 kB)
+Collecting textblob==0.15.3 (from -r /tmp/requirements_other.txt (line 307))
+  Downloading textblob-0.15.3-py2.py3-none-any.whl.metadata (4.2 kB)
+Collecting textfsm==1.1.3 (from -r /tmp/requirements_other.txt (line 308))
+  Downloading textfsm-1.1.3-py2.py3-none-any.whl.metadata (2.6 kB)
+Collecting thinc==8.2.2 (from -r /tmp/requirements_other.txt (line 309))
+  Downloading thinc-8.2.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (15 kB)
+Collecting threadpoolctl==3.1.0 (from -r /tmp/requirements_other.txt (line 310))
+  Downloading threadpoolctl-3.1.0-py3-none-any.whl.metadata (9.2 kB)
+Collecting tinycss2==1.1.1 (from -r /tmp/requirements_other.txt (line 311))
+  Downloading tinycss2-1.1.1-py3-none-any.whl.metadata (3.1 kB)
+Collecting toml==0.10.2 (from -r /tmp/requirements_other.txt (line 312))
+  Downloading toml-0.10.2-py2.py3-none-any.whl.metadata (7.1 kB)
+Requirement already satisfied: tomli==2.0.1 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 313)) (2.0.1)
+Collecting tornado==6.4 (from -r /tmp/requirements_other.txt (line 314))
+  Downloading tornado-6.4-cp38-abi3-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (2.5 kB)
+Collecting tqdm==4.64.1 (from -r /tmp/requirements_other.txt (line 315))
+  Downloading tqdm-4.64.1-py2.py3-none-any.whl.metadata (57 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 57.3/57.3 kB 3.0 MB/s eta 0:00:00
+Collecting traitlets==5.14.1 (from -r /tmp/requirements_other.txt (line 316))
+  Downloading traitlets-5.14.1-py3-none-any.whl.metadata (10 kB)
+Collecting transitions==0.9.0 (from -r /tmp/requirements_other.txt (line 317))
+  Downloading transitions-0.9.0-py2.py3-none-any.whl.metadata (82 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 82.3/82.3 kB 5.5 MB/s eta 0:00:00
+Collecting typepy==1.3.0 (from -r /tmp/requirements_other.txt (line 318))
+  Downloading typepy-1.3.0-py3-none-any.whl.metadata (9.3 kB)
+Collecting typer==0.4.2 (from -r /tmp/requirements_other.txt (line 319))
+  Downloading typer-0.4.2-py3-none-any.whl.metadata (12 kB)
+Requirement already satisfied: typing-extensions==4.9.0 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 320)) (4.9.0)
+Collecting tzdata==2022.4 (from -r /tmp/requirements_other.txt (line 321))
+  Downloading tzdata-2022.4-py2.py3-none-any.whl.metadata (1.4 kB)
+Collecting tzlocal==4.2 (from -r /tmp/requirements_other.txt (line 322))
+  Downloading tzlocal-4.2-py3-none-any.whl.metadata (13 kB)
+Collecting ucsmsdk==0.9.13 (from -r /tmp/requirements_other.txt (line 323))
+  Downloading ucsmsdk-0.9.13-py2.py3-none-any.whl.metadata (7.6 kB)
+Collecting uritemplate==3.0.1 (from -r /tmp/requirements_other.txt (line 324))
+  Downloading uritemplate-3.0.1-py2.py3-none-any.whl.metadata (4.6 kB)
+Requirement already satisfied: urllib3==2.0.7 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 326)) (2.0.7)
+Collecting wasabi==0.10.1 (from -r /tmp/requirements_other.txt (line 327))
+  Downloading wasabi-0.10.1-py3-none-any.whl.metadata (28 kB)
+Collecting wcwidth==0.2.5 (from -r /tmp/requirements_other.txt (line 328))
+  Downloading wcwidth-0.2.5-py2.py3-none-any.whl.metadata (11 kB)
+Collecting webencodings==0.5.1 (from -r /tmp/requirements_other.txt (line 329))
+  Downloading webencodings-0.5.1-py2.py3-none-any.whl.metadata (2.1 kB)
+Collecting websocket-client==1.4.1 (from -r /tmp/requirements_other.txt (line 330))
+  Downloading websocket_client-1.4.1-py3-none-any.whl.metadata (7.0 kB)
+Collecting widgetsnbextension==4.0.10 (from -r /tmp/requirements_other.txt (line 331))
+  Downloading widgetsnbextension-4.0.10-py3-none-any.whl.metadata (1.6 kB)
+Collecting wrapt==1.14.1 (from -r /tmp/requirements_other.txt (line 332))
+  Downloading wrapt-1.14.1-cp311-cp311-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.7 kB)
+Collecting xmltodict==0.12.0 (from -r /tmp/requirements_other.txt (line 333))
+  Downloading xmltodict-0.12.0-py2.py3-none-any.whl.metadata (6.3 kB)
+Collecting yamlordereddictloader==0.4.0 (from -r /tmp/requirements_other.txt (line 334))
+  Downloading yamlordereddictloader-0.4.0.tar.gz (3.3 kB)
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting yarl==1.9.4 (from -r /tmp/requirements_other.txt (line 335))
+  Downloading yarl-1.9.4-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (31 kB)
+Requirement already satisfied: zipp==3.9.0 in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_other.txt (line 336)) (3.9.0)
+Collecting pika==1.3.1 (from -r /tmp/requirements_other.txt (line 337))
+  Downloading pika-1.3.1-py3-none-any.whl.metadata (13 kB)
+Collecting opentelemetry-api==1.15.0 (from -r /tmp/requirements_other.txt (line 338))
+  Downloading opentelemetry_api-1.15.0-py3-none-any.whl.metadata (1.4 kB)
+Collecting opentelemetry-exporter-otlp==1.15.0 (from -r /tmp/requirements_other.txt (line 339))
+  Downloading opentelemetry_exporter_otlp-1.15.0-py3-none-any.whl.metadata (2.2 kB)
+Collecting opentelemetry-exporter-otlp-proto-grpc==1.15.0 (from -r /tmp/requirements_other.txt (line 340))
+  Downloading opentelemetry_exporter_otlp_proto_grpc-1.15.0-py3-none-any.whl.metadata (2.2 kB)
+Collecting opentelemetry-exporter-otlp-proto-http==1.15.0 (from -r /tmp/requirements_other.txt (line 341))
+  Downloading opentelemetry_exporter_otlp_proto_http-1.15.0-py3-none-any.whl.metadata (2.2 kB)
+Collecting opentelemetry-proto==1.15.0 (from -r /tmp/requirements_other.txt (line 342))
+  Downloading opentelemetry_proto-1.15.0-py3-none-any.whl.metadata (2.2 kB)
+Collecting opentelemetry-sdk==1.15.0 (from -r /tmp/requirements_other.txt (line 343))
+  Downloading opentelemetry_sdk-1.15.0-py3-none-any.whl.metadata (1.5 kB)
+Collecting json2html==1.3.0 (from -r /tmp/requirements_other.txt (line 344))
+  Downloading json2html-1.3.0.tar.gz (7.0 kB)
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting hpeOneview==8.1.0 (from -r /tmp/requirements_other.txt (line 345))
+  Downloading hpeOneView-8.1.0-py3-none-any.whl.metadata (16 kB)
+Collecting pymongo==4.5.0 (from -r /tmp/requirements_other.txt (line 346))
+  Downloading pymongo-4.5.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (22 kB)
+Collecting pysnmp==4.4.12 (from -r /tmp/requirements_other.txt (line 347))
+  Downloading pysnmp-4.4.12-py2.py3-none-any.whl.metadata (1.8 kB)
+Collecting hdbscan==0.8.33 (from -r /tmp/requirements_other.txt (line 348))
+  Downloading hdbscan-0.8.33.tar.gz (5.2 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.2/5.2 MB 27.8 MB/s eta 0:00:00
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting python-arango==7.5.6 (from -r /tmp/requirements_other.txt (line 349))
+  Downloading python_arango-7.5.6-py3-none-any.whl.metadata (5.8 kB)
+Requirement already satisfied: attrs>=17.3.0 in /cfx_venv/lib/python3.11/site-packages (from aiohttp==3.9.1->-r /tmp/requirements_other.txt (line 19)) (23.2.0)
+Collecting stanio~=0.3.0 (from cmdstanpy==1.2.0->-r /tmp/requirements_other.txt (line 62))
+  Downloading stanio-0.3.0-py3-none-any.whl.metadata (963 bytes)
+Requirement already satisfied: elasticsearch<8.0.0,>=7.0.0 in /cfx_venv/lib/python3.11/site-packages (from elasticsearch-dsl==7.0.0->-r /tmp/requirements_other.txt (line 80)) (7.9.1)
+Requirement already satisfied: setuptools in /cfx_venv/lib/python3.11/site-packages (from grpcio-tools==1.60.0->-r /tmp/requirements_other.txt (line 106)) (68.1.2)
+Collecting comm>=0.1.1 (from ipykernel==6.29.2->-r /tmp/requirements_other.txt (line 127))
+  Downloading comm-0.2.1-py3-none-any.whl.metadata (3.7 kB)
+Collecting debugpy>=1.6.5 (from ipykernel==6.29.2->-r /tmp/requirements_other.txt (line 127))
+  Downloading debugpy-1.8.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (1.1 kB)
+Collecting matplotlib-inline>=0.1 (from ipykernel==6.29.2->-r /tmp/requirements_other.txt (line 127))
+  Downloading matplotlib_inline-0.1.6-py3-none-any.whl.metadata (2.8 kB)
+Collecting stack-data (from ipython==8.21.0->-r /tmp/requirements_other.txt (line 131))
+  Downloading stack_data-0.6.3-py3-none-any.whl.metadata (18 kB)
+Collecting keyring (from jira==3.2.0->-r /tmp/requirements_other.txt (line 137))
+  Downloading keyring-24.3.1-py3-none-any.whl.metadata (20 kB)
+Requirement already satisfied: jsonschema-specifications>=2023.03.6 in /cfx_venv/lib/python3.11/site-packages (from jsonschema==4.21.1->-r /tmp/requirements_other.txt (line 144)) (2023.12.1)
+Requirement already satisfied: referencing>=0.28.4 in /cfx_venv/lib/python3.11/site-packages (from jsonschema==4.21.1->-r /tmp/requirements_other.txt (line 144)) (0.33.0)
+Requirement already satisfied: rpds-py>=0.7.1 in /cfx_venv/lib/python3.11/site-packages (from jsonschema==4.21.1->-r /tmp/requirements_other.txt (line 144)) (0.18.0)
+Collecting platformdirs>=2.5 (from jupyter-core==5.7.1->-r /tmp/requirements_other.txt (line 149))
+  Downloading platformdirs-4.2.0-py3-none-any.whl.metadata (11 kB)
+Collecting jupyter-events>=0.9.0 (from jupyter-server==2.12.5->-r /tmp/requirements_other.txt (line 150))
+  Downloading jupyter_events-0.9.0-py3-none-any.whl.metadata (5.7 kB)
+Collecting jupyter-server-terminals (from jupyter-server==2.12.5->-r /tmp/requirements_other.txt (line 150))
+  Downloading jupyter_server_terminals-0.5.2-py3-none-any.whl.metadata (5.6 kB)
+Collecting overrides (from jupyter-server==2.12.5->-r /tmp/requirements_other.txt (line 150))
+  Downloading overrides-7.7.0-py3-none-any.whl.metadata (5.8 kB)
+Collecting async-lru>=1.0.0 (from jupyterlab==4.1.2->-r /tmp/requirements_other.txt (line 157))
+  Downloading async_lru-2.0.4-py3-none-any.whl.metadata (4.5 kB)
+Collecting httpx>=0.25.0 (from jupyterlab==4.1.2->-r /tmp/requirements_other.txt (line 157))
+  Downloading httpx-0.27.0-py3-none-any.whl.metadata (7.2 kB)
+Collecting jupyter-lsp>=2.0.0 (from jupyterlab==4.1.2->-r /tmp/requirements_other.txt (line 157))
+  Downloading jupyter_lsp-2.2.4-py3-none-any.whl.metadata (1.8 kB)
+Requirement already satisfied: annotated-types>=0.4.0 in /cfx_venv/lib/python3.11/site-packages (from pydantic==2.5.3->-r /tmp/requirements_other.txt (line 239)) (0.6.0)
+Requirement already satisfied: pydantic-core==2.14.6 in /cfx_venv/lib/python3.11/site-packages (from pydantic==2.5.3->-r /tmp/requirements_other.txt (line 239)) (2.14.6)
+Collecting clikit<0.7,>=0.6 (from pystan==3.8.0->-r /tmp/requirements_other.txt (line 249))
+  Downloading clikit-0.6.2-py2.py3-none-any.whl.metadata (1.6 kB)
+Collecting httpstan<4.12,>=4.11 (from pystan==3.8.0->-r /tmp/requirements_other.txt (line 249))
+  Downloading httpstan-4.11.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.2 kB)
+Collecting pysimdjson<6.0.0,>=5.0.2 (from pystan==3.8.0->-r /tmp/requirements_other.txt (line 249))
+  Downloading pysimdjson-5.0.2.tar.gz (547 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 547.8/547.8 kB 23.4 MB/s eta 0:00:00
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting weasel<0.4.0,>=0.1.0 (from spacy==3.7.2->-r /tmp/requirements_other.txt (line 293))
+  Downloading weasel-0.3.4-py3-none-any.whl.metadata (4.7 kB)
+Collecting deprecated>=1.2.6 (from opentelemetry-api==1.15.0->-r /tmp/requirements_other.txt (line 338))
+  Downloading Deprecated-1.2.14-py2.py3-none-any.whl.metadata (5.4 kB)
+Collecting backoff<3.0.0,>=1.10.0 (from opentelemetry-exporter-otlp-proto-grpc==1.15.0->-r /tmp/requirements_other.txt (line 340))
+  Downloading backoff-2.2.1-py3-none-any.whl.metadata (14 kB)
+Collecting opentelemetry-semantic-conventions==0.36b0 (from opentelemetry-sdk==1.15.0->-r /tmp/requirements_other.txt (line 343))
+  Downloading opentelemetry_semantic_conventions-0.36b0-py3-none-any.whl.metadata (2.3 kB)
+Collecting docutils<0.18 (from hpeOneview==8.1.0->-r /tmp/requirements_other.txt (line 345))
+  Downloading docutils-0.17.1-py2.py3-none-any.whl.metadata (2.9 kB)
+Collecting pysmi (from pysnmp==4.4.12->-r /tmp/requirements_other.txt (line 347))
+  Downloading pysmi-0.3.4-py2.py3-none-any.whl.metadata (1.6 kB)
+Collecting pycryptodomex (from pysnmp==4.4.12->-r /tmp/requirements_other.txt (line 347))
+  Downloading pycryptodomex-3.20.0-cp35-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (3.4 kB)
+Collecting crashtest<0.4.0,>=0.3.0 (from clikit<0.7,>=0.6->pystan==3.8.0->-r /tmp/requirements_other.txt (line 249))
+  Downloading crashtest-0.3.1-py3-none-any.whl.metadata (748 bytes)
+Collecting pastel<0.3.0,>=0.2.0 (from clikit<0.7,>=0.6->pystan==3.8.0->-r /tmp/requirements_other.txt (line 249))
+  Downloading pastel-0.2.1-py2.py3-none-any.whl.metadata (1.9 kB)
+Collecting pylev<2.0,>=1.3 (from clikit<0.7,>=0.6->pystan==3.8.0->-r /tmp/requirements_other.txt (line 249))
+  Downloading pylev-1.4.0-py2.py3-none-any.whl.metadata (2.3 kB)
+Collecting marshmallow<4.0,>=3.10 (from httpstan<4.12,>=4.11->pystan==3.8.0->-r /tmp/requirements_other.txt (line 249))
+  Downloading marshmallow-3.21.1-py3-none-any.whl.metadata (7.2 kB)
+Collecting webargs<9.0,>=8.0 (from httpstan<4.12,>=4.11->pystan==3.8.0->-r /tmp/requirements_other.txt (line 249))
+  Downloading webargs-8.4.0-py3-none-any.whl.metadata (8.0 kB)
+Collecting httpcore==1.* (from httpx>=0.25.0->jupyterlab==4.1.2->-r /tmp/requirements_other.txt (line 157))
+  Downloading httpcore-1.0.4-py3-none-any.whl.metadata (20 kB)
+Collecting h11<0.15,>=0.13 (from httpcore==1.*->httpx>=0.25.0->jupyterlab==4.1.2->-r /tmp/requirements_other.txt (line 157))
+  Downloading h11-0.14.0-py3-none-any.whl.metadata (8.2 kB)
+Collecting python-json-logger>=2.0.4 (from jupyter-events>=0.9.0->jupyter-server==2.12.5->-r /tmp/requirements_other.txt (line 150))
+  Downloading python_json_logger-2.0.7-py3-none-any.whl.metadata (6.5 kB)
+Collecting rfc3339-validator (from jupyter-events>=0.9.0->jupyter-server==2.12.5->-r /tmp/requirements_other.txt (line 150))
+  Downloading rfc3339_validator-0.1.4-py2.py3-none-any.whl.metadata (1.5 kB)
+Collecting rfc3986-validator>=0.1.1 (from jupyter-events>=0.9.0->jupyter-server==2.12.5->-r /tmp/requirements_other.txt (line 150))
+  Downloading rfc3986_validator-0.1.1-py2.py3-none-any.whl.metadata (1.7 kB)
+Collecting cloudpathlib<0.17.0,>=0.7.0 (from weasel<0.4.0,>=0.1.0->spacy==3.7.2->-r /tmp/requirements_other.txt (line 293))
+  Downloading cloudpathlib-0.16.0-py3-none-any.whl.metadata (14 kB)
+Collecting jaraco.classes (from keyring->jira==3.2.0->-r /tmp/requirements_other.txt (line 137))
+  Downloading jaraco.classes-3.3.1-py3-none-any.whl.metadata (2.7 kB)
+Collecting SecretStorage>=3.2 (from keyring->jira==3.2.0->-r /tmp/requirements_other.txt (line 137))
+  Downloading SecretStorage-3.3.3-py3-none-any.whl.metadata (4.0 kB)
+Collecting jeepney>=0.4.2 (from keyring->jira==3.2.0->-r /tmp/requirements_other.txt (line 137))
+  Downloading jeepney-0.8.0-py3-none-any.whl.metadata (1.3 kB)
+Requirement already satisfied: ply in /cfx_venv/lib/python3.11/site-packages (from pysmi->pysnmp==4.4.12->-r /tmp/requirements_other.txt (line 347)) (3.11)
+Collecting executing>=1.2.0 (from stack-data->ipython==8.21.0->-r /tmp/requirements_other.txt (line 131))
+  Downloading executing-2.0.1-py2.py3-none-any.whl.metadata (9.0 kB)
+Collecting asttokens>=2.1.0 (from stack-data->ipython==8.21.0->-r /tmp/requirements_other.txt (line 131))
+  Downloading asttokens-2.4.1-py2.py3-none-any.whl.metadata (5.2 kB)
+Collecting pure-eval (from stack-data->ipython==8.21.0->-r /tmp/requirements_other.txt (line 131))
+  Downloading pure_eval-0.2.2-py3-none-any.whl.metadata (6.2 kB)
+Collecting fqdn (from jsonschema[format-nongpl]>=4.18.0->jupyter-events>=0.9.0->jupyter-server==2.12.5->-r /tmp/requirements_other.txt (line 150))
+  Downloading fqdn-1.5.1-py3-none-any.whl.metadata (1.4 kB)
+Collecting isoduration (from jsonschema[format-nongpl]>=4.18.0->jupyter-events>=0.9.0->jupyter-server==2.12.5->-r /tmp/requirements_other.txt (line 150))
+  Downloading isoduration-20.11.0-py3-none-any.whl.metadata (5.7 kB)
+Collecting uri-template (from jsonschema[format-nongpl]>=4.18.0->jupyter-events>=0.9.0->jupyter-server==2.12.5->-r /tmp/requirements_other.txt (line 150))
+  Downloading uri_template-1.3.0-py3-none-any.whl.metadata (8.8 kB)
+Collecting webcolors>=1.11 (from jsonschema[format-nongpl]>=4.18.0->jupyter-events>=0.9.0->jupyter-server==2.12.5->-r /tmp/requirements_other.txt (line 150))
+  Downloading webcolors-1.13-py3-none-any.whl.metadata (2.6 kB)
+Collecting more-itertools (from jaraco.classes->keyring->jira==3.2.0->-r /tmp/requirements_other.txt (line 137))
+  Downloading more_itertools-10.2.0-py3-none-any.whl.metadata (34 kB)
+Collecting arrow>=0.15.0 (from isoduration->jsonschema[format-nongpl]>=4.18.0->jupyter-events>=0.9.0->jupyter-server==2.12.5->-r /tmp/requirements_other.txt (line 150))
+  Downloading arrow-1.3.0-py3-none-any.whl.metadata (7.5 kB)
+Collecting types-python-dateutil>=2.8.10 (from arrow>=0.15.0->isoduration->jsonschema[format-nongpl]>=4.18.0->jupyter-events>=0.9.0->jupyter-server==2.12.5->-r /tmp/requirements_other.txt (line 150))
+  Downloading types_python_dateutil-2.8.19.20240106-py3-none-any.whl.metadata (1.8 kB)
+Downloading Babel-2.10.3-py3-none-any.whl (9.5 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 9.5/9.5 MB 30.0 MB/s eta 0:00:00
+Using cached Cython-0.29.37-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl (1.9 MB)
+Downloading Faker-8.2.1-py3-none-any.whl (1.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.2/1.2 MB 24.6 MB/s eta 0:00:00
+Downloading Jinja2-3.1.2-py3-none-any.whl (133 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 133.1/133.1 kB 15.3 MB/s eta 0:00:00
+Downloading LunarCalendar-0.0.9-py2.py3-none-any.whl (18 kB)
+Downloading Office365_REST_Python_Client-2.3.3-py3-none-any.whl (407 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 407.9/407.9 kB 22.0 MB/s eta 0:00:00
+Downloading Pillow-9.2.0-cp311-cp311-manylinux_2_28_x86_64.whl (3.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.2/3.2 MB 34.8 MB/s eta 0:00:00
+Downloading PyJWT-1.7.1-py2.py3-none-any.whl (18 kB)
+Downloading PyNaCl-1.5.0-cp36-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl (856 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 856.7/856.7 kB 30.1 MB/s eta 0:00:00
+Downloading Pygments-2.13.0-py3-none-any.whl (1.1 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.1/1.1 MB 28.0 MB/s eta 0:00:00
+Downloading QtPy-2.2.1-py3-none-any.whl (82 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 82.6/82.6 kB 7.6 MB/s eta 0:00:00
+Downloading Send2Trash-1.8.2-py3-none-any.whl (18 kB)
+Downloading adal-1.2.6-py2.py3-none-any.whl (55 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 55.4/55.4 kB 3.0 MB/s eta 0:00:00
+Downloading aiohttp-3.9.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 27.9 MB/s eta 0:00:00
+Downloading aiosignal-1.2.0-py3-none-any.whl (8.2 kB)
+Downloading anyio-3.6.1-py3-none-any.whl (80 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 80.6/80.6 kB 6.8 MB/s eta 0:00:00
+Downloading appdirs-1.4.4-py2.py3-none-any.whl (9.6 kB)
+Downloading argon2_cffi_bindings-21.2.0-cp36-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (86 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 86.2/86.2 kB 6.6 MB/s eta 0:00:00
+Downloading argon2_cffi-21.3.0-py3-none-any.whl (14 kB)
+Downloading async_timeout-4.0.2-py3-none-any.whl (5.8 kB)
+Downloading asynctest-0.13.0-py3-none-any.whl (26 kB)
+Downloading autopage-0.5.1-py3-none-any.whl (29 kB)
+Downloading azure_common-1.1.26-py2.py3-none-any.whl (12 kB)
+Downloading azure_core-1.11.0-py2.py3-none-any.whl (127 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 127.7/127.7 kB 18.2 MB/s eta 0:00:00
+Downloading azure_identity-1.5.0-py2.py3-none-any.whl (103 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 103.5/103.5 kB 1.6 MB/s eta 0:00:00
+Downloading azure_loganalytics-0.1.0-py2.py3-none-any.whl (16 kB)
+Downloading azure_mgmt_compute-18.0.0-py2.py3-none-any.whl (3.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.0/3.0 MB 33.1 MB/s eta 0:00:00
+Downloading azure_mgmt_consumption-3.0.0-py2.py3-none-any.whl (111 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 111.4/111.4 kB 7.1 MB/s eta 0:00:00
+Downloading azure_mgmt_core-1.2.2-py2.py3-none-any.whl (21 kB)
+Downloading azure_mgmt_loganalytics-2.0.0-py2.py3-none-any.whl (79 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 79.9/79.9 kB 11.5 MB/s eta 0:00:00
+Downloading azure_mgmt_monitor-1.0.1-py2.py3-none-any.whl (550 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 550.5/550.5 kB 24.3 MB/s eta 0:00:00
+Downloading azure_mgmt_network-17.0.0-py2.py3-none-any.whl (17.9 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 17.9/17.9 MB 30.1 MB/s eta 0:00:00
+Downloading azure_mgmt_resource-15.0.0-py2.py3-none-any.whl (1.6 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.6/1.6 MB 20.9 MB/s eta 0:00:00
+Downloading azure_mgmt_storage-16.0.0-py2.py3-none-any.whl (811 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 811.3/811.3 kB 18.2 MB/s eta 0:00:00
+Downloading azure_nspkg-3.0.2-py3-none-any.whl (1.5 kB)
+Downloading azure_storage_blob-12.8.1-py2.py3-none-any.whl (345 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 345.8/345.8 kB 15.8 MB/s eta 0:00:00
+Downloading backcall-0.2.0-py2.py3-none-any.whl (11 kB)
+Downloading bcrypt-3.2.0-cp36-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl (61 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 61.9/61.9 kB 6.8 MB/s eta 0:00:00
+Downloading beautifulsoup4-4.11.1-py3-none-any.whl (128 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 128.2/128.2 kB 8.0 MB/s eta 0:00:00
+Downloading bleach-4.1.0-py2.py3-none-any.whl (157 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 157.9/157.9 kB 7.7 MB/s eta 0:00:00
+Downloading blis-0.7.11-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (10.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.2/10.2 MB 32.7 MB/s eta 0:00:00
+Downloading boto3-1.34.8-py3-none-any.whl (139 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 139.3/139.3 kB 7.1 MB/s eta 0:00:00
+Downloading boto-2.49.0-py2.py3-none-any.whl (1.4 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.4/1.4 MB 30.3 MB/s eta 0:00:00
+Downloading botocore-1.34.47-py3-none-any.whl (12.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 12.0/12.0 MB 23.5 MB/s eta 0:00:00
+Downloading cached_property-1.5.2-py2.py3-none-any.whl (7.6 kB)
+Downloading cachetools-4.2.4-py3-none-any.whl (10 kB)
+Downloading catalogue-2.0.8-py3-none-any.whl (17 kB)
+Downloading chardet-5.0.0-py3-none-any.whl (193 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 193.6/193.6 kB 12.0 MB/s eta 0:00:00
+Downloading click-8.1.3-py3-none-any.whl (96 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 96.6/96.6 kB 3.1 MB/s eta 0:00:00
+Downloading cliff-3.10.1-py3-none-any.whl (81 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 81.0/81.0 kB 5.9 MB/s eta 0:00:00
+Downloading cmd2-2.4.2-py3-none-any.whl (147 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 147.1/147.1 kB 13.2 MB/s eta 0:00:00
+Downloading cmdstanpy-1.2.0-py3-none-any.whl (93 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 93.0/93.0 kB 5.0 MB/s eta 0:00:00
+Downloading confection-0.1.4-py3-none-any.whl (35 kB)
+Downloading confluent_kafka-2.3.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (4.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.0/4.0 MB 25.8 MB/s eta 0:00:00
+Downloading convertdate-2.4.0-py3-none-any.whl (47 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 47.9/47.9 kB 6.8 MB/s eta 0:00:00
+Downloading croniter-1.3.5-py2.py3-none-any.whl (17 kB)
+Downloading cycler-0.11.0-py3-none-any.whl (6.4 kB)
+Downloading debtcollector-2.5.0-py3-none-any.whl (23 kB)
+Downloading defusedxml-0.7.1-py2.py3-none-any.whl (25 kB)
+Downloading dnspython-2.2.1-py3-none-any.whl (269 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 269.1/269.1 kB 8.8 MB/s eta 0:00:00
+Downloading dogpile.cache-1.1.8-py3-none-any.whl (51 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 51.5/51.5 kB 7.0 MB/s eta 0:00:00
+Downloading dohq_teamcity-1.0.8-py3-none-any.whl (252 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 252.7/252.7 kB 20.3 MB/s eta 0:00:00
+Downloading entrypoints-0.4-py3-none-any.whl (5.3 kB)
+Downloading et_xmlfile-1.1.0-py3-none-any.whl (4.7 kB)
+Downloading eventlet-0.33.1-py2.py3-none-any.whl (226 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 226.8/226.8 kB 25.1 MB/s eta 0:00:00
+Downloading exchangelib-4.6.1-py2.py3-none-any.whl (237 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 237.8/237.8 kB 25.8 MB/s eta 0:00:00
+Downloading fastjsonschema-2.16.2-py3-none-any.whl (22 kB)
+Downloading fonttools-4.37.4-py3-none-any.whl (960 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 960.8/960.8 kB 23.2 MB/s eta 0:00:00
+Downloading frozenlist-1.4.1-cp311-cp311-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (272 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 272.3/272.3 kB 19.5 MB/s eta 0:00:00
+Downloading google_api_core-2.15.0-py3-none-any.whl (121 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 122.0/122.0 kB 8.8 MB/s eta 0:00:00
+Downloading google_api_python_client-2.111.0-py2.py3-none-any.whl (13.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 13.0/13.0 MB 32.0 MB/s eta 0:00:00
+Downloading google_auth_httplib2-0.1.0-py2.py3-none-any.whl (9.3 kB)
+Downloading google_auth-2.25.2-py2.py3-none-any.whl (184 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 184.2/184.2 kB 8.4 MB/s eta 0:00:00
+Downloading google_cloud_core-2.4.1-py2.py3-none-any.whl (29 kB)
+Downloading google_cloud_storage-2.14.0-py2.py3-none-any.whl (121 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 121.6/121.6 kB 7.4 MB/s eta 0:00:00
+Downloading google_crc32c-1.5.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (32 kB)
+Downloading google_resumable_media-2.7.0-py2.py3-none-any.whl (80 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 80.6/80.6 kB 6.9 MB/s eta 0:00:00
+Downloading googleapis_common_protos-1.56.4-py2.py3-none-any.whl (211 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 211.7/211.7 kB 14.1 MB/s eta 0:00:00
+Downloading greenlet-1.1.3.post0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (161 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 161.3/161.3 kB 5.9 MB/s eta 0:00:00
+Downloading haikunator-2.1.0-py2.py3-none-any.whl (4.6 kB)
+Downloading hdfs-2.7.0-py3-none-any.whl (34 kB)
+Downloading hijri_converter-2.2.4-py3-none-any.whl (14 kB)
+Downloading holidays-0.40-py3-none-any.whl (889 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 889.6/889.6 kB 34.2 MB/s eta 0:00:00
+Downloading httplib2-0.20.4-py3-none-any.whl (96 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 96.6/96.6 kB 11.5 MB/s eta 0:00:00
+Downloading hubspot_api_client-3.7.2-py3-none-any.whl (1.9 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.9/1.9 MB 34.1 MB/s eta 0:00:00
+Downloading humanreadable-0.1.0-py3-none-any.whl (8.8 kB)
+Downloading imbalanced_learn-0.7.0-py3-none-any.whl (167 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 167.1/167.1 kB 12.6 MB/s eta 0:00:00
+Downloading influxdb-5.3.1-py2.py3-none-any.whl (77 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 77.9/77.9 kB 820.0 kB/s eta 0:00:00
+Downloading infoblox_netmri-3.8.0.0-py2.py3-none-any.whl (13.8 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 13.8/13.8 MB 30.7 MB/s eta 0:00:00
+Downloading iniconfig-1.1.1-py2.py3-none-any.whl (5.0 kB)
+Downloading ipaddress-1.0.23-py2.py3-none-any.whl (18 kB)
+Downloading ipycytoscape-1.3.3-py2.py3-none-any.whl (3.6 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.6/3.6 MB 17.2 MB/s eta 0:00:00
+Downloading ipykernel-6.29.2-py3-none-any.whl (116 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 116.1/116.1 kB 8.5 MB/s eta 0:00:00
+Downloading ipympl-0.9.3-py2.py3-none-any.whl (511 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 511.6/511.6 kB 4.3 MB/s eta 0:00:00
+Downloading ipynbname-2023.2.0.0-py3-none-any.whl (4.3 kB)
+Downloading ipython_genutils-0.2.0-py2.py3-none-any.whl (26 kB)
+Downloading ipython-8.21.0-py3-none-any.whl (810 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 810.0/810.0 kB 31.4 MB/s eta 0:00:00
+Downloading ipywidgets-8.1.2-py3-none-any.whl (139 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 139.4/139.4 kB 8.9 MB/s eta 0:00:00
+Downloading iso8601-1.1.0-py3-none-any.whl (9.9 kB)
+Downloading isodate-0.6.1-py2.py3-none-any.whl (41 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 41.7/41.7 kB 2.2 MB/s eta 0:00:00
+Downloading jdcal-1.4.1-py2.py3-none-any.whl (9.5 kB)
+Downloading jedi-0.18.1-py2.py3-none-any.whl (1.6 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.6/1.6 MB 21.9 MB/s eta 0:00:00
+Downloading jira-3.2.0-py3-none-any.whl (69 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 69.0/69.0 kB 2.2 MB/s eta 0:00:00
+Downloading jmespath-0.10.0-py2.py3-none-any.whl (24 kB)
+Downloading joblib-1.3.2-py3-none-any.whl (302 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 302.2/302.2 kB 11.6 MB/s eta 0:00:00
+Downloading js_regex-1.0.1-py3-none-any.whl (12 kB)
+Downloading json5-0.9.5-py2.py3-none-any.whl (17 kB)
+Downloading jsonpatch-1.32-py2.py3-none-any.whl (12 kB)
+Downloading jsonpointer-2.3-py2.py3-none-any.whl (7.8 kB)
+Downloading json_normalize-1.0.1-py3-none-any.whl (6.6 kB)
+Downloading jupyter_client-8.6.0-py3-none-any.whl (105 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 105.9/105.9 kB 16.3 MB/s eta 0:00:00
+Downloading jupyter_console-6.6.3-py3-none-any.whl (24 kB)
+Downloading jupyter_core-5.7.1-py3-none-any.whl (28 kB)
+Downloading jupyter_server-2.12.5-py3-none-any.whl (380 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 380.3/380.3 kB 4.0 MB/s eta 0:00:00
+Downloading jupyter-1.0.0-py2.py3-none-any.whl (2.7 kB)
+Downloading jupyterlab_pygments-0.3.0-py3-none-any.whl (15 kB)
+Downloading jupyterlab_server-2.25.3-py3-none-any.whl (58 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 59.0/59.0 kB 8.2 MB/s eta 0:00:00
+Downloading jupyterlab_templates-0.5.1-py3-none-any.whl (161 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 161.9/161.9 kB 19.6 MB/s eta 0:00:00
+Downloading jupyterlab_widgets-3.0.10-py3-none-any.whl (215 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 215.0/215.0 kB 7.3 MB/s eta 0:00:00
+Downloading jupyterlab-4.1.2-py3-none-any.whl (11.4 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 11.4/11.4 MB 30.3 MB/s eta 0:00:00
+Downloading kafka_python-2.0.2-py2.py3-none-any.whl (246 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 246.5/246.5 kB 14.2 MB/s eta 0:00:00
+Downloading keystoneauth1-5.0.0-py3-none-any.whl (315 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 315.2/315.2 kB 22.4 MB/s eta 0:00:00
+Downloading kiwisolver-1.4.4-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.4 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.4/1.4 MB 26.0 MB/s eta 0:00:00
+Downloading korean_lunar_calendar-0.3.1-py3-none-any.whl (9.0 kB)
+Downloading kubernetes-23.3.0-py2.py3-none-any.whl (1.5 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.5/1.5 MB 16.0 MB/s eta 0:00:00
+Downloading langcodes-3.3.0-py3-none-any.whl (181 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 181.6/181.6 kB 14.7 MB/s eta 0:00:00
+Downloading lxml-4.9.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl (7.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 7.0/7.0 MB 19.4 MB/s eta 0:00:00
+Downloading mbstrdecoder-1.1.1-py3-none-any.whl (7.7 kB)
+Downloading mistune-3.0.2-py3-none-any.whl (47 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 48.0/48.0 kB 1.7 MB/s eta 0:00:00
+Downloading msal_extensions-0.3.0-py2.py3-none-any.whl (16 kB)
+Downloading msal-1.8.0-py2.py3-none-any.whl (58 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 59.0/59.0 kB 8.0 MB/s eta 0:00:00
+Downloading msrest-0.6.21-py2.py3-none-any.whl (85 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 85.2/85.2 kB 4.4 MB/s eta 0:00:00
+Downloading msrestazure-0.6.4-py2.py3-none-any.whl (40 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 40.5/40.5 kB 3.7 MB/s eta 0:00:00
+Downloading munch-2.5.0-py2.py3-none-any.whl (10 kB)
+Downloading nbclassic-0.3.7-py3-none-any.whl (13 kB)
+Downloading nbclient-0.5.12-py3-none-any.whl (71 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 71.2/71.2 kB 2.9 MB/s eta 0:00:00
+Downloading nbconvert-7.16.1-py3-none-any.whl (257 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 257.3/257.3 kB 26.2 MB/s eta 0:00:00
+Downloading nbformat-5.9.2-py3-none-any.whl (77 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 77.6/77.6 kB 12.4 MB/s eta 0:00:00
+Downloading netaddr-0.8.0-py2.py3-none-any.whl (1.9 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.9/1.9 MB 35.4 MB/s eta 0:00:00
+Downloading netmiko-4.2.0-py3-none-any.whl (213 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 213.0/213.0 kB 18.3 MB/s eta 0:00:00
+Downloading networkx-2.6.3-py3-none-any.whl (1.9 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.9/1.9 MB 15.9 MB/s eta 0:00:00
+Downloading nltk-3.8.1-py3-none-any.whl (1.5 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.5/1.5 MB 31.4 MB/s eta 0:00:00
+Downloading notebook_shim-0.2.4-py3-none-any.whl (13 kB)
+Downloading notebook-6.4.8-py3-none-any.whl (9.9 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 9.9/9.9 MB 36.1 MB/s eta 0:00:00
+Downloading ntc_templates-3.1.0-py3-none-any.whl (332 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 332.4/332.4 kB 25.6 MB/s eta 0:00:00
+Downloading ntlm_auth-1.5.0-py2.py3-none-any.whl (29 kB)
+Downloading prophet-1.1.5-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (14.4 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 14.4/14.4 MB 25.0 MB/s eta 0:00:00
+Downloading oauth2client-4.1.3-py2.py3-none-any.whl (98 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 98.2/98.2 kB 13.5 MB/s eta 0:00:00
+Downloading oauthlib-3.1.0-py2.py3-none-any.whl (147 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 147.4/147.4 kB 19.6 MB/s eta 0:00:00
+Downloading openpyxl-3.1.2-py2.py3-none-any.whl (249 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 250.0/250.0 kB 20.5 MB/s eta 0:00:00
+Downloading openstacksdk-0.101.0-py3-none-any.whl (1.5 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.5/1.5 MB 21.0 MB/s eta 0:00:00
+Downloading os_client_config-2.1.0-py3-none-any.whl (31 kB)
+Downloading os_service_types-1.7.0-py2.py3-none-any.whl (24 kB)
+Downloading osc_lib-2.6.2-py3-none-any.whl (88 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 88.9/88.9 kB 13.7 MB/s eta 0:00:00
+Downloading oslo.config-8.8.0-py3-none-any.whl (128 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 128.4/128.4 kB 10.4 MB/s eta 0:00:00
+Downloading oslo.context-4.1.0-py3-none-any.whl (20 kB)
+Downloading oslo.i18n-5.1.0-py3-none-any.whl (46 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 46.1/46.1 kB 6.5 MB/s eta 0:00:00
+Downloading oslo.log-4.8.0-py3-none-any.whl (71 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 71.9/71.9 kB 8.4 MB/s eta 0:00:00
+Downloading oslo.serialization-4.3.0-py3-none-any.whl (25 kB)
+Downloading oslo.utils-4.13.0-py3-none-any.whl (101 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 101.9/101.9 kB 16.8 MB/s eta 0:00:00
+Downloading pandocfilters-1.5.0-py2.py3-none-any.whl (8.7 kB)
+Downloading paramiko-2.11.0-py2.py3-none-any.whl (212 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 212.9/212.9 kB 16.0 MB/s eta 0:00:00
+Downloading parso-0.8.3-py2.py3-none-any.whl (100 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100.8/100.8 kB 12.4 MB/s eta 0:00:00
+Downloading pathy-0.6.2-py3-none-any.whl (42 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 42.8/42.8 kB 5.2 MB/s eta 0:00:00
+Downloading patsy-0.5.6-py2.py3-none-any.whl (233 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 233.9/233.9 kB 14.4 MB/s eta 0:00:00
+Downloading pbr-5.10.0-py2.py3-none-any.whl (112 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 112.4/112.4 kB 16.4 MB/s eta 0:00:00
+Downloading pexpect-4.8.0-py2.py3-none-any.whl (59 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 59.0/59.0 kB 6.5 MB/s eta 0:00:00
+Downloading pickleshare-0.7.5-py2.py3-none-any.whl (6.9 kB)
+Downloading pingparsing-1.4.0-py3-none-any.whl (25 kB)
+Downloading pluggy-1.0.0-py2.py3-none-any.whl (13 kB)
+Downloading portalocker-1.7.1-py2.py3-none-any.whl (10 kB)
+Downloading prettytable-3.4.1-py3-none-any.whl (26 kB)
+Downloading prometheus_client-0.14.1-py3-none-any.whl (59 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 59.5/59.5 kB 3.4 MB/s eta 0:00:00
+Downloading prompt_toolkit-3.0.43-py3-none-any.whl (386 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 386.1/386.1 kB 14.4 MB/s eta 0:00:00
+Downloading ptyprocess-0.7.0-py2.py3-none-any.whl (13 kB)
+Downloading py-1.11.0-py2.py3-none-any.whl (98 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 98.7/98.7 kB 3.6 MB/s eta 0:00:00
+Downloading pySqsListener-0.8.10-py2.py3-none-any.whl (10 kB)
+Downloading pyasn1_modules-0.2.8-py2.py3-none-any.whl (155 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 155.3/155.3 kB 4.9 MB/s eta 0:00:00
+Downloading pycef-1.11-py3-none-any.whl (5.5 kB)
+Downloading pymssql-2.2.11-cp311-cp311-manylinux_2_28_x86_64.whl (4.6 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.6/4.6 MB 32.0 MB/s eta 0:00:00
+Downloading pyserial-3.5-py2.py3-none-any.whl (90 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 90.6/90.6 kB 5.1 MB/s eta 0:00:00
+Downloading pystan-3.8.0-py3-none-any.whl (13 kB)
+Downloading pytest-7.1.2-py3-none-any.whl (297 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 297.0/297.0 kB 27.3 MB/s eta 0:00:00
+Downloading python_3parclient-4.2.12-py2.py3-none-any.whl (144 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 144.1/144.1 kB 11.3 MB/s eta 0:00:00
+Downloading python_keystoneclient-4.5.0-py3-none-any.whl (398 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 398.7/398.7 kB 18.3 MB/s eta 0:00:00
+Downloading python_magic-0.4.27-py2.py3-none-any.whl (13 kB)
+Downloading python_neutronclient-7.3.0-py3-none-any.whl (436 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 436.7/436.7 kB 26.2 MB/s eta 0:00:00
+Downloading python_novaclient-17.4.0-py3-none-any.whl (332 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 332.4/332.4 kB 24.0 MB/s eta 0:00:00
+Downloading pytz_deprecation_shim-0.1.0.post0-py2.py3-none-any.whl (15 kB)
+Downloading pywinrm-0.4.3-py2.py3-none-any.whl (44 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 44.1/44.1 kB 6.7 MB/s eta 0:00:00
+Downloading pyzmq-25.1.2-cp311-cp311-manylinux_2_28_x86_64.whl (1.1 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.1/1.1 MB 22.0 MB/s eta 0:00:00
+Downloading qgridnext-2.0.0-py3-none-any.whl (1.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 23.9 MB/s eta 0:00:00
+Downloading qtconsole-5.3.2-py3-none-any.whl (120 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 120.8/120.8 kB 9.7 MB/s eta 0:00:00
+Downloading rake_nltk-1.0.6-py3-none-any.whl (9.1 kB)
+Downloading regex-2023.12.25-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (785 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 785.1/785.1 kB 26.2 MB/s eta 0:00:00
+Downloading requests_ntlm-1.1.0-py2.py3-none-any.whl (5.7 kB)
+Downloading requests_oauthlib-1.3.1-py2.py3-none-any.whl (23 kB)
+Downloading requests_toolbelt-1.0.0-py2.py3-none-any.whl (54 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 54.5/54.5 kB 4.4 MB/s eta 0:00:00
+Downloading requestsexceptions-1.4.0-py2.py3-none-any.whl (3.8 kB)
+Downloading rfc3986-2.0.0-py2.py3-none-any.whl (31 kB)
+Downloading s3transfer-0.10.0-py3-none-any.whl (82 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 82.1/82.1 kB 9.3 MB/s eta 0:00:00
+Downloading scikit_learn-1.3.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (10.9 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.9/10.9 MB 28.6 MB/s eta 0:00:00
+Downloading scipy-1.11.4-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (36.4 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 36.4/36.4 MB 21.9 MB/s eta 0:00:00
+Downloading scp-0.14.4-py2.py3-none-any.whl (8.6 kB)
+Downloading seaborn-0.11.2-py3-none-any.whl (292 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 292.8/292.8 kB 22.8 MB/s eta 0:00:00
+Downloading semantic_version-2.9.0-py2.py3-none-any.whl (15 kB)
+Downloading setuptools_git-1.2-py2.py3-none-any.whl (10 kB)
+Downloading setuptools_rust-0.11.4-py3-none-any.whl (20 kB)
+Downloading sidecar-0.7.0-py3-none-any.whl (17 kB)
+Downloading slack_sdk-3.18.1-py2.py3-none-any.whl (266 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 266.2/266.2 kB 7.2 MB/s eta 0:00:00
+Downloading smart_open-5.2.1-py3-none-any.whl (58 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 58.6/58.6 kB 7.5 MB/s eta 0:00:00
+Downloading sniffio-1.3.0-py3-none-any.whl (10 kB)
+Downloading soupsieve-2.3.2.post1-py3-none-any.whl (37 kB)
+Downloading spacy_legacy-3.0.12-py2.py3-none-any.whl (29 kB)
+Downloading spacy_loggers-1.0.5-py3-none-any.whl (22 kB)
+Downloading spacy-3.7.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (6.6 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.6/6.6 MB 26.7 MB/s eta 0:00:00
+Downloading spectate-1.0.1-py2.py3-none-any.whl (11 kB)
+Downloading srsly-2.4.8-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (490 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 490.9/490.9 kB 15.3 MB/s eta 0:00:00
+Downloading statsmodels-0.14.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (10.8 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.8/10.8 MB 29.1 MB/s eta 0:00:00
+Downloading stevedore-3.5.0-py3-none-any.whl (49 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 49.7/49.7 kB 2.1 MB/s eta 0:00:00
+Downloading subprocrunner-1.6.0-py3-none-any.whl (10 kB)
+Downloading tenacity-8.1.0-py3-none-any.whl (23 kB)
+Downloading terminado-0.13.3-py3-none-any.whl (14 kB)
+Downloading testpath-0.6.0-py3-none-any.whl (83 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 83.9/83.9 kB 10.5 MB/s eta 0:00:00
+Downloading text_unidecode-1.3-py2.py3-none-any.whl (78 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 78.2/78.2 kB 5.3 MB/s eta 0:00:00
+Downloading textblob-0.15.3-py2.py3-none-any.whl (636 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 636.5/636.5 kB 30.6 MB/s eta 0:00:00
+Downloading textfsm-1.1.3-py2.py3-none-any.whl (44 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 44.7/44.7 kB 5.7 MB/s eta 0:00:00
+Downloading thinc-8.2.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (920 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 920.1/920.1 kB 8.7 MB/s eta 0:00:00
+Downloading threadpoolctl-3.1.0-py3-none-any.whl (14 kB)
+Downloading tinycss2-1.1.1-py3-none-any.whl (21 kB)
+Downloading toml-0.10.2-py2.py3-none-any.whl (16 kB)
+Downloading tornado-6.4-cp38-abi3-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (435 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 435.4/435.4 kB 28.8 MB/s eta 0:00:00
+Downloading tqdm-4.64.1-py2.py3-none-any.whl (78 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 78.5/78.5 kB 5.8 MB/s eta 0:00:00
+Downloading traitlets-5.14.1-py3-none-any.whl (85 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 85.4/85.4 kB 10.7 MB/s eta 0:00:00
+Downloading transitions-0.9.0-py2.py3-none-any.whl (97 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 97.7/97.7 kB 9.2 MB/s eta 0:00:00
+Downloading typepy-1.3.0-py3-none-any.whl (31 kB)
+Downloading typer-0.4.2-py3-none-any.whl (27 kB)
+Downloading tzdata-2022.4-py2.py3-none-any.whl (336 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 336.7/336.7 kB 20.4 MB/s eta 0:00:00
+Downloading tzlocal-4.2-py3-none-any.whl (19 kB)
+Downloading ucsmsdk-0.9.13-py2.py3-none-any.whl (6.5 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.5/6.5 MB 36.2 MB/s eta 0:00:00
+Downloading uritemplate-3.0.1-py2.py3-none-any.whl (15 kB)
+Downloading wasabi-0.10.1-py3-none-any.whl (26 kB)
+Downloading wcwidth-0.2.5-py2.py3-none-any.whl (30 kB)
+Downloading webencodings-0.5.1-py2.py3-none-any.whl (11 kB)
+Downloading websocket_client-1.4.1-py3-none-any.whl (55 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 55.0/55.0 kB 4.8 MB/s eta 0:00:00
+Downloading widgetsnbextension-4.0.10-py3-none-any.whl (2.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.3/2.3 MB 25.8 MB/s eta 0:00:00
+Downloading wrapt-1.14.1-cp311-cp311-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (78 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 78.4/78.4 kB 4.4 MB/s eta 0:00:00
+Downloading xmltodict-0.12.0-py2.py3-none-any.whl (9.2 kB)
+Downloading yarl-1.9.4-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (328 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 328.1/328.1 kB 19.7 MB/s eta 0:00:00
+Downloading pika-1.3.1-py3-none-any.whl (155 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 155.3/155.3 kB 12.6 MB/s eta 0:00:00
+Downloading opentelemetry_api-1.15.0-py3-none-any.whl (56 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 56.5/56.5 kB 8.3 MB/s eta 0:00:00
+Downloading opentelemetry_exporter_otlp-1.15.0-py3-none-any.whl (7.0 kB)
+Downloading opentelemetry_exporter_otlp_proto_grpc-1.15.0-py3-none-any.whl (20 kB)
+Downloading opentelemetry_exporter_otlp_proto_http-1.15.0-py3-none-any.whl (21 kB)
+Downloading opentelemetry_proto-1.15.0-py3-none-any.whl (52 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 52.6/52.6 kB 5.9 MB/s eta 0:00:00
+Downloading opentelemetry_sdk-1.15.0-py3-none-any.whl (94 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 94.5/94.5 kB 14.2 MB/s eta 0:00:00
+Downloading hpeOneView-8.1.0-py3-none-any.whl (191 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 191.8/191.8 kB 16.5 MB/s eta 0:00:00
+Downloading pymongo-4.5.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (675 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 675.1/675.1 kB 26.1 MB/s eta 0:00:00
+Downloading pysnmp-4.4.12-py2.py3-none-any.whl (296 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 296.5/296.5 kB 12.9 MB/s eta 0:00:00
+Downloading python_arango-7.5.6-py3-none-any.whl (101 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 101.2/101.2 kB 4.7 MB/s eta 0:00:00
+Downloading opentelemetry_semantic_conventions-0.36b0-py3-none-any.whl (26 kB)
+Downloading async_lru-2.0.4-py3-none-any.whl (6.1 kB)
+Downloading backoff-2.2.1-py3-none-any.whl (15 kB)
+Downloading clikit-0.6.2-py2.py3-none-any.whl (91 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 91.8/91.8 kB 7.4 MB/s eta 0:00:00
+Downloading comm-0.2.1-py3-none-any.whl (7.2 kB)
+Downloading debugpy-1.8.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.6 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.6/2.6 MB 15.1 MB/s eta 0:00:00
+Downloading Deprecated-1.2.14-py2.py3-none-any.whl (9.6 kB)
+Downloading docutils-0.17.1-py2.py3-none-any.whl (575 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 575.5/575.5 kB 19.7 MB/s eta 0:00:00
+Downloading httpstan-4.11.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (43.8 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 43.8/43.8 MB 11.6 MB/s eta 0:00:00
+Downloading httpx-0.27.0-py3-none-any.whl (75 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 75.6/75.6 kB 4.3 MB/s eta 0:00:00
+Downloading httpcore-1.0.4-py3-none-any.whl (77 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 77.8/77.8 kB 4.7 MB/s eta 0:00:00
+Downloading jupyter_events-0.9.0-py3-none-any.whl (18 kB)
+Downloading jupyter_lsp-2.2.4-py3-none-any.whl (69 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 69.1/69.1 kB 8.3 MB/s eta 0:00:00
+Downloading matplotlib_inline-0.1.6-py3-none-any.whl (9.4 kB)
+Downloading platformdirs-4.2.0-py3-none-any.whl (17 kB)
+Downloading stanio-0.3.0-py3-none-any.whl (6.2 kB)
+Downloading weasel-0.3.4-py3-none-any.whl (50 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 50.1/50.1 kB 2.8 MB/s eta 0:00:00
+Downloading jupyter_server_terminals-0.5.2-py3-none-any.whl (13 kB)
+Downloading keyring-24.3.1-py3-none-any.whl (38 kB)
+Downloading overrides-7.7.0-py3-none-any.whl (17 kB)
+Downloading pycryptodomex-3.20.0-cp35-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.1 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 14.8 MB/s eta 0:00:00
+Downloading pysmi-0.3.4-py2.py3-none-any.whl (80 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 80.0/80.0 kB 12.5 MB/s eta 0:00:00
+Downloading stack_data-0.6.3-py3-none-any.whl (24 kB)
+Downloading asttokens-2.4.1-py2.py3-none-any.whl (27 kB)
+Downloading cloudpathlib-0.16.0-py3-none-any.whl (45 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 45.0/45.0 kB 2.3 MB/s eta 0:00:00
+Downloading crashtest-0.3.1-py3-none-any.whl (7.0 kB)
+Downloading executing-2.0.1-py2.py3-none-any.whl (24 kB)
+Downloading jeepney-0.8.0-py3-none-any.whl (48 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 48.4/48.4 kB 1.4 MB/s eta 0:00:00
+Downloading marshmallow-3.21.1-py3-none-any.whl (49 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 49.4/49.4 kB 1.9 MB/s eta 0:00:00
+Downloading pastel-0.2.1-py2.py3-none-any.whl (6.0 kB)
+Downloading pylev-1.4.0-py2.py3-none-any.whl (6.1 kB)
+Downloading python_json_logger-2.0.7-py3-none-any.whl (8.1 kB)
+Downloading rfc3986_validator-0.1.1-py2.py3-none-any.whl (4.2 kB)
+Downloading SecretStorage-3.3.3-py3-none-any.whl (15 kB)
+Downloading webargs-8.4.0-py3-none-any.whl (31 kB)
+Downloading jaraco.classes-3.3.1-py3-none-any.whl (6.8 kB)
+Downloading pure_eval-0.2.2-py3-none-any.whl (11 kB)
+Downloading rfc3339_validator-0.1.4-py2.py3-none-any.whl (3.5 kB)
+Downloading h11-0.14.0-py3-none-any.whl (58 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 58.3/58.3 kB 9.0 MB/s eta 0:00:00
+Downloading webcolors-1.13-py3-none-any.whl (14 kB)
+Downloading fqdn-1.5.1-py3-none-any.whl (9.1 kB)
+Downloading isoduration-20.11.0-py3-none-any.whl (11 kB)
+Downloading more_itertools-10.2.0-py3-none-any.whl (57 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 57.0/57.0 kB 3.3 MB/s eta 0:00:00
+Downloading uri_template-1.3.0-py3-none-any.whl (11 kB)
+Downloading arrow-1.3.0-py3-none-any.whl (66 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66.4/66.4 kB 6.2 MB/s eta 0:00:00
+Downloading types_python_dateutil-2.8.19.20240106-py3-none-any.whl (9.7 kB)
+Building wheels for collected packages: MarkupSafe, PyMeeus, bs4, colored, cx-Oracle, cymem, docopt, ephem, gensim, ifconfig-parser, ijson, imcsdk, junos-eznc, matplotlib, msgpack, multidict, murmurhash, ncclient, netifaces, paho-mqtt, preshed, purestorage, pygrok, pyinotify, pykerberos, pymsteams, pyperclip, pyvmomi, splunk-sdk, yamlordereddictloader, json2html, hdbscan, pysimdjson
+  Building wheel for MarkupSafe (pyproject.toml): started
+  Building wheel for MarkupSafe (pyproject.toml): finished with status 'done'
+  Created wheel for MarkupSafe: filename=MarkupSafe-2.1.1-cp311-cp311-linux_x86_64.whl size=27727 sha256=c3a87113b27ea602f5be8796c75153972b7a2d850bbc057d2279550bd540e4be
+  Stored in directory: /root/.cache/pip/wheels/f2/8e/9e/4ee907ff6fb9e145722f0506c46ad9516302d1f424b43220e5
+  Building wheel for PyMeeus (pyproject.toml): started
+  Building wheel for PyMeeus (pyproject.toml): finished with status 'done'
+  Created wheel for PyMeeus: filename=PyMeeus-0.5.11-py3-none-any.whl size=730970 sha256=41ece602b95363904c67d84fe43e4b8dd147c73937f40a14e85fc532b53f899d
+  Stored in directory: /root/.cache/pip/wheels/87/7c/e1/d102ca9152afe1b885a5f115577cfefbdf568052dee6d6dbd5
+  Building wheel for bs4 (pyproject.toml): started
+  Building wheel for bs4 (pyproject.toml): finished with status 'done'
+  Created wheel for bs4: filename=bs4-0.0.1-py3-none-any.whl size=1256 sha256=da9e8adb7091af3fdb46e3e438c78f92934af138694256bcfd0e3d56d559e76b
+  Stored in directory: /root/.cache/pip/wheels/d4/c8/5b/b5be9c20e5e4503d04a6eac8a3cd5c2393505c29f02bea0960
+  Building wheel for colored (pyproject.toml): started
+  Building wheel for colored (pyproject.toml): finished with status 'done'
+  Created wheel for colored: filename=colored-1.4.3-py3-none-any.whl size=14323 sha256=b728d66c1d5d69c8a00d9235920dbcaa0656924d9f94464e4fe3c1fe3504457c
+  Stored in directory: /root/.cache/pip/wheels/ce/b4/fe/231d542c113f80f3ff7893a2877417467d9379c06e50e2a270
+  Building wheel for cx-Oracle (pyproject.toml): started
+  Building wheel for cx-Oracle (pyproject.toml): finished with status 'done'
+  Created wheel for cx-Oracle: filename=cx_Oracle-8.1.0-cp311-cp311-linux_x86_64.whl size=806197 sha256=4b5e22e2e14ee66f74f8f13b8b264c629fc4a81d1e4e626b134f28df4ccbafcc
+  Stored in directory: /root/.cache/pip/wheels/7f/e4/af/4d624800dd64614791187359031b4c9e2a09000fa8624aa0c5
+  Building wheel for cymem (pyproject.toml): started
+  Building wheel for cymem (pyproject.toml): finished with status 'done'
+  Created wheel for cymem: filename=cymem-2.0.6-cp311-cp311-linux_x86_64.whl size=209365 sha256=916b6c4f01cc6a05276da31f3e4c2c5046a1ba32dc685af0fe90b1c7f3d8d99e
+  Stored in directory: /root/.cache/pip/wheels/60/a1/44/41a6d88e1b66557be305c8c6039116be93c625d4551e99e60d
+  Building wheel for docopt (pyproject.toml): started
+  Building wheel for docopt (pyproject.toml): finished with status 'done'
+  Created wheel for docopt: filename=docopt-0.6.2-py2.py3-none-any.whl size=13706 sha256=ed0d21bdf2bd16f6108198bd6cba5a7adda705c314278f1f08d35553411ec20b
+  Stored in directory: /root/.cache/pip/wheels/1a/b0/8c/4b75c4116c31f83c8f9f047231251e13cc74481cca4a78a9ce
+  Building wheel for ephem (pyproject.toml): started
+  Building wheel for ephem (pyproject.toml): finished with status 'done'
+  Created wheel for ephem: filename=ephem-4.1.3-cp311-cp311-linux_x86_64.whl size=1742322 sha256=1811f3f10aaf1f4e637fb126e1e3233038772f54e4c1521c421d9ce654ab45f1
+  Stored in directory: /root/.cache/pip/wheels/68/0f/46/6b635affba1f488d99756b2b084bdceb2a146baa11b78eed00
+  Building wheel for gensim (pyproject.toml): started
+  Building wheel for gensim (pyproject.toml): finished with status 'done'
+  Created wheel for gensim: filename=gensim-3.8.1-cp311-cp311-linux_x86_64.whl size=23720045 sha256=18181c76443d099d66cb5fd32f079ad79ce4923f7856b60f34555d9acdd24e1b
+  Stored in directory: /root/.cache/pip/wheels/b1/99/ab/1bc6ad2b3ab1d061a699396ad366a3b142ef1c5a5563b7e25d
+  Building wheel for ifconfig-parser (pyproject.toml): started
+  Building wheel for ifconfig-parser (pyproject.toml): finished with status 'done'
+  Created wheel for ifconfig-parser: filename=ifconfig_parser-0.0.5-py3-none-any.whl size=4130 sha256=c41438185d5c38a71dcd7ffd926f5601530cbe465d6ae672b3e1e69831bbf275
+  Stored in directory: /root/.cache/pip/wheels/7b/e9/bc/a28d92bbaebc2cb293aa7289986df10706519751eaad3748a6
+  Building wheel for ijson (pyproject.toml): started
+  Building wheel for ijson (pyproject.toml): finished with status 'done'
+  Created wheel for ijson: filename=ijson-2.6.1-py3-none-any.whl size=17424 sha256=781f388347652817e99f6018a90fafc149c5291ab25973bfadee778b5e3ecca5
+  Stored in directory: /root/.cache/pip/wheels/23/2e/a0/fa96df3d8025507a40bda60ba96084959eab80e1cd4e4350bf
+  Building wheel for imcsdk (pyproject.toml): started
+  Building wheel for imcsdk (pyproject.toml): finished with status 'done'
+  Created wheel for imcsdk: filename=imcsdk-0.9.10-py2.py3-none-any.whl size=810451 sha256=651f40ca37b128497f297f227bd24c26d3be2af316f4b2073a53ea41eed097c7
+  Stored in directory: /root/.cache/pip/wheels/9d/75/50/9343517c7429a02c57c94d1ac40114d30894bbd4d0e0ce3a71
+  Building wheel for junos-eznc (pyproject.toml): started
+  Building wheel for junos-eznc (pyproject.toml): finished with status 'done'
+  Created wheel for junos-eznc: filename=junos_eznc-2.5.1-py3-none-any.whl size=190401 sha256=07808dda0a339aaf439f6cee8642f4bc7658aa88b3c28118e867d9fcb19165a9
+  Stored in directory: /root/.cache/pip/wheels/8d/34/83/82aa99fa87357fd933a4e47b5beeb7a7c5c1842a9235367714
+  Building wheel for matplotlib (pyproject.toml): started
+  Building wheel for matplotlib (pyproject.toml): still running...
+  Building wheel for matplotlib (pyproject.toml): still running...
+  Building wheel for matplotlib (pyproject.toml): finished with status 'done'
+  Created wheel for matplotlib: filename=matplotlib-3.5.3-cp311-cp311-linux_x86_64.whl size=11177306 sha256=cf2eeb5c14cbf7ef47dca9d4d9ec6eeea754e5321f8f77190196db620aee633c
+  Stored in directory: /root/.cache/pip/wheels/5d/3b/87/b850f835f7a97bd28b0fb81fd73bdb17755122ea5ad71484f9
+  Building wheel for msgpack (pyproject.toml): started
+  Building wheel for msgpack (pyproject.toml): finished with status 'done'
+  Created wheel for msgpack: filename=msgpack-1.0.4-cp311-cp311-linux_x86_64.whl size=302783 sha256=f6f3b0fdb40d1f48d0f0f34b7730f46ec9ba059b522d2f2f107f5e6e603df44d
+  Stored in directory: /root/.cache/pip/wheels/55/e6/d3/5defbcadbaa60a8bc20e1d233aa52941a1fbe2707b11f9066d
+  Building wheel for multidict (pyproject.toml): started
+  Building wheel for multidict (pyproject.toml): finished with status 'done'
+  Created wheel for multidict: filename=multidict-6.0.2-cp311-cp311-linux_x86_64.whl size=122146 sha256=2c6a74343843fecde22d8d987898062fbbebe3bca5cc6d349754d96bd2322d63
+  Stored in directory: /root/.cache/pip/wheels/7b/ec/ad/cc2e36f0511204c0f10234b843217fcf9cfe91d8da632e6e80
+  Building wheel for murmurhash (pyproject.toml): started
+  Building wheel for murmurhash (pyproject.toml): finished with status 'done'
+  Created wheel for murmurhash: filename=murmurhash-1.0.8-cp311-cp311-linux_x86_64.whl size=130261 sha256=d3c4776b6b0edefe35fa7f3d875a89b627800a3aec65c856fef0545fbd3e556c
+  Stored in directory: /root/.cache/pip/wheels/92/94/72/972949f7cf0b586e21df4f11edeaddb5cfc0b2dbc77cba7904
+  Building wheel for ncclient (pyproject.toml): started
+  Building wheel for ncclient (pyproject.toml): finished with status 'done'
+  Created wheel for ncclient: filename=ncclient-0.6.13-py2.py3-none-any.whl size=84642 sha256=0d584f3a78daec53bab1ff3fd4c339a8bec3488c760ba7e5157be38355c86ed9
+  Stored in directory: /root/.cache/pip/wheels/e5/48/da/7619e605a4476009a6b2b40fc86d098856355320df9bc231b1
+  Building wheel for netifaces (pyproject.toml): started
+  Building wheel for netifaces (pyproject.toml): finished with status 'done'
+  Created wheel for netifaces: filename=netifaces-0.11.0-cp311-cp311-linux_x86_64.whl size=34684 sha256=4ef38dc83586d37295e46a0fff2928aefebeec12f37e5bf5230a7f7ddd37aa37
+  Stored in directory: /root/.cache/pip/wheels/40/85/29/648c19bbbb5f1d30e33bfb343fd7fb54296b402f7205d8e46f
+  Building wheel for paho-mqtt (pyproject.toml): started
+  Building wheel for paho-mqtt (pyproject.toml): finished with status 'done'
+  Created wheel for paho-mqtt: filename=paho_mqtt-1.5.1-py3-none-any.whl size=61549 sha256=573a7c71691165829ec249702a2497c66a76c350da6ffd100a322a9e8d7ae1b1
+  Stored in directory: /root/.cache/pip/wheels/30/7f/4c/34f4856f49bb078f42222012932b707fe7c9cbcfe9899ebab2
+  Building wheel for preshed (pyproject.toml): started
+  Building wheel for preshed (pyproject.toml): finished with status 'done'
+  Created wheel for preshed: filename=preshed-3.0.7-cp311-cp311-linux_x86_64.whl size=851323 sha256=766b3ec7c8e7e378b3efecda6a40b05313375b909c2b3a38b7966d8ec147e97e
+  Stored in directory: /root/.cache/pip/wheels/65/cb/94/1442cf9e393f301c6d023416a307ddadd3823f174818945d8c
+  Building wheel for purestorage (pyproject.toml): started
+  Building wheel for purestorage (pyproject.toml): finished with status 'done'
+  Created wheel for purestorage: filename=purestorage-1.19.0-py3-none-any.whl size=19950 sha256=110414d7c435277043141341cf21afda1bfe311c6fa7eb4d2b8e90ce73dddc98
+  Stored in directory: /root/.cache/pip/wheels/da/f4/d0/6d51cee36e09443f14b4a837a652ab60231ad8148c300f52eb
+  Building wheel for pygrok (pyproject.toml): started
+  Building wheel for pygrok (pyproject.toml): finished with status 'done'
+  Created wheel for pygrok: filename=pygrok-1.0.0-py3-none-any.whl size=21727 sha256=305fa1c8fae45e3077aff045e09ac929a5bed27548410fe247a806241c38c1ea
+  Stored in directory: /root/.cache/pip/wheels/68/0a/e9/5af5254e12947ad9a043b254a9c50ab3a16bface70da9cd455
+  Building wheel for pyinotify (pyproject.toml): started
+  Building wheel for pyinotify (pyproject.toml): finished with status 'done'
+  Created wheel for pyinotify: filename=pyinotify-0.9.6-py3-none-any.whl size=25342 sha256=91d660dcc3c680b1ae302ba520dd74ca76fb9a429706110c8442b0e064f13a9e
+  Stored in directory: /root/.cache/pip/wheels/61/5f/c5/4c20d068f36a653907eeec8dfea850f191031229e0adbdba66
+  Building wheel for pykerberos (pyproject.toml): started
+  Building wheel for pykerberos (pyproject.toml): finished with status 'done'
+  Created wheel for pykerberos: filename=pykerberos-1.2.4-cp311-cp311-linux_x86_64.whl size=62779 sha256=de5fed06a9ed19fa003fab1d5f27760f3edad3d31b297b66b7d47a83cfdb3002
+  Stored in directory: /root/.cache/pip/wheels/82/43/5c/3be57bdfb18bd10ebabb4bb8013c1f85e5ada20652a6179140
+  Building wheel for pymsteams (pyproject.toml): started
+  Building wheel for pymsteams (pyproject.toml): finished with status 'done'
+  Created wheel for pymsteams: filename=pymsteams-0.2.2-py3-none-any.whl size=6682 sha256=50c723b3e100868b7d570ba865fec8617e977dbef964a016f5d81b876fe9ddff
+  Stored in directory: /root/.cache/pip/wheels/94/a2/0d/62c50ba5080763eb0580b194d6d6e820e491d151cb7d432f51
+  Building wheel for pyperclip (pyproject.toml): started
+  Building wheel for pyperclip (pyproject.toml): finished with status 'done'
+  Created wheel for pyperclip: filename=pyperclip-1.8.2-py3-none-any.whl size=11122 sha256=9cbe03fda440096f4fe12a59f08505c5b6386d6a6127efb450e9c4b6eb2d2f7a
+  Stored in directory: /root/.cache/pip/wheels/70/bd/ba/8ae5c080c895c9360fe6e153acda2dee82527374467eae061b
+  Building wheel for pyvmomi (pyproject.toml): started
+  Building wheel for pyvmomi (pyproject.toml): finished with status 'done'
+  Created wheel for pyvmomi: filename=pyvmomi-7.0.3-py2.py3-none-any.whl size=259565 sha256=4bb5364d3607fbde5fd1d33a7d725fa9a8e04a0b23e8c130bd6eeba4471d1cc3
+  Stored in directory: /root/.cache/pip/wheels/37/50/5c/4cf7e3c5871ba8956736edb54310b53f6392bb2ff43870d51e
+  Building wheel for splunk-sdk (pyproject.toml): started
+  Building wheel for splunk-sdk (pyproject.toml): finished with status 'done'
+  Created wheel for splunk-sdk: filename=splunk_sdk-1.7.2-py3-none-any.whl size=124924 sha256=3723574085d39bd63869e34a1b40bc5af7c8872fbbeb84fb4be680036b50969d
+  Stored in directory: /root/.cache/pip/wheels/d4/9e/23/dbfc917aa8ee020021dc22fc5f4cc5bc294cff3bf15583e73f
+  Building wheel for yamlordereddictloader (pyproject.toml): started
+  Building wheel for yamlordereddictloader (pyproject.toml): finished with status 'done'
+  Created wheel for yamlordereddictloader: filename=yamlordereddictloader-0.4.0-py3-none-any.whl size=4052 sha256=213e305b5bf91fab4169cfad3817d754bbce0070fa94807dc4a013fe07934254
+  Stored in directory: /root/.cache/pip/wheels/79/04/c6/da43e7996014f1c3f481e708341d634a772b0d192234b6fe6f
+  Building wheel for json2html (pyproject.toml): started
+  Building wheel for json2html (pyproject.toml): finished with status 'done'
+  Created wheel for json2html: filename=json2html-1.3.0-py3-none-any.whl size=7593 sha256=bdc1cc1e2573ef19dd3c8426146ff3b7a9afd0d73027e2cfe0a5ca6dbfb1e904
+  Stored in directory: /root/.cache/pip/wheels/ea/8b/96/b33d26a9d72d6c8ac50ef1fe81089c350a9fdcf51feab22144
+  Building wheel for hdbscan (pyproject.toml): started
+  Building wheel for hdbscan (pyproject.toml): still running...
+  Building wheel for hdbscan (pyproject.toml): finished with status 'done'
+  Created wheel for hdbscan: filename=hdbscan-0.8.33-cp311-cp311-linux_x86_64.whl size=3190447 sha256=ab29c1255c360b198f2feefc872e7f81b6a6bb3cba2e06a8231da043e256d4d9
+  Stored in directory: /root/.cache/pip/wheels/4e/8c/6f/d0495e4e40cbd27a8c7330d4e963837e099d6e16014dbdcdb5
+  Building wheel for pysimdjson (pyproject.toml): started
+  Building wheel for pysimdjson (pyproject.toml): finished with status 'done'
+  Created wheel for pysimdjson: filename=pysimdjson-5.0.2-cp311-cp311-linux_x86_64.whl size=1635087 sha256=27fc3265bbfbd8fac7cb45cc829798f1cbbd8aeff0e94f0b7b3799f88ba30dd6
+  Stored in directory: /root/.cache/pip/wheels/0a/79/aa/f8229f0fd5e28284366dccf2649ed344588048909c6c2416f9
+Successfully built MarkupSafe PyMeeus bs4 colored cx-Oracle cymem docopt ephem gensim ifconfig-parser ijson imcsdk junos-eznc matplotlib msgpack multidict murmurhash ncclient netifaces paho-mqtt preshed purestorage pygrok pyinotify pykerberos pymsteams pyperclip pyvmomi splunk-sdk yamlordereddictloader json2html hdbscan pysimdjson
+Installing collected packages: webencodings, wcwidth, wasabi, text-unidecode, splunk-sdk, setuptools-git, requestsexceptions, pyserial, pyperclip, pymssql, PyMeeus, pylev, pykerberos, PyJWT, pyinotify, pure-eval, ptyprocess, portalocker, pickleshare, paho-mqtt, netifaces, netaddr, msgpack, korean-lunar-calendar, kafka-python, json5, json2html, json-normalize, jdcal, ipython-genutils, ipaddress, iniconfig, ijson, ifconfig-parser, haikunator, fastjsonschema, ephem, docopt, cymem, cx-Oracle, confluent-kafka, colored, cached-property, boto, backcall, azure-nspkg, azure-common, appdirs, yamlordereddictloader, xmltodict, wrapt, widgetsnbextension, websocket-client, webcolors, uritemplate, uri-template, ucsmsdk, tzdata, types-python-dateutil, transitions, traitlets, tqdm, tornado, toml, tinycss2, threadpoolctl, textfsm, testpath, tenacity, stanio, spectate, spacy-loggers, spacy-legacy, soupsieve, sniffio, smart-open, slack-sdk, Send2Trash, semantic-version, scipy, rfc3986-validator, rfc3986, rfc3339-validator, regex, pyzmq, python-magic, python-json-logger, pysmi, pysimdjson, Pygments, pycryptodomex, pycef, pyasn1-modules, py, prompt-toolkit, prometheus-client, prettytable, pluggy, platformdirs, Pillow, pika, pexpect, pbr, patsy, pastel, parso, pandocfilters, overrides, opentelemetry-semantic-conventions, opentelemetry-proto, oauthlib, ntlm-auth, networkx, murmurhash, munch, multidict, more-itertools, mistune, MarkupSafe, lxml, langcodes, kiwisolver, jupyterlab-widgets, jupyterlab-pygments, jsonpointer, js-regex, joblib, jmespath, jeepney, isodate, iso8601, imcsdk, httplib2, hijri-converter, h11, greenlet, googleapis-common-protos, google-crc32c, frozenlist, fqdn, fonttools, executing, et-xmlfile, entrypoints, docutils, dnspython, defusedxml, debugpy, Cython, cycler, crashtest, convertdate, cmd2, cloudpathlib, click, chardet, catalogue, cachetools, blis, backoff, Babel, autopage, asynctest, async-timeout, async-lru, asttokens, yarl, typer, terminado, stevedore, stack-data, srsly, setuptools-rust, scikit-learn, requests-toolbelt, requests-oauthlib, QtPy, pyvmomi, pytz-deprecation-shim, pytest, pysnmp, PyNaCl, pymsteams, pymongo, pygrok, purestorage, preshed, oslo.i18n, os-service-types, openpyxl, oauth2client, ntc-templates, nltk, mbstrdecoder, matplotlib-inline, matplotlib, marshmallow, LunarCalendar, jupyter-core, jsonpatch, Jinja2, jedi, jaraco.classes, infoblox-netmri, influxdb, hubspot-api-client, httpcore, hpeOneview, holidays, hdfs, google-resumable-media, google-auth, gensim, Faker, eventlet, dohq-teamcity, deprecated, debtcollector, croniter, comm, clikit, botocore, bleach, beautifulsoup4, bcrypt, azure-core, arrow, argon2-cffi-bindings, anyio, aiosignal, webargs, tzlocal, typepy, textblob, subprocrunner, statsmodels, SecretStorage, seaborn, s3transfer, requests-ntlm, rake-nltk, python-arango, pathy, paramiko, oslo.utils, oslo.context, oslo.config, opentelemetry-api, msrest, kubernetes, keystoneauth1, jupyter-server-terminals, jupyter-client, isoduration, ipython, imbalanced-learn, httpx, hdbscan, google-auth-httplib2, google-api-core, dogpile.cache, confection, cmdstanpy, cliff, bs4, azure-mgmt-core, argon2-cffi, aiohttp, adal, weasel, thinc, scp, pywinrm, python-3parclient, prophet, oslo.serialization, opentelemetry-sdk, openstacksdk, ncclient, nbformat, msrestazure, msal, keyring, ipywidgets, ipykernel, humanreadable, httpstan, google-cloud-core, google-api-python-client, exchangelib, boto3, azure-storage-blob, azure-mgmt-storage, azure-mgmt-resource, azure-mgmt-network, azure-mgmt-monitor, azure-mgmt-compute, azure-loganalytics, spacy, sidecar, qtconsole, qgridnext, python-novaclient, python-keystoneclient, pystan, pySqsListener, pingparsing, oslo.log, osc-lib, os-client-config, opentelemetry-exporter-otlp-proto-http, opentelemetry-exporter-otlp-proto-grpc, Office365-REST-Python-Client, netmiko, nbclient, msal-extensions, jupyter-events, jupyter-console, junos-eznc, jira, ipynbname, ipympl, ipycytoscape, google-cloud-storage, azure-mgmt-loganalytics, azure-mgmt-consumption, python-neutronclient, opentelemetry-exporter-otlp, nbconvert, en-core-web-sm, azure-identity, notebook, jupyter-server, notebook-shim, jupyterlab-server, jupyter-lsp, jupyter, nbclassic, jupyterlab, jupyterlab-templates
+  Attempting uninstall: PyJWT
+    Found existing installation: PyJWT 2.6.0
+    Uninstalling PyJWT-2.6.0:
+      Successfully uninstalled PyJWT-2.6.0
+  Attempting uninstall: tzdata
+    Found existing installation: tzdata 2023.3
+    Uninstalling tzdata-2023.3:
+      Successfully uninstalled tzdata-2023.3
+  Attempting uninstall: greenlet
+    Found existing installation: greenlet 3.0.3
+    Uninstalling greenlet-3.0.3:
+      Successfully uninstalled greenlet-3.0.3
+Successfully installed Babel-2.10.3 Cython-0.29.37 Faker-8.2.1 Jinja2-3.1.2 LunarCalendar-0.0.9 MarkupSafe-2.1.1 Office365-REST-Python-Client-2.3.3 Pillow-9.2.0 PyJWT-1.7.1 PyMeeus-0.5.11 PyNaCl-1.5.0 Pygments-2.13.0 QtPy-2.2.1 SecretStorage-3.3.3 Send2Trash-1.8.2 adal-1.2.6 aiohttp-3.9.1 aiosignal-1.2.0 anyio-3.6.1 appdirs-1.4.4 argon2-cffi-21.3.0 argon2-cffi-bindings-21.2.0 arrow-1.3.0 asttokens-2.4.1 async-lru-2.0.4 async-timeout-4.0.2 asynctest-0.13.0 autopage-0.5.1 azure-common-1.1.26 azure-core-1.11.0 azure-identity-1.5.0 azure-loganalytics-0.1.0 azure-mgmt-compute-18.0.0 azure-mgmt-consumption-3.0.0 azure-mgmt-core-1.2.2 azure-mgmt-loganalytics-2.0.0 azure-mgmt-monitor-1.0.1 azure-mgmt-network-17.0.0 azure-mgmt-resource-15.0.0 azure-mgmt-storage-16.0.0 azure-nspkg-3.0.2 azure-storage-blob-12.8.1 backcall-0.2.0 backoff-2.2.1 bcrypt-3.2.0 beautifulsoup4-4.11.1 bleach-4.1.0 blis-0.7.11 boto-2.49.0 boto3-1.34.8 botocore-1.34.47 bs4-0.0.1 cached-property-1.5.2 cachetools-4.2.4 catalogue-2.0.8 chardet-5.0.0 click-8.1.3 cliff-3.10.1 clikit-0.6.2 cloudpathlib-0.16.0 cmd2-2.4.2 cmdstanpy-1.2.0 colored-1.4.3 comm-0.2.1 confection-0.1.4 confluent-kafka-2.3.0 convertdate-2.4.0 crashtest-0.3.1 croniter-1.3.5 cx-Oracle-8.1.0 cycler-0.11.0 cymem-2.0.6 debtcollector-2.5.0 debugpy-1.8.1 defusedxml-0.7.1 deprecated-1.2.14 dnspython-2.2.1 docopt-0.6.2 docutils-0.17.1 dogpile.cache-1.1.8 dohq-teamcity-1.0.8 en-core-web-sm-3.7.1 entrypoints-0.4 ephem-4.1.3 et-xmlfile-1.1.0 eventlet-0.33.1 exchangelib-4.6.1 executing-2.0.1 fastjsonschema-2.16.2 fonttools-4.37.4 fqdn-1.5.1 frozenlist-1.4.1 gensim-3.8.1 google-api-core-2.15.0 google-api-python-client-2.111.0 google-auth-2.25.2 google-auth-httplib2-0.1.0 google-cloud-core-2.4.1 google-cloud-storage-2.14.0 google-crc32c-1.5.0 google-resumable-media-2.7.0 googleapis-common-protos-1.56.4 greenlet-1.1.3.post0 h11-0.14.0 haikunator-2.1.0 hdbscan-0.8.33 hdfs-2.7.0 hijri-converter-2.2.4 holidays-0.40 hpeOneview-8.1.0 httpcore-1.0.4 httplib2-0.20.4 httpstan-4.11.0 httpx-0.27.0 hubspot-api-client-3.7.2 humanreadable-0.1.0 ifconfig-parser-0.0.5 ijson-2.6.1 imbalanced-learn-0.7.0 imcsdk-0.9.10 influxdb-5.3.1 infoblox-netmri-3.8.0.0 iniconfig-1.1.1 ipaddress-1.0.23 ipycytoscape-1.3.3 ipykernel-6.29.2 ipympl-0.9.3 ipynbname-2023.2.0.0 ipython-8.21.0 ipython-genutils-0.2.0 ipywidgets-8.1.2 iso8601-1.1.0 isodate-0.6.1 isoduration-20.11.0 jaraco.classes-3.3.1 jdcal-1.4.1 jedi-0.18.1 jeepney-0.8.0 jira-3.2.0 jmespath-0.10.0 joblib-1.3.2 js-regex-1.0.1 json-normalize-1.0.1 json2html-1.3.0 json5-0.9.5 jsonpatch-1.32 jsonpointer-2.3 junos-eznc-2.5.1 jupyter-1.0.0 jupyter-client-8.6.0 jupyter-console-6.6.3 jupyter-core-5.7.1 jupyter-events-0.9.0 jupyter-lsp-2.2.4 jupyter-server-2.12.5 jupyter-server-terminals-0.5.2 jupyterlab-4.1.2 jupyterlab-pygments-0.3.0 jupyterlab-server-2.25.3 jupyterlab-templates-0.5.1 jupyterlab-widgets-3.0.10 kafka-python-2.0.2 keyring-24.3.1 keystoneauth1-5.0.0 kiwisolver-1.4.4 korean-lunar-calendar-0.3.1 kubernetes-23.3.0 langcodes-3.3.0 lxml-4.9.1 marshmallow-3.21.1 matplotlib-3.5.3 matplotlib-inline-0.1.6 mbstrdecoder-1.1.1 mistune-3.0.2 more-itertools-10.2.0 msal-1.8.0 msal-extensions-0.3.0 msgpack-1.0.4 msrest-0.6.21 msrestazure-0.6.4 multidict-6.0.2 munch-2.5.0 murmurhash-1.0.8 nbclassic-0.3.7 nbclient-0.5.12 nbconvert-7.16.1 nbformat-5.9.2 ncclient-0.6.13 netaddr-0.8.0 netifaces-0.11.0 netmiko-4.2.0 networkx-2.6.3 nltk-3.8.1 notebook-6.4.8 notebook-shim-0.2.4 ntc-templates-3.1.0 ntlm-auth-1.5.0 oauth2client-4.1.3 oauthlib-3.1.0 openpyxl-3.1.2 openstacksdk-0.101.0 opentelemetry-api-1.15.0 opentelemetry-exporter-otlp-1.15.0 opentelemetry-exporter-otlp-proto-grpc-1.15.0 opentelemetry-exporter-otlp-proto-http-1.15.0 opentelemetry-proto-1.15.0 opentelemetry-sdk-1.15.0 opentelemetry-semantic-conventions-0.36b0 os-client-config-2.1.0 os-service-types-1.7.0 osc-lib-2.6.2 oslo.config-8.8.0 oslo.context-4.1.0 oslo.i18n-5.1.0 oslo.log-4.8.0 oslo.serialization-4.3.0 oslo.utils-4.13.0 overrides-7.7.0 paho-mqtt-1.5.1 pandocfilters-1.5.0 paramiko-2.11.0 parso-0.8.3 pastel-0.2.1 pathy-0.6.2 patsy-0.5.6 pbr-5.10.0 pexpect-4.8.0 pickleshare-0.7.5 pika-1.3.1 pingparsing-1.4.0 platformdirs-4.2.0 pluggy-1.0.0 portalocker-1.7.1 preshed-3.0.7 prettytable-3.4.1 prometheus-client-0.14.1 prompt-toolkit-3.0.43 prophet-1.1.5 ptyprocess-0.7.0 pure-eval-0.2.2 purestorage-1.19.0 py-1.11.0 pySqsListener-0.8.10 pyasn1-modules-0.2.8 pycef-1.11 pycryptodomex-3.20.0 pygrok-1.0.0 pyinotify-0.9.6 pykerberos-1.2.4 pylev-1.4.0 pymongo-4.5.0 pymssql-2.2.11 pymsteams-0.2.2 pyperclip-1.8.2 pyserial-3.5 pysimdjson-5.0.2 pysmi-0.3.4 pysnmp-4.4.12 pystan-3.8.0 pytest-7.1.2 python-3parclient-4.2.12 python-arango-7.5.6 python-json-logger-2.0.7 python-keystoneclient-4.5.0 python-magic-0.4.27 python-neutronclient-7.3.0 python-novaclient-17.4.0 pytz-deprecation-shim-0.1.0.post0 pyvmomi-7.0.3 pywinrm-0.4.3 pyzmq-25.1.2 qgridnext-2.0.0 qtconsole-5.3.2 rake-nltk-1.0.6 regex-2023.12.25 requests-ntlm-1.1.0 requests-oauthlib-1.3.1 requests-toolbelt-1.0.0 requestsexceptions-1.4.0 rfc3339-validator-0.1.4 rfc3986-2.0.0 rfc3986-validator-0.1.1 s3transfer-0.10.0 scikit-learn-1.3.2 scipy-1.11.4 scp-0.14.4 seaborn-0.11.2 semantic-version-2.9.0 setuptools-git-1.2 setuptools-rust-0.11.4 sidecar-0.7.0 slack-sdk-3.18.1 smart-open-5.2.1 sniffio-1.3.0 soupsieve-2.3.2.post1 spacy-3.7.2 spacy-legacy-3.0.12 spacy-loggers-1.0.5 spectate-1.0.1 splunk-sdk-1.7.2 srsly-2.4.8 stack-data-0.6.3 stanio-0.3.0 statsmodels-0.14.1 stevedore-3.5.0 subprocrunner-1.6.0 tenacity-8.1.0 terminado-0.13.3 testpath-0.6.0 text-unidecode-1.3 textblob-0.15.3 textfsm-1.1.3 thinc-8.2.2 threadpoolctl-3.1.0 tinycss2-1.1.1 toml-0.10.2 tornado-6.4 tqdm-4.64.1 traitlets-5.14.1 transitions-0.9.0 typepy-1.3.0 typer-0.4.2 types-python-dateutil-2.8.19.20240106 tzdata-2022.4 tzlocal-4.2 ucsmsdk-0.9.13 uri-template-1.3.0 uritemplate-3.0.1 wasabi-0.10.1 wcwidth-0.2.5 weasel-0.3.4 webargs-8.4.0 webcolors-1.13 webencodings-0.5.1 websocket-client-1.4.1 widgetsnbextension-4.0.10 wrapt-1.14.1 xmltodict-0.12.0 yamlordereddictloader-0.4.0 yarl-1.9.4
+Removing intermediate container ec9ec3a3f5d9
+ ---> d23f5715980b
+Step 37/57 : RUN /cfx_venv/bin/pip install -r /tmp/requirements_cfx.txt  --prefer-binary -i http://10.95.159.86:3141/macaw/$DEVPI_INDEX/ --trusted-host 10.95.159.86
+ ---> Running in 4f3530eef203
+Looking in indexes: http://10.95.159.86:3141/macaw/jenkins_2024-03-08/
+Obtaining file:///opt/rda_user_ext_wrapper (from -r /tmp/requirements_cfx.txt (line 159))
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Checking if build backend supports build_editable: started
+  Checking if build backend supports build_editable: finished with status 'done'
+  Getting requirements to build editable: started
+  Getting requirements to build editable: finished with status 'done'
+  Preparing editable metadata (pyproject.toml): started
+  Preparing editable metadata (pyproject.toml): finished with status 'done'
+Collecting alert-ml-workflow-processors (from -r /tmp/requirements_cfx.txt (line 1))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/c4a/b730528beb30c/alert_ml_workflow_processors-24.1.24.1-py3-none-any.whl (27 kB)
+Collecting cfx-analytics (from -r /tmp/requirements_cfx.txt (line 2))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/418/dc7841024539f/cfx_analytics-24.2.21.1-py3-none-any.whl (56 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 56.5/56.5 kB 3.4 MB/s eta 0:00:00
+Collecting cfx-classify (from -r /tmp/requirements_cfx.txt (line 3))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/f7b/3c5f1ff306bed/cfx_classify-23.8.17.1-py3-none-any.whl (29 kB)
+Collecting cfx-clustering (from -r /tmp/requirements_cfx.txt (line 4))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/e7f/6ad87e28b9693/cfx_clustering-24.2.8.1-py3-none-any.whl (27.5 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 27.5/27.5 MB 28.3 MB/s eta 0:00:00
+Requirement already satisfied: cfx-core in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_cfx.txt (line 5)) (22.10.22.1)
+Collecting cfx-interface (from -r /tmp/requirements_cfx.txt (line 6))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/051/45ee8138697bf/cfx_interface-22.10.22.1-py3-none-any.whl (3.4 kB)
+Collecting cfx-ml-utils (from -r /tmp/requirements_cfx.txt (line 7))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/a26/ae3b204bfcceb/cfx_ml_utils-22.10.22.1-py3-none-any.whl (27.5 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 27.5/27.5 MB 29.0 MB/s eta 0:00:00
+Collecting cfxdx (from -r /tmp/requirements_cfx.txt (line 8))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/370/6379283f5b036/cfxdx-24.1.23.1-py3-none-any.whl (117 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 117.2/117.2 kB 7.6 MB/s eta 0:00:00
+Collecting cfxdx-bundle-all (from -r /tmp/requirements_cfx.txt (line 9))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/6fa/e6a93e46f8b3f/cfxdx_bundle_all-24.3.8.8-py3-none-any.whl (2.4 kB)
+Collecting cfxdx-ext-aiaexpress (from -r /tmp/requirements_cfx.txt (line 10))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/75e/0f2df9a07eeb5/cfxdx_ext_aiaexpress-24.2.8.1-py3-none-any.whl (33 kB)
+Collecting cfxdx-ext-aix-inventory (from -r /tmp/requirements_cfx.txt (line 11))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/a2c/c77a1f98cc81a/cfxdx_ext_aix_inventory-22.10.12.1-py3-none-any.whl (11 kB)
+Collecting cfxdx-ext-ansible (from -r /tmp/requirements_cfx.txt (line 12))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/ea4/c660613af8734/cfxdx_ext_ansible-22.10.12.1-py3-none-any.whl (6.4 kB)
+Collecting cfxdx-ext-apic (from -r /tmp/requirements_cfx.txt (line 13))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/82b/974eec656842b/cfxdx_ext_apic-22.11.7.1-py3-none-any.whl (12 kB)
+Collecting cfxdx-ext-appdynamics (from -r /tmp/requirements_cfx.txt (line 14))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/258/bdf5915a3dceb/cfxdx_ext_appdynamics-23.10.18.1-py3-none-any.whl (13 kB)
+Collecting cfxdx_ext_arangodb (from -r /tmp/requirements_cfx.txt (line 15))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/28b/b9123bee34126/cfxdx_ext_arangodb-24.2.20.1-py3-none-any.whl (4.9 kB)
+Collecting cfxdx-ext-aws (from -r /tmp/requirements_cfx.txt (line 16))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/5b2/e794e16743df0/cfxdx_ext_aws-23.4.24.1-py3-none-any.whl (12 kB)
+Collecting cfxdx-ext-aws-cloudwatch (from -r /tmp/requirements_cfx.txt (line 17))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/1f9/5353497afbe1a/cfxdx_ext_aws_cloudwatch-22.10.12.1-py3-none-any.whl (12 kB)
+Collecting cfxdx-ext-aws-kinesis (from -r /tmp/requirements_cfx.txt (line 18))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/4d0/29214af74cb35/cfxdx_ext_aws_kinesis-22.10.12.1-py3-none-any.whl (6.5 kB)
+Collecting cfxdx-ext-aws-sqs (from -r /tmp/requirements_cfx.txt (line 19))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/a12/3131d469c7890/cfxdx_ext_aws_sqs-23.10.17-py3-none-any.whl (6.6 kB)
+Collecting cfxdx-ext-azure (from -r /tmp/requirements_cfx.txt (line 20))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/3c6/c90bcc4c233a6/cfxdx_ext_azure-23.10.18.1-py3-none-any.whl (7.3 kB)
+Collecting cfxdx-ext-azure-insights (from -r /tmp/requirements_cfx.txt (line 21))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/f74/a825bb20f23f8/cfxdx_ext_azure_insights-22.10.12.1-py3-none-any.whl (9.4 kB)
+Collecting cfxdx-ext-bigswitch (from -r /tmp/requirements_cfx.txt (line 22))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/ec3/286137cb90079/cfxdx_ext_bigswitch-22.10.12.1-py3-none-any.whl (11 kB)
+Collecting cfxdx-ext-blob (from -r /tmp/requirements_cfx.txt (line 23))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/9be/bde01f0625197/cfxdx_ext_blob-22.10.12.1-py3-none-any.whl (8.1 kB)
+Collecting cfxdx-ext-cfxai-classification (from -r /tmp/requirements_cfx.txt (line 24))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/9da/083a039f7131e/cfxdx_ext_cfxai_classification-23.7.20.1-py3-none-any.whl (9.4 kB)
+Collecting cfxdx-ext-cfxai-clustering (from -r /tmp/requirements_cfx.txt (line 25))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/3ff/4615eff507dc4/cfxdx_ext_cfxai_clustering-23.7.3.1-py3-none-any.whl (15 kB)
+Collecting cfxdx-ext-cfxai-nlp (from -r /tmp/requirements_cfx.txt (line 26))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/050/2e9e2dce6541a/cfxdx_ext_cfxai_nlp-22.10.12.1-py3-none-any.whl (7.4 kB)
+Collecting cfxdx-ext-cfxai-regression (from -r /tmp/requirements_cfx.txt (line 27))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/cb8/105db75b47962/cfxdx_ext_cfxai_regression-23.12.13.1-py3-none-any.whl (17 kB)
+Collecting cfxdx-ext-cfxaia (from -r /tmp/requirements_cfx.txt (line 28))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/da2/24166edac231c/cfxdx_ext_cfxaia-24.2.23-py3-none-any.whl (12 kB)
+Collecting cfxdx-ext-cfxdimensions (from -r /tmp/requirements_cfx.txt (line 29))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/1a1/3a0f24f6fb4df/cfxdx_ext_cfxdimensions-22.10.12.1-py3-none-any.whl (8.7 kB)
+Collecting cfxdx-ext-cfxdm (from -r /tmp/requirements_cfx.txt (line 30))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/093/f6d5950d75107/cfxdx_ext_cfxdm-24.2.26-py3-none-any.whl (209 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 209.4/209.4 kB 11.5 MB/s eta 0:00:00
+Collecting cfxdx-ext-cisco-intersight (from -r /tmp/requirements_cfx.txt (line 31))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/66e/bb0eb96c5b98b/cfxdx_ext_cisco_intersight-22.11.7.1-py3-none-any.whl (8.2 kB)
+Collecting cfxdx-ext-cisco-ios (from -r /tmp/requirements_cfx.txt (line 32))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/5d0/e0c7abced6b68/cfxdx_ext_cisco_ios-23.5.25-py3-none-any.whl (14 kB)
+Collecting cfxdx-ext-cisco-nxos (from -r /tmp/requirements_cfx.txt (line 33))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/303/9b7c2db6c8b0e/cfxdx_ext_cisco_nxos-22.10.12.1-py3-none-any.whl (14 kB)
+Collecting cfxdx-ext-cisco-support (from -r /tmp/requirements_cfx.txt (line 34))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/4bd/2dffb255b160e/cfxdx_ext_cisco_support-23.11.14-py3-none-any.whl (9.1 kB)
+Collecting cfxdx-ext-cisco-ucs (from -r /tmp/requirements_cfx.txt (line 35))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/444/304d3d46a1e69/cfxdx_ext_cisco_ucs-24.2.26.4-py3-none-any.whl (17 kB)
+Collecting cfxdx-ext-cisco-ucsm (from -r /tmp/requirements_cfx.txt (line 36))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/a0b/343a8bcee5cb5/cfxdx_ext_cisco_ucsm-23.11.29.3-py3-none-any.whl (9.4 kB)
+Collecting cfxdx-ext-cisco-webex (from -r /tmp/requirements_cfx.txt (line 37))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/5b5/5273f47d1538e/cfxdx_ext_cisco_webex-22.10.12.1-py3-none-any.whl (5.2 kB)
+Collecting cfxdx-ext-cloud-defense (from -r /tmp/requirements_cfx.txt (line 38))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/ce9/a045e8cd9b274/cfxdx_ext_cloud_defense-22.10.12.1-py3-none-any.whl (16 kB)
+Collecting cfxdx-ext-consul (from -r /tmp/requirements_cfx.txt (line 39))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/db2/40d8ec7cf8e95/cfxdx_ext_consul-23.2.21-py3-none-any.whl (7.0 kB)
+Collecting cfxdx-ext-datadog (from -r /tmp/requirements_cfx.txt (line 40))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/670/dd411695fb451/cfxdx_ext_datadog-22.10.12.1-py3-none-any.whl (7.7 kB)
+Collecting cfxdx-ext-datagen (from -r /tmp/requirements_cfx.txt (line 41))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/3ba/353a36ef8204c/cfxdx_ext_datagen-22.11.7.1-py3-none-any.whl (371 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 371.0/371.0 kB 13.2 MB/s eta 0:00:00
+Collecting cfxdx-ext-datanetwork (from -r /tmp/requirements_cfx.txt (line 42))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/62b/856e80435573c/cfxdx_ext_datanetwork-24.1.18.1-py3-none-any.whl (14 kB)
+Collecting cfxdx-ext-diagnostictools (from -r /tmp/requirements_cfx.txt (line 43))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/e32/fcb02b95123bd/cfxdx_ext_diagnostictools-24.2.5-py3-none-any.whl (16 kB)
+Collecting cfxdx-ext-remediation-tools (from -r /tmp/requirements_cfx.txt (line 44))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/d6f/a4ab769309ff8/cfxdx_ext_remediation_tools-23.7.26.1-py3-none-any.whl (4.8 kB)
+Collecting cfxdx-ext-dimensions-bulk (from -r /tmp/requirements_cfx.txt (line 45))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/6a9/8a197ec5d4729/cfxdx_ext_dimensions_bulk-24.2.23-py3-none-any.whl (5.4 kB)
+Collecting cfxdx-ext-dimensions-plus (from -r /tmp/requirements_cfx.txt (line 46))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/5ae/8c710acddd05e/cfxdx_ext_dimensions_plus-22.10.12.1-py3-none-any.whl (5.8 kB)
+Collecting cfxdx-ext-dynatrace (from -r /tmp/requirements_cfx.txt (line 47))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/696/f1fd762f1be10/cfxdx_ext_dynatrace-23.8.7.1-py3-none-any.whl (10 kB)
+Collecting cfxdx-ext-elasticsearch (from -r /tmp/requirements_cfx.txt (line 48))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/ea1/1650be706332d/cfxdx_ext_elasticsearch-24.2.11.1-py3-none-any.whl (17 kB)
+Collecting cfxdx-ext-email (from -r /tmp/requirements_cfx.txt (line 49))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/5ab/ccd6f47319fe1/cfxdx_ext_email-23.3.24-py3-none-any.whl (8.2 kB)
+Collecting cfxdx-ext-email-mapi (from -r /tmp/requirements_cfx.txt (line 50))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/515/e4b4af3c2fd46/cfxdx_ext_email_mapi-22.10.12.1-py3-none-any.whl (5.1 kB)
+Collecting cfxdx-ext-emc-isilon (from -r /tmp/requirements_cfx.txt (line 51))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/ad0/57dbd38a12ccd/cfxdx_ext_emc_isilon-22.11.7.1-py3-none-any.whl (10 kB)
+Collecting cfxdx-ext-emc-unity (from -r /tmp/requirements_cfx.txt (line 52))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/6be/c3843199086fa/cfxdx_ext_emc_unity-22.10.12.1-py3-none-any.whl (10 kB)
+Collecting cfxdx-ext-emc-xtremio (from -r /tmp/requirements_cfx.txt (line 53))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/049/74ada54193f6c/cfxdx_ext_emc_xtremio-22.10.12.1-py3-none-any.whl (7.9 kB)
+Collecting cfxdx-ext-file (from -r /tmp/requirements_cfx.txt (line 54))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/0f5/aa967cf02365d/cfxdx_ext_file-24.2.23-py3-none-any.whl (31 kB)
+Collecting cfxdx-ext-gcp (from -r /tmp/requirements_cfx.txt (line 55))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/1bc/a3111f3a23ffe/cfxdx_ext_gcp-23.2.15-py3-none-any.whl (8.2 kB)
+Collecting cfxdx-ext-geomap (from -r /tmp/requirements_cfx.txt (line 56))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/549/314270657f3b5/cfxdx_ext_geomap-22.10.12.1-py3-none-any.whl (3.4 kB)
+Collecting cfxdx-ext-graphql (from -r /tmp/requirements_cfx.txt (line 57))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/c1d/75c41779cebb3/cfxdx_ext_graphql-22.10.12.1-py3-none-any.whl (4.9 kB)
+Collecting cfxdx-ext-hdfs (from -r /tmp/requirements_cfx.txt (line 58))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/0e6/3fa2b532a90a3/cfxdx_ext_hdfs-22.10.12.1-py3-none-any.whl (6.6 kB)
+Collecting cfxdx-ext-hpe-3par (from -r /tmp/requirements_cfx.txt (line 59))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/631/03fd7cdbc22c0/cfxdx_ext_hpe_3par-23.10.6.1-py3-none-any.whl (5.8 kB)
+Collecting cfxdx-ext-httpclient (from -r /tmp/requirements_cfx.txt (line 60))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/6fd/5ad9c710165f2/cfxdx_ext_httpclient-22.10.12.1-py3-none-any.whl (5.0 kB)
+Collecting cfxdx-ext-hubspot (from -r /tmp/requirements_cfx.txt (line 61))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/375/b76d910ce9064/cfxdx_ext_hubspot-22.10.12.1-py3-none-any.whl (3.6 kB)
+Collecting cfxdx-ext-ibm-qradar (from -r /tmp/requirements_cfx.txt (line 62))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/285/3d55db6c3fd7f/cfxdx_ext_ibm_qradar-22.10.12.1-py3-none-any.whl (5.9 kB)
+Collecting cfxdx-ext-ibm-watson (from -r /tmp/requirements_cfx.txt (line 63))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/ecf/7630871192d4a/cfxdx_ext_ibm_watson-22.10.12.1-py3-none-any.whl (5.5 kB)
+Collecting cfxdx-ext-influx-db (from -r /tmp/requirements_cfx.txt (line 64))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/f9c/086228430970c/cfxdx_ext_influx_db-22.10.12.1-py3-none-any.whl (4.6 kB)
+Collecting cfxdx-ext-istio (from -r /tmp/requirements_cfx.txt (line 65))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/cab/a84e60c1dd6e1/cfxdx_ext_istio-22.11.7.1-py3-none-any.whl (4.9 kB)
+Collecting cfxdx-ext-jira (from -r /tmp/requirements_cfx.txt (line 66))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/559/5eaa2d5c73673/cfxdx_ext_jira-23.8.8-py3-none-any.whl (8.9 kB)
+Collecting cfxdx-ext-juniper (from -r /tmp/requirements_cfx.txt (line 67))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/3ec/7ea281d60b15b/cfxdx_ext_juniper-22.10.12.1-py3-none-any.whl (10 kB)
+Collecting cfxdx-ext-kafka (from -r /tmp/requirements_cfx.txt (line 68))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/8ed/554ae9f5a144e/cfxdx_ext_kafka-22.10.12.1-py3-none-any.whl (6.1 kB)
+Collecting cfxdx-ext-kibana (from -r /tmp/requirements_cfx.txt (line 69))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/9f3/7013f1a817cbd/cfxdx_ext_kibana-22.10.12.1-py3-none-any.whl (6.2 kB)
+Collecting cfxdx-ext-kubernetes (from -r /tmp/requirements_cfx.txt (line 70))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/d20/5b80ab9103797/cfxdx_ext_kubernetes-23.1.19-py3-none-any.whl (12 kB)
+Collecting cfxdx-ext-linux-inventory (from -r /tmp/requirements_cfx.txt (line 71))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/e81/1a3c77d37daae/cfxdx_ext_linux_inventory-24.2.23-py3-none-any.whl (22 kB)
+Collecting cfxdx-ext-me-appmanager (from -r /tmp/requirements_cfx.txt (line 72))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/2ab/59d66f6a237ea/cfxdx_ext_me_appmanager-22.11.7.1-py3-none-any.whl (7.4 kB)
+Collecting cfxdx-ext-meraki (from -r /tmp/requirements_cfx.txt (line 73))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/162/5cdfc05b88c38/cfxdx_ext_meraki-22.11.7.1-py3-none-any.whl (24 kB)
+Collecting cfxdx-ext-motadata (from -r /tmp/requirements_cfx.txt (line 74))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/d13/b3b95dfce3185/cfxdx_ext_motadata-22.10.12.1-py3-none-any.whl (4.5 kB)
+Collecting cfxdx-ext-mqtt (from -r /tmp/requirements_cfx.txt (line 75))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/9d4/bc9a2413c3a5d/cfxdx_ext_mqtt-22.10.12.1-py3-none-any.whl (8.2 kB)
+Collecting cfxdx-ext-msteams (from -r /tmp/requirements_cfx.txt (line 76))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/1a9/70e76691556d4/cfxdx_ext_msteams-22.10.12.1-py3-none-any.whl (4.5 kB)
+Collecting cfxdx-ext-mysql (from -r /tmp/requirements_cfx.txt (line 77))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/172/915f75db269f3/cfxdx_ext_mysql-24.1.31-py3-none-any.whl (10 kB)
+Collecting cfxdx-ext-nagios (from -r /tmp/requirements_cfx.txt (line 78))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/2fe/5e067a46cc22b/cfxdx_ext_nagios-23.4.9.1-py3-none-any.whl (7.3 kB)
+Collecting cfxdx-ext-nats (from -r /tmp/requirements_cfx.txt (line 79))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/f43/6788716107fe3/cfxdx_ext_nats-23.3.16.1-py3-none-any.whl (17 kB)
+Collecting cfxdx-ext-netapp-ontap-7 (from -r /tmp/requirements_cfx.txt (line 80))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/88e/6d838835970ce/cfxdx_ext_netapp_ontap_7-22.10.12.1-py3-none-any.whl (12 kB)
+Collecting cfxdx-ext-netapp-ontap-cmode (from -r /tmp/requirements_cfx.txt (line 81))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/106/375a8836d92c6/cfxdx_ext_netapp_ontap_cmode-23.11.2.1-py3-none-any.whl (8.4 kB)
+Collecting cfxdx-ext-netmri (from -r /tmp/requirements_cfx.txt (line 82))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/581/679a45d01e28e/cfxdx_ext_netmri-22.10.12.1-py3-none-any.whl (5.3 kB)
+Collecting cfxdx-ext-oia (from -r /tmp/requirements_cfx.txt (line 83))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/8d8/c82c5cbd2a916/cfxdx_ext_oia-24.2.23-py3-none-any.whl (25 kB)
+Collecting cfxdx-ext-openai (from -r /tmp/requirements_cfx.txt (line 84))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/e0e/039ec11deb35d/cfxdx_ext_openai-22.10.12.1-py3-none-any.whl (9.9 kB)
+Collecting cfxdx-ext-openstack (from -r /tmp/requirements_cfx.txt (line 85))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/5a3/84a51dc3684e2/cfxdx_ext_openstack-22.10.12.1-py3-none-any.whl (4.3 kB)
+Collecting cfxdx-ext-opmanager (from -r /tmp/requirements_cfx.txt (line 86))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/8c0/c41d12ae93683/cfxdx_ext_opmanager-22.10.12.1-py3-none-any.whl (7.3 kB)
+Collecting cfxdx-ext-oracle (from -r /tmp/requirements_cfx.txt (line 87))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/26a/d9235b46627a7/cfxdx_ext_oracle-22.10.12.1-py3-none-any.whl (3.9 kB)
+Collecting cfxdx-ext-pagerduty (from -r /tmp/requirements_cfx.txt (line 88))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/0f8/ec45d61c61e8e/cfxdx_ext_pagerduty-23.2.22-py3-none-any.whl (8.5 kB)
+Collecting cfxdx-ext-prometheus (from -r /tmp/requirements_cfx.txt (line 89))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/dda/ef943cc852b49/cfxdx_ext_prometheus-22.10.12.1-py3-none-any.whl (10 kB)
+Collecting cfxdx-ext-proxy-bots (from -r /tmp/requirements_cfx.txt (line 90))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/ec5/900b531154266/cfxdx_ext_proxy_bots-22.11.7.1-py3-none-any.whl (3.2 kB)
+Collecting cfxdx-ext-prtg (from -r /tmp/requirements_cfx.txt (line 91))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/262/c63a67e472c66/cfxdx_ext_prtg-22.10.12.1-py3-none-any.whl (4.5 kB)
+Collecting cfxdx-ext-purestorage (from -r /tmp/requirements_cfx.txt (line 92))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/e3e/a120fdee0aa76/cfxdx_ext_purestorage-22.10.12.1-py3-none-any.whl (6.5 kB)
+Collecting cfxdx-ext-rda-system (from -r /tmp/requirements_cfx.txt (line 93))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/c2f/fe5ba616d58b7/cfxdx_ext_rda_system-22.10.12.1-py3-none-any.whl (3.5 kB)
+Collecting cfxdx-ext-redfish (from -r /tmp/requirements_cfx.txt (line 94))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/971/049e4ba3ba1a4/cfxdx_ext_redfish-23.9.21-py3-none-any.whl (9.3 kB)
+Collecting cfxdx-ext-restclient (from -r /tmp/requirements_cfx.txt (line 95))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/7d0/6a38a6b9699b3/cfxdx_ext_restclient-24.1.30.1-py3-none-any.whl (10 kB)
+Collecting cfxdx-ext-rubrik (from -r /tmp/requirements_cfx.txt (line 96))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/6ed/5354b4bf86034/cfxdx_ext_rubrik-22.10.12.1-py3-none-any.whl (3.6 kB)
+Collecting cfxdx-ext-sendgrid (from -r /tmp/requirements_cfx.txt (line 97))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/25a/7b3991d4f9a3d/cfxdx_ext_sendgrid-22.10.12.1-py3-none-any.whl (4.0 kB)
+Collecting cfxdx-ext-service-desk-plus (from -r /tmp/requirements_cfx.txt (line 98))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/c1b/b91f4c61b5906/cfxdx_ext_service_desk_plus-22.12.29-py3-none-any.whl (15 kB)
+Collecting cfxdx-ext-servicenow (from -r /tmp/requirements_cfx.txt (line 99))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/9e2/4cb86bf35bc80/cfxdx_ext_servicenow-23.10.9-py3-none-any.whl (18 kB)
+Collecting cfxdx-ext-sharepoint (from -r /tmp/requirements_cfx.txt (line 100))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/643/28190d810d4b0/cfxdx_ext_sharepoint-22.11.7.1-py3-none-any.whl (4.3 kB)
+Collecting cfxdx-ext-slack (from -r /tmp/requirements_cfx.txt (line 101))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/80b/4cd271ba1bee4/cfxdx_ext_slack-23.2.3-py3-none-any.whl (12 kB)
+Collecting cfxdx-ext-splunk (from -r /tmp/requirements_cfx.txt (line 102))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/330/62a3f935b60f1/cfxdx_ext_splunk-23.1.24-py3-none-any.whl (9.8 kB)
+Collecting cfxdx-ext-sql-server (from -r /tmp/requirements_cfx.txt (line 103))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/4ae/0439a45e2f347/cfxdx_ext_sql_server-22.11.7.1-py3-none-any.whl (7.0 kB)
+Collecting cfxdx-ext-sqlite (from -r /tmp/requirements_cfx.txt (line 104))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/b64/a0f6c42f75355/cfxdx_ext_sqlite-22.10.12.1-py3-none-any.whl (3.8 kB)
+Collecting cfxdx-ext-ssh (from -r /tmp/requirements_cfx.txt (line 105))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/021/6f48137bc9373/cfxdx_ext_ssh-24.2.6-py3-none-any.whl (13 kB)
+Collecting cfxdx-ext-syslog (from -r /tmp/requirements_cfx.txt (line 106))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/849/5836aafa4046a/cfxdx_ext_syslog-22.10.12.1-py3-none-any.whl (5.0 kB)
+Collecting cfxdx-ext-teamcity (from -r /tmp/requirements_cfx.txt (line 107))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/97d/dd431030d3365/cfxdx_ext_teamcity-22.10.12.1-py3-none-any.whl (4.3 kB)
+Collecting cfxdx-ext-thousandeyes (from -r /tmp/requirements_cfx.txt (line 108))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/2a3/fb12e0be98154/cfxdx_ext_thousandeyes-23.11.30-py3-none-any.whl (8.4 kB)
+Collecting cfxdx-ext-vmware (from -r /tmp/requirements_cfx.txt (line 109))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/15e/d3412cb6aeb7f/cfxdx_ext_vmware-23.12.11-py3-none-any.whl (43 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 43.2/43.2 kB 2.7 MB/s eta 0:00:00
+Collecting cfxdx-ext-vrops (from -r /tmp/requirements_cfx.txt (line 110))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/493/05831f5aa245c/cfxdx_ext_vrops-24.2.8.1-py3-none-any.whl (10 kB)
+Collecting cfxdx-ext-webhook (from -r /tmp/requirements_cfx.txt (line 111))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/60f/e77889ea84f70/cfxdx_ext_webhook-22.10.12.1-py3-none-any.whl (3.2 kB)
+Collecting cfxdx-ext-windows-inventory (from -r /tmp/requirements_cfx.txt (line 112))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/3be/553e0d968269f/cfxdx_ext_windows_inventory-24.1.4-py3-none-any.whl (24 kB)
+Collecting cfxdx-ext-zabbix (from -r /tmp/requirements_cfx.txt (line 113))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/5aa/9f6d6a52f4d62/cfxdx_ext_zabbix-23.7.21-py3-none-any.whl (6.9 kB)
+Collecting cfxdx-notebook-addon (from -r /tmp/requirements_cfx.txt (line 114))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/6b1/5b2c6b9fc30bf/cfxdx_notebook_addon-24.1.23.1-py3-none-any.whl (450 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 450.4/450.4 kB 13.5 MB/s eta 0:00:00
+Collecting cfxdx-ext-ibm-instana (from -r /tmp/requirements_cfx.txt (line 115))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/07e/6b0093d83c381/cfxdx_ext_ibm_instana-23.2.7-py3-none-any.whl (10 kB)
+Collecting cfxdx-ext-hpna (from -r /tmp/requirements_cfx.txt (line 116))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/127/ce438cd81be30/cfxdx_ext_hpna-23.12.1-py3-none-any.whl (3.8 kB)
+Collecting cfxdx-ext-graph-api (from -r /tmp/requirements_cfx.txt (line 117))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/2b4/67bbf3be8df2b/cfxdx_ext_graph_api-23.4.3.1-py3-none-any.whl (11 kB)
+Collecting cfxdx-ext-zerto (from -r /tmp/requirements_cfx.txt (line 118))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/0f1/598fc38b12889/cfxdx_ext_zerto-23.1.23.1-py3-none-any.whl (5.4 kB)
+Collecting cfxdx-ext-proactivecase (from -r /tmp/requirements_cfx.txt (line 119))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/1de/5280e2f9966d3/cfxdx_ext_proactivecase-23.9.1-py3-none-any.whl (6.8 kB)
+Collecting cfxdx-ext-proactiveincident (from -r /tmp/requirements_cfx.txt (line 120))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/057/ba5c4fd9e2730/cfxdx_ext_proactiveincident-23.9.1-py3-none-any.whl (6.7 kB)
+Collecting cfxdx-ext-rabbitmq (from -r /tmp/requirements_cfx.txt (line 121))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/8ab/37f830151127a/cfxdx_ext_rabbitmq-23.5.10-py3-none-any.whl (5.2 kB)
+Collecting cfxdx-ext-arcsight (from -r /tmp/requirements_cfx.txt (line 122))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/460/1bed7104d7101/cfxdx_ext_arcsight-23.1.11-py3-none-any.whl (4.6 kB)
+Collecting cfxdx-ext-hpe-oneview (from -r /tmp/requirements_cfx.txt (line 123))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/e48/f9cceb11a1d84/cfxdx_ext_hpe_oneview-23.10.6.1-py3-none-any.whl (8.0 kB)
+Collecting cfxdx-ext-opentelemetry (from -r /tmp/requirements_cfx.txt (line 124))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/7a3/5d5ffad44d167/cfxdx_ext_opentelemetry-23.10.23.4-py3-none-any.whl (11 kB)
+Collecting cfxdx-ext-bmc-remedy (from -r /tmp/requirements_cfx.txt (line 125))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/873/b0190be269937/cfxdx_ext_bmc_remedy-24.2.12-py3-none-any.whl (7.2 kB)
+Collecting cfxdx-ext-camunda (from -r /tmp/requirements_cfx.txt (line 126))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/a8e/5f9159cdd6fc1/cfxdx_ext_camunda-23.4.17.1-py3-none-any.whl (4.6 kB)
+Collecting cfxdx-ext-cisco-dnac (from -r /tmp/requirements_cfx.txt (line 127))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/530/369bfb8f4ad19/cfxdx_ext_cisco_dnac-24.2.9.1-py3-none-any.whl (11 kB)
+Collecting cfxdx-ext-hpe-oneview-dashboard (from -r /tmp/requirements_cfx.txt (line 128))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/e95/4bdb8ac1e320c/cfxdx_ext_hpe_oneview_dashboard-23.10.6.1-py3-none-any.whl (7.6 kB)
+Collecting cfxdx-ext-dell-ome (from -r /tmp/requirements_cfx.txt (line 129))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/97e/b0557c8a05c27/cfxdx_ext_dell_ome-23.10.6.1-py3-none-any.whl (8.3 kB)
+Collecting cfxdx-ext-network-device (from -r /tmp/requirements_cfx.txt (line 130))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/c0e/c753ea49bdc1b/cfxdx_ext_network_device-24.1.28-py3-none-any.whl (11 kB)
+Collecting cfxdx-ext-hpe-primera (from -r /tmp/requirements_cfx.txt (line 131))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/9d0/f9e67a234eefd/cfxdx_ext_hpe_primera-23.10.6.1-py3-none-any.whl (5.9 kB)
+Collecting cfxdx-ext-opsgenie (from -r /tmp/requirements_cfx.txt (line 132))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/4fa/7d1d9d8e40c65/cfxdx_ext_opsgenie-23.8.7-py3-none-any.whl (13 kB)
+Collecting cfxdx-ext-bluecat-ipam (from -r /tmp/requirements_cfx.txt (line 133))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/1fb/5bdacf4a23f1b/cfxdx_ext_bluecat_ipam-23.7.25-py3-none-any.whl (4.9 kB)
+Collecting cfxdx-ext-brocade (from -r /tmp/requirements_cfx.txt (line 134))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/203/7a5688fca16f5/cfxdx_ext_brocade-23.10.6.1-py3-none-any.whl (5.7 kB)
+Collecting cfxdx-ext-dimensions-aia-export (from -r /tmp/requirements_cfx.txt (line 135))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/9e7/5d8a81fc30666/cfxdx_ext_dimensions_aia_export-24.2.23-py3-none-any.whl (5.6 kB)
+Collecting cfxdx-ext-cisco-bcs-oi (from -r /tmp/requirements_cfx.txt (line 136))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/3f2/d4aa144439b31/cfxdx_ext_cisco_bcs_oi-24.2.23-py3-none-any.whl (8.9 kB)
+Collecting cfxdx-ext-discovery (from -r /tmp/requirements_cfx.txt (line 137))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/eed/0426c5c6f1447/cfxdx_ext_discovery-24.1.16-py3-none-any.whl (4.3 kB)
+Collecting cfxdx-ext-cisco-smart-bonding (from -r /tmp/requirements_cfx.txt (line 138))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/c56/ba8b1cd334b2e/cfxdx_ext_cisco_smart_bonding-23.9.25-py3-none-any.whl (8.1 kB)
+Collecting cfxdx-ext-olvm (from -r /tmp/requirements_cfx.txt (line 139))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/194/9c38c501c9371/cfxdx_ext_olvm-23.10.6.1-py3-none-any.whl (5.9 kB)
+Collecting cfxdx-ext-mongodb (from -r /tmp/requirements_cfx.txt (line 140))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/f26/8d0b12eabb529/cfxdx_ext_mongodb-23.9.12-py3-none-any.whl (7.1 kB)
+Collecting cfxdx-ext-nsx (from -r /tmp/requirements_cfx.txt (line 141))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/2ef/26d54205d6729/cfxdx_ext_nsx-23.11.22-py3-none-any.whl (9.2 kB)
+Collecting cfxdx-ext-vcd (from -r /tmp/requirements_cfx.txt (line 142))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/4f0/5b3d94d091b6a/cfxdx_ext_vcd-23.11.2-py3-none-any.whl (7.6 kB)
+Collecting cfxdx-ext-cisco-prime (from -r /tmp/requirements_cfx.txt (line 143))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/bb7/5073151621686/cfxdx_ext_cisco_prime-23.9.29-py3-none-any.whl (6.0 kB)
+Collecting cfxdx-ext-hitachi-vsp (from -r /tmp/requirements_cfx.txt (line 144))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/0c3/daa80c16acc2a/cfxdx_ext_hitachi_vsp-23.10.12-py3-none-any.whl (6.3 kB)
+Collecting cfxdx-ext-snmp (from -r /tmp/requirements_cfx.txt (line 145))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/f83/326c21e0db2cd/cfxdx_ext_snmp-24.2.21-py3-none-any.whl (13 kB)
+Collecting cfxdx-ext-ndfc (from -r /tmp/requirements_cfx.txt (line 146))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/c02/38cd3a4b2695f/cfxdx_ext_ndfc-23.12.13-py3-none-any.whl (5.8 kB)
+Collecting cfxdx-ext-neo4j-graphdb (from -r /tmp/requirements_cfx.txt (line 147))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/1e2/c3267360358da/cfxdx_ext_neo4j_graphdb-24.2.2.1-py3-none-any.whl (5.9 kB)
+Collecting cfxdx-ext-velocloud-orchestrator (from -r /tmp/requirements_cfx.txt (line 148))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/1c7/e64687a7dc054/cfxdx_ext_velocloud_orchestrator-23.12.14-py3-none-any.whl (5.1 kB)
+Requirement already satisfied: cfxql in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_cfx.txt (line 149)) (24.2.14.1)
+Collecting rda-agent (from -r /tmp/requirements_cfx.txt (line 150))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/b45/758465edfab78/rda_agent-22.11.30.2-py3-none-any.whl (13 kB)
+Collecting rda-app-data-models (from -r /tmp/requirements_cfx.txt (line 151))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/dfb/f3c13a347c037/rda_app_data_models-24.1.11.1-py3-none-any.whl (42 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 42.6/42.6 kB 1.8 MB/s eta 0:00:00
+Requirement already satisfied: rda-es-lib in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_cfx.txt (line 152)) (24.2.9.1)
+Requirement already satisfied: rda-extension-list in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_cfx.txt (line 153)) (24.2.23.1)
+Requirement already satisfied: rda-messaging in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_cfx.txt (line 154)) (24.2.29.1)
+Requirement already satisfied: rda-logging in /cfx_venv/lib/python3.11/site-packages (from -r /tmp/requirements_cfx.txt (line 155)) (24.2.9.1)
+Collecting rda-saas-reports (from -r /tmp/requirements_cfx.txt (line 156))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/9bf/1a98a45ab1316/rda_saas_reports-24.3.3.1-py3-none-any.whl (574 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 574.6/574.6 kB 12.1 MB/s eta 0:00:00
+Collecting rda-tool-snmp (from -r /tmp/requirements_cfx.txt (line 157))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/de9/055d9bddc025b/rda_tool_snmp-24.2.1.1-py3-none-any.whl (1.8 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.8/1.8 MB 26.4 MB/s eta 0:00:00
+Collecting rda-opentelemetry (from -r /tmp/requirements_cfx.txt (line 160))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/133/3c56b2828d007/rda_opentelemetry-23.10.21.1-py3-none-any.whl (15 kB)
+Collecting cfxdx-ext-msp>=24.1.8.2 (from cfxdx-bundle-all->-r /tmp/requirements_cfx.txt (line 9))
+  Downloading http://10.95.159.86:3141/macaw/jenkins_2024-03-08/%2Bf/d70/53fd9486ecc33/cfxdx_ext_msp-24.1.8.2-py3-none-any.whl (3.1 kB)
+Requirement already satisfied: grpcio==1.60.0 in /cfx_venv/lib/python3.11/site-packages (from rda_user_ext_wrapper==22.7.4.1->-r /tmp/requirements_cfx.txt (line 159)) (1.60.0)
+Requirement already satisfied: grpcio-tools==1.60.0 in /cfx_venv/lib/python3.11/site-packages (from rda_user_ext_wrapper==22.7.4.1->-r /tmp/requirements_cfx.txt (line 159)) (1.60.0)
+Requirement already satisfied: protobuf==4.25.1 in /cfx_venv/lib/python3.11/site-packages (from rda_user_ext_wrapper==22.7.4.1->-r /tmp/requirements_cfx.txt (line 159)) (4.25.1)
+Requirement already satisfied: PyYAML==6.0 in /cfx_venv/lib/python3.11/site-packages (from rda_user_ext_wrapper==22.7.4.1->-r /tmp/requirements_cfx.txt (line 159)) (6.0)
+Requirement already satisfied: psutil==5.9.1 in /cfx_venv/lib/python3.11/site-packages (from rda_user_ext_wrapper==22.7.4.1->-r /tmp/requirements_cfx.txt (line 159)) (5.9.1)
+Requirement already satisfied: pandas in /cfx_venv/lib/python3.11/site-packages (from rda_user_ext_wrapper==22.7.4.1->-r /tmp/requirements_cfx.txt (line 159)) (2.1.4)
+Requirement already satisfied: setuptools in /cfx_venv/lib/python3.11/site-packages (from grpcio-tools==1.60.0->rda_user_ext_wrapper==22.7.4.1->-r /tmp/requirements_cfx.txt (line 159)) (68.1.2)
+Requirement already satisfied: numpy<2,>=1.23.2 in /cfx_venv/lib/python3.11/site-packages (from pandas->rda_user_ext_wrapper==22.7.4.1->-r /tmp/requirements_cfx.txt (line 159)) (1.26.2)
+Requirement already satisfied: python-dateutil>=2.8.2 in /cfx_venv/lib/python3.11/site-packages (from pandas->rda_user_ext_wrapper==22.7.4.1->-r /tmp/requirements_cfx.txt (line 159)) (2.8.2)
+Requirement already satisfied: pytz>=2020.1 in /cfx_venv/lib/python3.11/site-packages (from pandas->rda_user_ext_wrapper==22.7.4.1->-r /tmp/requirements_cfx.txt (line 159)) (2023.3.post1)
+Requirement already satisfied: tzdata>=2022.1 in /cfx_venv/lib/python3.11/site-packages (from pandas->rda_user_ext_wrapper==22.7.4.1->-r /tmp/requirements_cfx.txt (line 159)) (2022.4)
+Requirement already satisfied: six>=1.5 in /cfx_venv/lib/python3.11/site-packages (from python-dateutil>=2.8.2->pandas->rda_user_ext_wrapper==22.7.4.1->-r /tmp/requirements_cfx.txt (line 159)) (1.16.0)
+Building wheels for collected packages: rda_user_ext_wrapper
+  Building editable for rda_user_ext_wrapper (pyproject.toml): started
+  Building editable for rda_user_ext_wrapper (pyproject.toml): finished with status 'done'
+  Created wheel for rda_user_ext_wrapper: filename=rda_user_ext_wrapper-22.7.4.1-0.editable-py3-none-any.whl size=1881 sha256=0e53c8560dcf2bdce3db165d8d218da509cb449bed78bde055d14fd9fed11cca
+  Stored in directory: /tmp/pip-ephem-wheel-cache-11h7xt_e/wheels/b7/a1/bd/a5382167177ea67f1672f71c5b51d025b50436b0e9a36dde97
+Successfully built rda_user_ext_wrapper
+Installing collected packages: rda-tool-snmp, rda-saas-reports, rda-opentelemetry, rda-app-data-models, rda-agent, cfxdx-notebook-addon, cfxdx-ext-zerto, cfxdx-ext-zabbix, cfxdx-ext-windows-inventory, cfxdx-ext-webhook, cfxdx-ext-vrops, cfxdx-ext-vmware, cfxdx-ext-velocloud-orchestrator, cfxdx-ext-vcd, cfxdx-ext-thousandeyes, cfxdx-ext-teamcity, cfxdx-ext-syslog, cfxdx-ext-ssh, cfxdx-ext-sqlite, cfxdx-ext-sql-server, cfxdx-ext-splunk, cfxdx-ext-snmp, cfxdx-ext-slack, cfxdx-ext-sharepoint, cfxdx-ext-servicenow, cfxdx-ext-service-desk-plus, cfxdx-ext-sendgrid, cfxdx-ext-rubrik, cfxdx-ext-restclient, cfxdx-ext-remediation-tools, cfxdx-ext-redfish, cfxdx-ext-rda-system, cfxdx-ext-rabbitmq, cfxdx-ext-purestorage, cfxdx-ext-prtg, cfxdx-ext-proxy-bots, cfxdx-ext-prometheus, cfxdx-ext-proactiveincident, cfxdx-ext-proactivecase, cfxdx-ext-pagerduty, cfxdx-ext-oracle, cfxdx-ext-opsgenie, cfxdx-ext-opmanager, cfxdx-ext-opentelemetry, cfxdx-ext-openstack, cfxdx-ext-openai, cfxdx-ext-olvm, cfxdx-ext-oia, cfxdx-ext-nsx, cfxdx-ext-network-device, cfxdx-ext-netmri, cfxdx-ext-netapp-ontap-cmode, cfxdx-ext-netapp-ontap-7, cfxdx-ext-neo4j-graphdb, cfxdx-ext-ndfc, cfxdx-ext-nats, cfxdx-ext-nagios, cfxdx-ext-mysql, cfxdx-ext-msteams, cfxdx-ext-msp, cfxdx-ext-mqtt, cfxdx-ext-motadata, cfxdx-ext-mongodb, cfxdx-ext-meraki, cfxdx-ext-me-appmanager, cfxdx-ext-linux-inventory, cfxdx-ext-kubernetes, cfxdx-ext-kibana, cfxdx-ext-kafka, cfxdx-ext-juniper, cfxdx-ext-jira, cfxdx-ext-istio, cfxdx-ext-influx-db, cfxdx-ext-ibm-watson, cfxdx-ext-ibm-qradar, cfxdx-ext-ibm-instana, cfxdx-ext-hubspot, cfxdx-ext-httpclient, cfxdx-ext-hpna, cfxdx-ext-hpe-primera, cfxdx-ext-hpe-oneview-dashboard, cfxdx-ext-hpe-oneview, cfxdx-ext-hpe-3par, cfxdx-ext-hitachi-vsp, cfxdx-ext-hdfs, cfxdx-ext-graphql, cfxdx-ext-graph-api, cfxdx-ext-geomap, cfxdx-ext-gcp, cfxdx-ext-file, cfxdx-ext-emc-xtremio, cfxdx-ext-emc-unity, cfxdx-ext-emc-isilon, cfxdx-ext-email-mapi, cfxdx-ext-email, cfxdx-ext-elasticsearch, cfxdx-ext-dynatrace, cfxdx-ext-discovery, cfxdx-ext-dimensions-plus, cfxdx-ext-dimensions-bulk, cfxdx-ext-dimensions-aia-export, cfxdx-ext-diagnostictools, cfxdx-ext-dell-ome, cfxdx-ext-datanetwork, cfxdx-ext-datagen, cfxdx-ext-datadog, cfxdx-ext-consul, cfxdx-ext-cloud-defense, cfxdx-ext-cisco-webex, cfxdx-ext-cisco-ucsm, cfxdx-ext-cisco-ucs, cfxdx-ext-cisco-support, cfxdx-ext-cisco-smart-bonding, cfxdx-ext-cisco-prime, cfxdx-ext-cisco-nxos, cfxdx-ext-cisco-ios, cfxdx-ext-cisco-intersight, cfxdx-ext-cisco-dnac, cfxdx-ext-cisco-bcs-oi, cfxdx-ext-cfxdm, cfxdx-ext-cfxdimensions, cfxdx-ext-cfxaia, cfxdx-ext-cfxai-regression, cfxdx-ext-cfxai-nlp, cfxdx-ext-cfxai-clustering, cfxdx-ext-cfxai-classification, cfxdx-ext-camunda, cfxdx-ext-brocade, cfxdx-ext-bmc-remedy, cfxdx-ext-bluecat-ipam, cfxdx-ext-blob, cfxdx-ext-bigswitch, cfxdx-ext-azure-insights, cfxdx-ext-azure, cfxdx-ext-aws-sqs, cfxdx-ext-aws-kinesis, cfxdx-ext-aws-cloudwatch, cfxdx-ext-aws, cfxdx-ext-arcsight, cfxdx_ext_arangodb, cfxdx-ext-appdynamics, cfxdx-ext-apic, cfxdx-ext-ansible, cfxdx-ext-aix-inventory, cfxdx-ext-aiaexpress, cfxdx, cfx-ml-utils, cfx-interface, cfx-clustering, cfx-classify, cfx-analytics, alert-ml-workflow-processors, cfxdx-bundle-all, rda_user_ext_wrapper
+Successfully installed alert-ml-workflow-processors-24.1.24.1 cfx-analytics-24.2.21.1 cfx-classify-23.8.17.1 cfx-clustering-24.2.8.1 cfx-interface-22.10.22.1 cfx-ml-utils-22.10.22.1 cfxdx-24.1.23.1 cfxdx-bundle-all-24.3.8.8 cfxdx-ext-aiaexpress-24.2.8.1 cfxdx-ext-aix-inventory-22.10.12.1 cfxdx-ext-ansible-22.10.12.1 cfxdx-ext-apic-22.11.7.1 cfxdx-ext-appdynamics-23.10.18.1 cfxdx-ext-arcsight-23.1.11 cfxdx-ext-aws-23.4.24.1 cfxdx-ext-aws-cloudwatch-22.10.12.1 cfxdx-ext-aws-kinesis-22.10.12.1 cfxdx-ext-aws-sqs-23.10.17 cfxdx-ext-azure-23.10.18.1 cfxdx-ext-azure-insights-22.10.12.1 cfxdx-ext-bigswitch-22.10.12.1 cfxdx-ext-blob-22.10.12.1 cfxdx-ext-bluecat-ipam-23.7.25 cfxdx-ext-bmc-remedy-24.2.12 cfxdx-ext-brocade-23.10.6.1 cfxdx-ext-camunda-23.4.17.1 cfxdx-ext-cfxai-classification-23.7.20.1 cfxdx-ext-cfxai-clustering-23.7.3.1 cfxdx-ext-cfxai-nlp-22.10.12.1 cfxdx-ext-cfxai-regression-23.12.13.1 cfxdx-ext-cfxaia-24.2.23 cfxdx-ext-cfxdimensions-22.10.12.1 cfxdx-ext-cfxdm-24.2.26 cfxdx-ext-cisco-bcs-oi-24.2.23 cfxdx-ext-cisco-dnac-24.2.9.1 cfxdx-ext-cisco-intersight-22.11.7.1 cfxdx-ext-cisco-ios-23.5.25 cfxdx-ext-cisco-nxos-22.10.12.1 cfxdx-ext-cisco-prime-23.9.29 cfxdx-ext-cisco-smart-bonding-23.9.25 cfxdx-ext-cisco-support-23.11.14 cfxdx-ext-cisco-ucs-24.2.26.4 cfxdx-ext-cisco-ucsm-23.11.29.3 cfxdx-ext-cisco-webex-22.10.12.1 cfxdx-ext-cloud-defense-22.10.12.1 cfxdx-ext-consul-23.2.21 cfxdx-ext-datadog-22.10.12.1 cfxdx-ext-datagen-22.11.7.1 cfxdx-ext-datanetwork-24.1.18.1 cfxdx-ext-dell-ome-23.10.6.1 cfxdx-ext-diagnostictools-24.2.5 cfxdx-ext-dimensions-aia-export-24.2.23 cfxdx-ext-dimensions-bulk-24.2.23 cfxdx-ext-dimensions-plus-22.10.12.1 cfxdx-ext-discovery-24.1.16 cfxdx-ext-dynatrace-23.8.7.1 cfxdx-ext-elasticsearch-24.2.11.1 cfxdx-ext-email-23.3.24 cfxdx-ext-email-mapi-22.10.12.1 cfxdx-ext-emc-isilon-22.11.7.1 cfxdx-ext-emc-unity-22.10.12.1 cfxdx-ext-emc-xtremio-22.10.12.1 cfxdx-ext-file-24.2.23 cfxdx-ext-gcp-23.2.15 cfxdx-ext-geomap-22.10.12.1 cfxdx-ext-graph-api-23.4.3.1 cfxdx-ext-graphql-22.10.12.1 cfxdx-ext-hdfs-22.10.12.1 cfxdx-ext-hitachi-vsp-23.10.12 cfxdx-ext-hpe-3par-23.10.6.1 cfxdx-ext-hpe-oneview-23.10.6.1 cfxdx-ext-hpe-oneview-dashboard-23.10.6.1 cfxdx-ext-hpe-primera-23.10.6.1 cfxdx-ext-hpna-23.12.1 cfxdx-ext-httpclient-22.10.12.1 cfxdx-ext-hubspot-22.10.12.1 cfxdx-ext-ibm-instana-23.2.7 cfxdx-ext-ibm-qradar-22.10.12.1 cfxdx-ext-ibm-watson-22.10.12.1 cfxdx-ext-influx-db-22.10.12.1 cfxdx-ext-istio-22.11.7.1 cfxdx-ext-jira-23.8.8 cfxdx-ext-juniper-22.10.12.1 cfxdx-ext-kafka-22.10.12.1 cfxdx-ext-kibana-22.10.12.1 cfxdx-ext-kubernetes-23.1.19 cfxdx-ext-linux-inventory-24.2.23 cfxdx-ext-me-appmanager-22.11.7.1 cfxdx-ext-meraki-22.11.7.1 cfxdx-ext-mongodb-23.9.12 cfxdx-ext-motadata-22.10.12.1 cfxdx-ext-mqtt-22.10.12.1 cfxdx-ext-msp-24.1.8.2 cfxdx-ext-msteams-22.10.12.1 cfxdx-ext-mysql-24.1.31 cfxdx-ext-nagios-23.4.9.1 cfxdx-ext-nats-23.3.16.1 cfxdx-ext-ndfc-23.12.13 cfxdx-ext-neo4j-graphdb-24.2.2.1 cfxdx-ext-netapp-ontap-7-22.10.12.1 cfxdx-ext-netapp-ontap-cmode-23.11.2.1 cfxdx-ext-netmri-22.10.12.1 cfxdx-ext-network-device-24.1.28 cfxdx-ext-nsx-23.11.22 cfxdx-ext-oia-24.2.23 cfxdx-ext-olvm-23.10.6.1 cfxdx-ext-openai-22.10.12.1 cfxdx-ext-openstack-22.10.12.1 cfxdx-ext-opentelemetry-23.10.23.4 cfxdx-ext-opmanager-22.10.12.1 cfxdx-ext-opsgenie-23.8.7 cfxdx-ext-oracle-22.10.12.1 cfxdx-ext-pagerduty-23.2.22 cfxdx-ext-proactivecase-23.9.1 cfxdx-ext-proactiveincident-23.9.1 cfxdx-ext-prometheus-22.10.12.1 cfxdx-ext-proxy-bots-22.11.7.1 cfxdx-ext-prtg-22.10.12.1 cfxdx-ext-purestorage-22.10.12.1 cfxdx-ext-rabbitmq-23.5.10 cfxdx-ext-rda-system-22.10.12.1 cfxdx-ext-redfish-23.9.21 cfxdx-ext-remediation-tools-23.7.26.1 cfxdx-ext-restclient-24.1.30.1 cfxdx-ext-rubrik-22.10.12.1 cfxdx-ext-sendgrid-22.10.12.1 cfxdx-ext-service-desk-plus-22.12.29 cfxdx-ext-servicenow-23.10.9 cfxdx-ext-sharepoint-22.11.7.1 cfxdx-ext-slack-23.2.3 cfxdx-ext-snmp-24.2.21 cfxdx-ext-splunk-23.1.24 cfxdx-ext-sql-server-22.11.7.1 cfxdx-ext-sqlite-22.10.12.1 cfxdx-ext-ssh-24.2.6 cfxdx-ext-syslog-22.10.12.1 cfxdx-ext-teamcity-22.10.12.1 cfxdx-ext-thousandeyes-23.11.30 cfxdx-ext-vcd-23.11.2 cfxdx-ext-velocloud-orchestrator-23.12.14 cfxdx-ext-vmware-23.12.11 cfxdx-ext-vrops-24.2.8.1 cfxdx-ext-webhook-22.10.12.1 cfxdx-ext-windows-inventory-24.1.4 cfxdx-ext-zabbix-23.7.21 cfxdx-ext-zerto-23.1.23.1 cfxdx-notebook-addon-24.1.23.1 cfxdx_ext_arangodb-24.2.20.1 rda-agent-22.11.30.2 rda-app-data-models-24.1.11.1 rda-opentelemetry-23.10.21.1 rda-saas-reports-24.3.3.1 rda-tool-snmp-24.2.1.1 rda_user_ext_wrapper-22.7.4.1
+Removing intermediate container 4f3530eef203
+ ---> de00d1e9a83c
+Step 38/57 : RUN /cfx_venv/bin/pip install --no-deps pysnow==0.7.17
+ ---> Running in 4034154a0ede
+Collecting pysnow==0.7.17
+  Downloading pysnow-0.7.17-py2.py3-none-any.whl.metadata (2.5 kB)
+Downloading pysnow-0.7.17-py2.py3-none-any.whl (27 kB)
+Installing collected packages: pysnow
+Successfully installed pysnow-0.7.17
+Removing intermediate container 4034154a0ede
+ ---> 6458057f2ad5
+Step 39/57 : RUN /cfx_venv/bin/pip install --no-deps jupyterlab-tabular-data-editor==1.0.0
+ ---> Running in 6414c7ace7a2
+Collecting jupyterlab-tabular-data-editor==1.0.0
+  Downloading jupyterlab_tabular_data_editor-1.0.0-py3-none-any.whl.metadata (6.0 kB)
+Downloading jupyterlab_tabular_data_editor-1.0.0-py3-none-any.whl (476 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 476.1/476.1 kB 5.4 MB/s eta 0:00:00
+Installing collected packages: jupyterlab-tabular-data-editor
+Successfully installed jupyterlab-tabular-data-editor-1.0.0
+Removing intermediate container 6414c7ace7a2
+ ---> e7a0c888a67f
+Step 40/57 : RUN mkdir -p /usr/share/mibs; cp /cfx_venv/lib/python3.11/site-packages/rda_tool_snmp/examples/mibs/*.mib /usr/share/mibs/
+ ---> Running in a6eee962e5f9
+Removing intermediate container a6eee962e5f9
+ ---> 2414e048b73f
+Step 41/57 : RUN python3.9 -m pip install -e /opt/rda_user_ext_wrapper ; exit 0
+ ---> Running in a0abfe7f0df8
+/bin/sh: 1: python3.9: not found
+Removing intermediate container a0abfe7f0df8
+ ---> fb41ea113513
+Step 42/57 : RUN python3.10 -m pip install -e /opt/rda_user_ext_wrapper; exit 0
+ ---> Running in 1aeb817a5b0f
+/bin/sh: 1: python3.10: not found
+Removing intermediate container 1aeb817a5b0f
+ ---> ab03b1e59df2
+Step 43/57 : COPY    kernel.json /usr/share/jupyter/kernels/python3/kernel.json
+ ---> f7afd62794c0
+Step 44/57 : COPY       jupyter_notebook_config.py   /opt/cfxdx_nb/jupyter_config/
+ ---> 7204f490ad92
+Step 45/57 : RUN     mkdir -p /opt/cfxdx_nb/jupyter_config/custom/
+ ---> Running in 7c961fd76c6a
+Removing intermediate container 7c961fd76c6a
+ ---> 0f6fa172579d
+Step 46/57 : COPY    logo.png /opt/cfxdx_nb/jupyter_config/custom/
+ ---> e930af6ac192
+Step 47/57 : COPY    custom.css /opt/cfxdx_nb/jupyter_config/custom/
+ ---> 61bbbe76701e
+Step 48/57 : WORKDIR    /opt/cfxdx_nb/
+ ---> Running in 66d8e0b2adee
+Removing intermediate container 66d8e0b2adee
+ ---> c1a4e85249c7
+Step 49/57 : EXPOSE     9999
+ ---> Running in a000187161f0
+Removing intermediate container a000187161f0
+ ---> 88b2d0eef82b
+Step 50/57 : RUN     echo '[supervisord]\n        logfile=/dev/null\n        pidfile=/var/run/supervisord.pid\n        loglevel=info\n        minfds=1024\n        minprocs=200\n        nodaemon=true\n        user=root\n        \n        [program:nginx]\n        command=/usr/local/nginx/sbin/nginx  -c /usr/local/nginx/conf/nginx.conf -g "daemon off;"\n        process_name=%(program_name)s\n        redirect_stderr=true\n        stdout_logfile=/dev/stdout\n        stdout_logfile_maxbytes=0\n        autorestart=false\n        exitcodes=0\n        stopasgroup=true\n        killasgroup=true\n        stopsignal=TERM\n        stopwaitsecs=15\n        numprocs=1\n        priority=500\n        \n        [program:cfxdx_nb_nginx_main]\n        command=/bin/bash -c "/opt/cfxdx_nb/cfxdx_nb_nginx_main.sh"\n        process_name=%(program_name)s\n        redirect_stderr=true\n        stdout_logfile=/dev/stdout\n        stdout_logfile_maxbytes=0\n        autorestart=false\n        exitcodes=0\n        stopasgroup=true\n        killasgroup=true\n        stopsignal=TERM\n        stopwaitsecs=15\n        numprocs=1\n        priority=500\n        \n        ' > /etc/supervisord.conf
+ ---> Running in 49abedd9dc1c
+Removing intermediate container 49abedd9dc1c
+ ---> ea2b739986ed
+Step 51/57 : COPY    nginx.conf /usr/local/nginx/conf/
+ ---> bb0569001cf2
+Step 52/57 : VOLUME  /var/log/nginx
+ ---> Running in d10661b86467
+Removing intermediate container d10661b86467
+ ---> 05af22855054
+Step 53/57 : RUN     mkdir -p /var/log/nginx &&         touch /var/log/nginx/access.log &&         touch /var/log/nginx/error.log && rm -f /usr/bin/python && ln -s /usr/bin/python3.7 /usr/bin/python && python --version &&         cd /tmp; rm -f nginx-1.24.0.tar.gz; rm -rf nginx-1.24.0; ls -lrt /tmp
+ ---> Running in 21fe82922405
+Python 3.11.7
+total 12
+-rw-r--r-- 1 root root 6750 Mar  8 12:08 requirements_other.txt
+-rw-r--r-- 1 root root 3194 Mar  8 12:08 requirements_cfx.txt
+drwxr-xr-x 2 root root    6 Mar  8 13:00 bot_package_logs
+Removing intermediate container 21fe82922405
+ ---> 93552c2facdc
+Step 54/57 : RUN export NODE_OPTIONS=--openssl-legacy-provider && npm update && jupyter lab build
+ ---> Running in 09472eefb3d5
+/bin/sh: 1: npm: not found
+The command '/bin/sh -c export NODE_OPTIONS=--openssl-legacy-provider && npm update && jupyter lab build' returned a non-zero code: 127
+Fri Mar  8 15:14:29 UTC 2024 [ERROR] Docker build failed: ubuntu-cfxdx-nb-nginx-all:daily-jk
+Fri Mar  8 15:14:29 UTC 2024 [ERROR] Exiting build
