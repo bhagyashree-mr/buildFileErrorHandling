@@ -1,4 +1,4 @@
-platform-pods-dependent-package-failure-logs.txt 
+platform-pods-dependent-package-failure-logs.txt
 platform-pods-no-space-logs.txt
 platform-pods-publish-failure-logs.txt
 studio-builds-cmd-failue-logs.txt
