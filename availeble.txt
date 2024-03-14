@@ -1,0 +1,8 @@
+[ERROR] Docker build failed 
+[ERROR] Exiting build 
+no space left on device 
+ERROR: Could not install packages due to an OSError: [Errno 28] No space left on device 
+returned a non-zero code: 1 
+returned a non-zero code: 127 
+ERROR: No matching distribution found 
+ERROR: Could not find a version that satisfies the requirement
