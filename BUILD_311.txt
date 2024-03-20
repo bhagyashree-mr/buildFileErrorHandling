@@ -1493,6 +1493,8 @@ cd1c8c8633fa: Layer already exists
 daily_20240319: digest: sha256:b93d2a6b5e05822ec6cc935376e642e7cc5b1e5350dc132b9875e5ee002a5b7a size: 4088
 Tue Mar 19 09:24:18 UTC 2024 [INFO]  Successfully deployed images to Docker registry: cfx-rda-user-preferences:daily_20240319
 Mon Mar 18 11:33:55 UTC 2024 [ERROR] Docker build failed: cfx-rda-access-manager:daily_20240318
+Mon Mar 18 12:10:12 UTC 2024 [ERROR] Docker build failed: cfx-rda-test-image:daily_20240318
+
 
 REPOSITORY   TAG       IMAGE ID   CREATED   SIZE
 Tue Mar 19 09:24:18 UTC 2024 [INFO]  Image cfx-rda-user-preferences:daily_20240319 built successfully
