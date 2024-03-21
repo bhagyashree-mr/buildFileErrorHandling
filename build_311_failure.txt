@@ -1,5 +1,3 @@
-
-
 Registry file used: registry/internal-registry-new.sh
 DOCKERFILES root directory: templates/
 Parent directory of the pods to build: /opt/codebase/
